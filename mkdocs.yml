@@ -1,0 +1,32 @@
+site_name: DevOps ուսումնական ձեռնարկ
+site_description: Հայերեն, գործնական DevOps ուղեցույց
+site_url: https://example.invalid/devops-book/
+repo_name: DevOps Book
+theme:
+  name: material
+  language: hy
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+nav:
+  - Սկիզբ: index.md
+  - Linux:
+      - Overview: linux/index.md
+      - Processes: linux/processes.md
+  - Networks: networking/index.md
+  - Git և CI/CD: git-ci-cd/index.md
+  - Docker և Kubernetes: docker-kubernetes/index.md
+  - Cloud, Security, Observability: cloud-security-observability/index.md
+  - Labs: labs/index.md
+  - Բառարան: glossary.md
