@@ -5,5 +5,6 @@ Linux-ը DevOps-ի հիմքն է. production workload-ների մեծ մասը �
 ## Թեմաներ
 
 - [Processes](processes.md) — ծրագրերի գործարկում, դիտարկում և անվտանգ դադարեցում։
+- [Bash Scripting](bash-scripting.md) — սկրիպտեր, ավտոմատացում, subshell vs source, idempotency։
 - Filesystem — շուտով։
 - systemd — շուտով։
