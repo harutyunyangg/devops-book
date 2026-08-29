@@ -6,5 +6,6 @@ Linux-ը DevOps-ի հիմքն է. production workload-ների մեծ մասը �
 
 - [Processes](processes.md) — ծրագրերի գործարկում, դիտարկում և անվտանգ դադարեցում։
 - [Bash Scripting](bash-scripting.md) — սկրիպտեր, ավտոմատացում, subshell vs source, idempotency։
+- [Cgroups](cgroups.md) — ռեսուրսների (CPU, memory, I/O) խմբավորում և սահմանափակում systemd-ի և կոնտեյներների համար։
 - Filesystem — շուտով։
 - systemd — շուտով։

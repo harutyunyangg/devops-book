@@ -25,6 +25,7 @@ nav:
       - Overview: linux/index.md
       - Processes: linux/processes.md
       - Bash Scripting: linux/bash-scripting.md
+      - Cgroups: linux/cgroups.md
   - Networks: networking/index.md
   - Git և CI/CD: git-ci-cd/index.md
   - Docker և Kubernetes: docker-kubernetes/index.md
