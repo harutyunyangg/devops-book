@@ -1,0 +1,1805 @@
+
+<!doctype html>
+<html lang="hy" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Հայերեն, գործնական DevOps ուղեցույց">
+      
+      
+      
+        <link rel="canonical" href="https://example.invalid/devops-book/linux/bash-scripting/">
+      
+      
+        <link rel="prev" href="../processes/">
+      
+      
+        <link rel="next" href="../cgroups/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Bash Scripting - DevOps ուսումնական ձեռնարկ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#linux-bash-scripting" class="md-skip">
+          Անցնել պարունակությանը
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Գլխագիր">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-header__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DevOps ուսումնական ձեռնարկ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bash Scripting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Որոնում" placeholder="Որոնում" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Որոնում">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Ջնջել" aria-label="Ջնջել" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Որոնում
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Ներդիրներ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Սկիզբ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Linux
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../networking/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Networks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../git-ci-cd/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Git և CI/CD
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../docker-kubernetes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Docker և Kubernetes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../cloud-security-observability/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Cloud, Security, Observability
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Բառարան
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Տեղորոշում" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-nav__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DevOps ուսումնական ձեռնարկ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Սկիզբ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bash Scripting
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bash Scripting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Սկրիպտի կառուցվածքն ու գործարկումը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական սինտաքս
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-execution-model-subshell-vs-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process execution model. subshell vs source
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exit-codes-set-e-set-u" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exit codes և set -e / set -u
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idempotency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իդեմպոտենտություն (Idempotency)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Փորձարկում (Lab)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lab-1-subshell-vs-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 1. subshell vs source
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lab-2-exit-codes-set-euo-pipefail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 2: Exit codes և set -euo pipefail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lab-3-idempotent-setup-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 3: Idempotent setup script
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scriptsh-directory-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչու՞ է ./script.sh-ով գործարկելիս directory-ի փոփոխությունը չպահպանվում, և ինչպե՞ս լուծել
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-subshell-source-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս ստուգել script-ը subshell-ում է, թե source-ով
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subshell-source-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ ռիսկեր կան subshell-ի և source-ի հետ ավտոմատացված միջավայրերում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idempotency-devops-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է idempotency, և ինչո՞ւ այն կարևոր DevOps-ում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cgroups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cgroups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git-ci-cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git և CI/CD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker և Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud, Security, Observability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Բառարան
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Սկրիպտի կառուցվածքն ու գործարկումը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական սինտաքս
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-execution-model-subshell-vs-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process execution model. subshell vs source
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exit-codes-set-e-set-u" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exit codes և set -e / set -u
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idempotency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իդեմպոտենտություն (Idempotency)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Փորձարկում (Lab)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lab-1-subshell-vs-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 1. subshell vs source
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lab-2-exit-codes-set-euo-pipefail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 2: Exit codes և set -euo pipefail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lab-3-idempotent-setup-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 3: Idempotent setup script
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scriptsh-directory-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչու՞ է ./script.sh-ով գործարկելիս directory-ի փոփոխությունը չպահպանվում, և ինչպե՞ս լուծել
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-subshell-source-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս ստուգել script-ը subshell-ում է, թե source-ով
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subshell-source-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ ռիսկեր կան subshell-ի և source-ի հետ ավտոմատացված միջավայրերում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#idempotency-devops-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է idempotency, և ինչո՞ւ այն կարևոր DevOps-ում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="linux-bash-scripting">Linux Bash Scripting<a class="headerlink" href="#linux-bash-scripting" title="Permanent link">&para;</a></h1>
+<h2 id="_1">Տեսություն<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>Bash</strong> (Bourne Again SHell) -ը Linux-ի (և macOS-ի) ամենատարածված command-line ինտերպրետատորն է (shell)։ <strong>Bash script</strong>-ը պարզապես տեքստային ֆայլ է, որը պարունակում է հրամանների հաջորդականություն, որոնք կարող են գործարկվել միասին ավտոմատացնելու կրկնվող գործողությունները.</p>
+<p>Bash-ը DevOps-ի հիմնական գործիքներից է. նախքան Ansible-ի, Terraform-ի կամ CI/CD pipeline-ների անցումը մենք հաճախ ամեն ինչ սկսում ենք սկրիպտից։ Այն թույլ է տալիս.</p>
+<ul>
+<li><strong>ավտոմատացնել</strong> կրկնվող գործողությունները (backup, մոնիտորինգ),</li>
+<li><strong>կառավարել համակարգը</strong> (ծրագրերի տեղադրում, կարգավորումներ, օգտատերեր),</li>
+<li><strong>ինտեգրել տարբեր Linux հրամաններ</strong> մեկ աշխատանքային հոսքում,</li>
+<li>աշխատել <strong>ավելի արագ</strong>, քան GUI-ով, հատկապես սերվերներում.</li>
+</ul>
+<h3 id="_2">Սկրիպտի կառուցվածքն ու գործարկումը<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>Սկրիպտի առաջին տողում գրվում է <strong>shebang</strong> (<code>`#!/bin/bash`</code>), որը ցույց է տալիս, թե որ ինտերպրետատորով պետք է գործարկվի ֆայլը։ <code>#</code>-ով սկսվող տողերը մեկնաբանություններ են և չեն կատարվում.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1"># Սա մեկնաբանություն է</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Բարև, աշխարհ"</span>
+<span class="nv">name</span><span class="o">=</span><span class="s2">"Արմեն"</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Բարև, </span><span class="nv">$name</span><span class="s2">"</span>
+</code></pre></div>
+<p>Ֆայլը գործարկելու համար նախ դարձնում ենք executable, ապա կանչում.</p>
+<div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>my_first_script.sh<span class="w">   </span><span class="c1"># դարձնել գործարկելի</span>
+./my_first_script.sh<span class="w">          </span><span class="c1"># գործարկել</span>
+<span class="c1"># կամ</span>
+bash<span class="w"> </span>my_first_script.sh
+</code></pre></div>
+<h3 id="_3">Հիմնական սինտաքս<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p><strong>Փոփոխականներ.</strong> Bash-ում փոփոխականը սահմանվում է առանց բացատների <code>=</code>-ի շուրջ, իսկ արժեքը օգտագործվում է <code>$name</code> կամ <code>${name}</code> ձևով.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">name</span><span class="o">=</span><span class="s2">"Աննա"</span><span class="w">                    </span><span class="c1"># տողային փոփոխական</span>
+<span class="nv">age</span><span class="o">=</span><span class="m">25</span><span class="w">                         </span><span class="c1"># թիվ</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Իմ անունը </span><span class="nv">$name</span><span class="s2"> է, ես </span><span class="nv">$age</span><span class="s2"> տարեկան եմ"</span>
+<span class="nv">new_age</span><span class="o">=</span><span class="k">$((</span><span class="nv">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">5</span><span class="k">))</span><span class="w">           </span><span class="c1"># հաշվողական գործողություն</span>
+</code></pre></div>
+<p>Փոփոխականների տեսակներ.</p>
+<ul>
+<li><strong>Տեղական</strong>: <code>local var="value"</code> (ֆունկցիայի ներսում),</li>
+<li><strong>Միջավայրի</strong>: <code>export PATH="/usr/local/bin:$PATH"</code> — ժառանգվում է child process-ների կողմից,</li>
+<li><strong>Ընթերցում օգտատիրոջից</strong>: <code>read -p "անուն" username</code>,</li>
+<li><strong>Հրամանի արդյունք</strong>: <code>current_date=$(date)</code>.</li>
+</ul>
+<p><strong>Պայմանական արտահայտություններ (<code>if/elif/else</code>).</strong> Թվերի օպերատորներն են <code>-eq</code> (հավասար), <code>-ne</code> (ոչ հավասար), <code>-gt</code> (մեծ), <code>-lt</code> (փոքր), <code>-ge</code> (մեծ կամ հավասար), <code>-le</code> (փոքր կամ հավասար)։ Տողերի համար <code>=</code>, <code>!=</code>, <code>-z</code> (դատարկ), <code>-n</code> (ոչ դատարկ)։ Ֆայլերի ստուգումներ <code>-f</code> (ֆայլ), <code>-d</code> (պանակ), <code>-e</code> (գոյություն ունի), <code>-r</code> (կարելի է կարդալ), <code>-w</code> (կարելի է գրել), <code>-x</code> (գործարկելի)։</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="s2">"file.txt"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Ֆայլը կա"</span>
+<span class="k">elif</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">"folder"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Պանակը կա"</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Ոչ մեկը չկա"</span>
+<span class="k">fi</span>
+</code></pre></div>
+<p><strong>Ցիկլեր.</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..5<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Համար </span><span class="nv">$i</span><span class="s2">"</span>
+<span class="k">done</span>
+
+<span class="k">for</span><span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span>*.txt<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Մշակում եմ </span><span class="nv">$file</span><span class="s2">"</span>
+<span class="w">    </span>cat<span class="w"> </span><span class="s2">"</span><span class="nv">$file</span><span class="s2">"</span>
+<span class="k">done</span>
+
+<span class="nv">counter</span><span class="o">=</span><span class="m">1</span>
+<span class="k">while</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$counter</span><span class="w"> </span>-le<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Քայլ </span><span class="nv">$counter</span><span class="s2">"</span>
+<span class="w">    </span><span class="o">((</span>counter++<span class="o">))</span>
+<span class="k">done</span>
+
+<span class="nv">counter</span><span class="o">=</span><span class="m">1</span>
+<span class="k">until</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$counter</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Counter </span><span class="nv">$counter</span><span class="s2">"</span>
+<span class="w">    </span><span class="o">((</span>counter++<span class="o">))</span>
+<span class="k">done</span>
+</code></pre></div>
+<p>Ֆայլի տողերով շրջելը <code>while IFS= read -r line; do ...; done &lt; "file.txt"</code> — <code>IFS=</code>-ը և <code>-r</code>-ը պահպանում են բացատներն ու backslash-ները.</p>
+<p><strong>Զանգվածներ.</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nv">fruits</span><span class="o">=(</span><span class="s2">"խնձոր"</span><span class="w"> </span><span class="s2">"բանան"</span><span class="w"> </span><span class="s2">"նարինջ"</span><span class="o">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">fruits</span><span class="p">[0]</span><span class="si">}</span><span class="s2">"</span><span class="w">        </span><span class="c1"># խնձոր</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">fruits</span><span class="p">[@]</span><span class="si">}</span><span class="s2">"</span><span class="w">        </span><span class="c1"># բոլոր անդամները</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="si">${#</span><span class="nv">fruits</span><span class="p">[@]</span><span class="si">}</span><span class="s2">"</span><span class="w">       </span><span class="c1"># քանակը</span>
+<span class="nv">fruits</span><span class="o">+=(</span><span class="s2">"կիվի"</span><span class="o">)</span><span class="w">           </span><span class="c1"># ավելացնել</span>
+<span class="k">for</span><span class="w"> </span>fruit<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">fruits</span><span class="p">[@]</span><span class="si">}</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$fruit</span><span class="s2">"</span>
+<span class="k">done</span>
+</code></pre></div>
+<p><strong>Ֆունկցիաներ.</strong></p>
+<div class="highlight"><pre><span></span><code>greet<span class="o">()</span><span class="w"> </span><span class="o">{</span><span class="w">        </span><span class="c1"># կամ function greet() {</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">name</span><span class="o">=</span><span class="nv">$1</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Բարև, </span><span class="nv">$name</span><span class="s2">"</span>
+<span class="o">}</span>
+greet<span class="w"> </span><span class="s2">"Արմեն"</span>
+</code></pre></div>
+<p>Նշում. ֆունկցիայի <code>return</code>-ը վերադարձնում է 0-255 exit status, ոչ թե տող. տող վերադարձնելու համար <code>echo</code>-ով արտածիր և արժեքը բռնիր <code>$(...)</code>-ով.</p>
+<p><strong>Արգումենտներ.</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">"Սկրիպտի անունը </span><span class="nv">$0</span><span class="s2">"</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Առաջին արգումենտ </span><span class="nv">$1</span><span class="s2">"</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Բոլոր արգումենտները </span><span class="nv">$@</span><span class="s2">"</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Քանակը </span><span class="nv">$#</span><span class="s2">"</span>
+<span class="k">for</span><span class="w"> </span>arg<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Արգումենտ </span><span class="nv">$arg</span><span class="s2">"</span>
+<span class="k">done</span>
+</code></pre></div>
+<p><strong>Case, <code>&amp;&amp;</code>/<code>||</code>, here-doc.</strong></p>
+<p><strong><code>case</code> — ընտրություն ըստ արժեքի.</strong> Ստուգում է <code>$1</code>-ը (սկրիպտի առաջին արգումենտը) և կատարում համապատասխան ճյուղը. <code>*)</code> ճյուղը. default-ն է (այն, ինչ չի տեղավորվում)։ Ամեն ճյուղ վերջանում է <code>;;</code>-ով, իսկ կառույցը փակվում է <code>esac</code>-ով (<code>case</code>-ի հակառակը).</p>
+<div class="highlight"><pre><span></span><code><span class="k">case</span><span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="k">in</span>
+<span class="w">  </span>start<span class="o">)</span><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Մեկնարկում..."</span><span class="p">;;</span>
+<span class="w">  </span>stop<span class="o">)</span><span class="w">     </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Դադարեցնում..."</span><span class="p">;;</span>
+<span class="w">  </span>restart<span class="o">)</span><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Վերագործարկում..."</span><span class="p">;;</span>
+<span class="w">  </span>*<span class="o">)</span><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Օգտագործում: </span><span class="nv">$0</span><span class="s2"> {start|stop|restart}"</span><span class="p">;;</span>
+<span class="k">esac</span>
+</code></pre></div>
+<p><strong><code>&amp;&amp;</code> (AND) և <code>||</code> (OR).</strong> <code>[ ... ]</code>-ը (test) ստուգում է պայմանը և վերադարձնում <code>0</code> (ճիշտ) կամ ոչ-0 (սխալ), և Bash-ը որոշումը կայացնում է <strong>այդ exit code-ի վրա</strong>.
+- <code>A &amp;&amp; B</code> — եթե A-ն վերադարձրեց 0-ն (հաջող), կատարվի B-ը,
+- <code>A || B</code> — եթե A-ն վերադարձրեց ոչ-0-ն (ձախողում), կատարվի B-ը.</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span>file.txt<span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Ֆայլը կա"</span><span class="w">     </span><span class="c1"># պայմանը ճիշտ  է → echo-ն կատարվում է</span>
+<span class="o">[</span><span class="w"> </span>-f<span class="w"> </span>file.txt<span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Ֆայլը չկա"</span><span class="w">   </span><span class="c1"># պայմանը սխալ է → echo-ն կատարվում է</span>
+</code></pre></div>
+<p><strong>Here-doc (<code>&lt;&lt; EOF</code>).</strong> Ինչ-որ հրամանին (հաճախ <code>cat</code>-ին) բազմատող տեքստ է փոխանցվում որպես input. <code>EOF</code>-ը դելիմիտերն (բաժանարարն) է. կարող ես ցանկացած անուն ընտրել, բայց սկզբի և վերջի «բանալի»-ն պետք է նույնը լինի:</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+<span class="s">Սա բազմատող</span>
+<span class="s">տեքստ է</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<h3 id="process-execution-model-subshell-vs-source">Process execution model. subshell vs source<a class="headerlink" href="#process-execution-model-subshell-vs-source" title="Permanent link">&para;</a></h3>
+<p>Bash script-ը աշխատում է կամ <strong>նոր ենթապրոցեսում (subshell)</strong>, կամ <strong>նույն shell-ի կոնտեքստում (source)</strong>, և հենց սա է որոշում, թե script-ի փոփոխությունները կպահպանվեն, թե ոչ.</p>
+<table>
+<thead>
+<tr>
+<th>Գործարկման եղանակ</th>
+<th>Հրաման</th>
+<th>Ինչ է կատարվում</th>
+<th>Փոփոխականները</th>
+<th>Directory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subshell</td>
+<td><code>./script.sh</code> կամ <code>bash script.sh</code></td>
+<td>Նոր child process (subshell)</td>
+<td>❌ Կորչում են</td>
+<td>❌ Չի պահպանվում</td>
+</tr>
+<tr>
+<td>Source</td>
+<td><code>source script.sh</code> կամ <code>. script.sh</code></td>
+<td>Ընթացիկ shell-ում</td>
+<td>✅ Պահպանվում են</td>
+<td>✅ Պահպանվում է</td>
+</tr>
+</tbody>
+</table>
+<p>Subshell-ը ժառանգում է ծնողի environment-ը (փոփոխականներ, directory, file descriptors), բայց դրանից հետո աշխատում է մեկուսացված script-ի ավարտից հետո դրա ներսում արված ցանկացած <code>cd</code>, <code>export</code>, <code>alias</code> կամ <code>set</code> ավարտվում է նրա հետ, իսկ ծնող shell-ը մնում է անփոփոխ։ Դրա պատճառով <code>./script.sh</code>-ի մեջ արված <code>cd</code>-ը ազդում է միայն script-ի ներսում. դուրս գալուց հետո մնում ես սկզբնական directory-ում.</p>
+<p>Source-ը (<code>source script.sh</code> կամ <code>. script.sh</code>) կատարվում է ընթացիկ shell-ում առանց նոր պրոցեսի, ուստի <code>cd</code>-ն, <code>export</code>-ը, alias-ները և ֆունկցիաները պահպանվում են session-ում. այսպես են բեռնվում <code>.bashrc</code>-ը և <code>.profile</code>-ը, ակտիվանում է Python virtual environment-ը (<code>source venv/bin/activate</code>), և կարգավորվում են environment փոփոխականները.</p>
+<p><strong>Ինչպես համոզվել, թե որտեղ է աշխատում script-ը.</strong> <code>$$</code>-ը ցույց է տալիս ընթացիկ shell-ի PID-ը, <code>$PPID</code>-ը ծնողի PID-ը, իսկ <code>$SHLVL</code>-ը shell-ի ներդրման մակարդակը (1 = հիմնական, 2 = առաջին subshell)։ <code>./script.sh</code>-ով գործարկելիս SHLVL-ը մեծանում է 1-ով, source-ով մնում է նույնը.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"PID </span><span class="nv">$$</span><span class="s2">, ծնող </span><span class="nv">$PPID</span><span class="s2">, SHLVL </span><span class="nv">$SHLVL</span><span class="s2">"</span>
+ps<span class="w"> </span>-f<span class="w">      </span><span class="c1"># պրոցեսների ծառը</span>
+</code></pre></div>
+<h3 id="exit-codes-set-e-set-u">Exit codes և <code>set -e</code> / <code>set -u</code><a class="headerlink" href="#exit-codes-set-e-set-u" title="Permanent link">&para;</a></h3>
+<p>Յուրաքանչյուր հրաման կամ պրոցես վերադարձնում է <strong>exit code</strong> (0-255 ամբողջ թիվ).</p>
+<table>
+<thead>
+<tr>
+<th>Exit code</th>
+<th>Իմաստ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>✅ Հաջողություն. 0-ն միակ հաջողության կոդը</td>
+</tr>
+<tr>
+<td><code>1</code>-<code>255</code></td>
+<td>❌ Սխալ «ոչ զրոյական exit code»</td>
+</tr>
+</tbody>
+</table>
+<p><code>$?</code>-ը պահում է վերջին հրամանի exit code-ը <code>echo $?</code>։ <code>if</code>-ը ինքն է ստուգում exit code-ը <code>if command; then ...</code>. Ընդհանուր արժեքներ <code>1</code> (ընդհանուր սխալ), <code>2</code> (սխալ օգտագործում), <code>126</code> (ոչ executable), <code>127</code> (հրամանը չի գտնվել)։ Ինքդ կարող ես վերադարձնել <code>exit 0</code> — հաջողություն, <code>exit 1</code> — սխալ.</p>
+<ul>
+<li><code>set -e</code> — դադարեցնում է սկրիպտը, եթե որևէ հրաման վերադարձնի ոչ զրոյական exit code (կանխում է աղետալի շարունակությունը, օրինակ cd-ի ձախողումից հետո <code>rm -rf *</code>)։</li>
+<li><code>set -u</code> — սխալ չսահմանված փոփոխականի օգտագործման դեպքում (բռնում է տառասխալները օրինակ <code>$nam</code>-ը, երբ սահմանել ես <code>$name</code>)։</li>
+<li><code>set -euo pipefail</code> — ամենաանվտանգ համադրությունը. <code>pipefail</code>-ը ցույց է տալիս pipe-ի ձախողումը, նույնիսկ եթե վերջին հրամանը հաջողվել է.</li>
+<li><code>set -x</code> — debug. ցուցադրում է կատարվող հրամանները.</li>
+</ul>
+<p><strong>Անվտանգ directory-ի փոփոխություն.</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/var/log/application<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Չեմ կարողանում մտնել"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+</code></pre></div>
+<p><code>||</code>-ը «OR» է եթե <code>cd</code>-ն ձախողվի, կատարվում է <code>{ ... }</code>-ի կոդը. <code>echo</code>-ն հաղորդագրությունն ուղարկում է <strong>STDERR</strong>-ին (<code>&gt;&amp;2</code>), իսկ <code>exit 1</code>-ը սկրիպտը դադարեցնում է սխալի կոդով. սխալի հաղորդագրություններն այդպես առանձնանում են նորմալ ելքից (STDOUT)։</p>
+<h3 id="idempotency">Իդեմպոտենտություն (Idempotency)<a class="headerlink" href="#idempotency" title="Permanent link">&para;</a></h3>
+<p><strong>Idempotency</strong>. գործողության հատկությունն է, երբ նույն գործողությունը մեկ կամ բազմիցս կատարելուց տալիս է նույն արդյունքը. առանց կողմնակի ազդեցության։ Այն DevOps-ի հիմնասյուներից է. ավտոմատացման գործիքները (Ansible, Terraform) idempotent են, ուստի կարելի է 100 անգամ գործարկել միջավայրը չփչացնելով։ Cron-ի վերագործարկումն ու disaster recovery-ն ել անվտանգ են դառնում.</p>
+<table>
+<thead>
+<tr>
+<th>Գործ</th>
+<th>❌ Non-idempotent</th>
+<th>✅ Idempotent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Directory ստեղծել</td>
+<td><code>mkdir /path</code> (սխալ եթե կա)</td>
+<td><code>mkdir -p /path</code></td>
+</tr>
+<tr>
+<td>User ստեղծել</td>
+<td><code>useradd name</code> (սխալ եթե կա)</td>
+<td><code>id name \|\| useradd name</code></td>
+</tr>
+<tr>
+<td>Ֆայլում տող ավելացնել</td>
+<td><code>echo "line" &gt;&gt; f</code> (կրկնվում է)</td>
+<td><code>grep -q "line" f \|\| echo "line" &gt;&gt; f</code></td>
+</tr>
+<tr>
+<td>Package տեղադրել</td>
+<td><code>apt-get install -y pkg</code></td>
+<td><code>dpkg -l pkg \|\| apt-get install -y pkg</code></td>
+</tr>
+<tr>
+<td>Service start</td>
+<td><code>systemctl start svc</code></td>
+<td><code>systemctl is-active svc \|\| systemctl start svc</code></td>
+</tr>
+</tbody>
+</table>
+<p>Իդեմպոտենտ script-ի կառուցվածքը նախ ստուգիր՝ արդյոք վիճակն արդեն ցանկալին է, ապա միայն եթե ոչ կատարիր փոփոխությունը, և հաստատիր արդյունքը.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+
+<span class="k">if</span><span class="w"> </span>id<span class="w"> </span><span class="s2">"myuser"</span><span class="w"> </span><span class="p">&amp;</span>&gt;<span class="w"> </span>/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"User-ն արդեն կա. skip"</span>
+<span class="k">else</span>
+<span class="w">    </span>sudo<span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>myuser
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"User-ը ստեղծված է"</span>
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">"/opt/myapp"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Directory կա. skip"</span>
+<span class="k">else</span>
+<span class="w">    </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/opt/myapp
+<span class="k">fi</span>
+
+grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">"myapp.local"</span><span class="w"> </span>/etc/hosts<span class="w"> </span><span class="m">2</span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"127.0.0.1 myapp.local"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts
+</code></pre></div>
+<p>Իդեմպոտենտ գրելաձևի idioms<code></code>mkdir -p<code>,</code>id user || useradd<code>,</code>getent group g || groupadd g<code>,</code>[ -f file ] || touch file<code>,</code>grep -q "line" file || echo "line" &gt;&gt; file<code>,</code>[ -L link ] || ln -s target link<code>,</code>dpkg -l pkg || apt-get install -y pkg<code>,</code>[ -d repo ] || git clone url repo. Իդեմպոտենտությունը ստուգվում է<code>script-ը 2-3 անգամ գործարկելով</code> output-ը պետք է նույնը լինի.</p>
+<h2 id="_4">Հիմնական հրամաններ<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Հրաման</th>
+<th>Նպատակ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>echo</code></td>
+<td>Տողի արտածում</td>
+</tr>
+<tr>
+<td><code>read -p "prompt" var</code></td>
+<td>Օգտատիրոջից մուտքի ընթերցում</td>
+</tr>
+<tr>
+<td><code>test</code> / <code>[ ... ]</code></td>
+<td>Պայմանի ստուգում (թիվ, տող, ֆայլ)</td>
+</tr>
+<tr>
+<td><code>$(...)</code></td>
+<td>Հրամանի արդյունքը փոփոխականում</td>
+</tr>
+<tr>
+<td><code>set -e</code> / <code>-u</code> / <code>-x</code></td>
+<td>Սխալի/debug-ի ռեժիմներ</td>
+</tr>
+<tr>
+<td><code>grep</code></td>
+<td>Տեքստում որոնում</td>
+</tr>
+<tr>
+<td><code>sed</code></td>
+<td>Տեքստի փոխարինում/խմբագրում</td>
+</tr>
+<tr>
+<td><code>awk</code></td>
+<td>Տեքստի մշակում սյունակներով</td>
+</tr>
+<tr>
+<td><code>cut</code></td>
+<td>Տողի մասերի առանձնացում</td>
+</tr>
+<tr>
+<td><code>sort</code> / <code>uniq</code></td>
+<td>Տեսակավորում / կրկնվողների հեռացում</td>
+</tr>
+<tr>
+<td><code>wc</code></td>
+<td>Տողերի/բառերի/նիշերի քանակ</td>
+</tr>
+<tr>
+<td><code>ps -f</code></td>
+<td>Պրոցեսների ծառը (PID/PPID)</td>
+</tr>
+<tr>
+<td><code>$$</code> / <code>$PPID</code> / <code>$SHLVL</code></td>
+<td>Shell-ի նույնականացում</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lab">Փորձարկում (Lab)<a class="headerlink" href="#lab" title="Permanent link">&para;</a></h2>
+<p>Այս փորձերը գործարկիր սովորական Linux VM-ում կամ development container-ում ոչ production-ում, և առանց production credentials-ի.</p>
+<h3 id="lab-1-subshell-vs-source">Lab 1. subshell vs source<a class="headerlink" href="#lab-1-subshell-vs-source" title="Permanent link">&para;</a></h3>
+<p>Ստեղծիր <code>where_am_i.sh</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"1. Ես </span><span class="k">$(</span>whoami<span class="k">)</span><span class="s2">-ն եմ, աշխատում եմ </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">-ում"</span>
+<span class="nb">cd</span><span class="w"> </span>/etc
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"2. Հիմա ես </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">-ում եմ"</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"PID </span><span class="nv">$$</span><span class="s2">, SHLVL </span><span class="nv">$SHLVL</span><span class="s2">"</span>
+</code></pre></div>
+<p>Գործարկիր երկու եղանակով.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nb">pwd</span>
+/home/user
+
+$<span class="w"> </span>./where_am_i.sh
+<span class="m">1</span>.<span class="w"> </span>Ես<span class="w"> </span>user-ն<span class="w"> </span>եմ,<span class="w"> </span>աշխատում<span class="w"> </span>եմ<span class="w"> </span>/home/user-ում
+<span class="m">2</span>.<span class="w"> </span>Հիմա<span class="w"> </span>ես<span class="w"> </span>/etc-ում<span class="w"> </span>եմ
+PID<span class="w"> </span><span class="m">5678</span>,<span class="w"> </span>SHLVL<span class="w"> </span><span class="m">2</span>
+
+$<span class="w"> </span><span class="nb">pwd</span>
+/home/user<span class="w">        </span><span class="c1"># ❌ չի փոխվել (subshell)</span>
+
+$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>where_am_i.sh
+<span class="m">1</span>.<span class="w"> </span>Ես<span class="w"> </span>user-ն<span class="w"> </span>եմ,<span class="w"> </span>աշխատում<span class="w"> </span>եմ<span class="w"> </span>/home/user-ում
+<span class="m">2</span>.<span class="w"> </span>Հիմա<span class="w"> </span>ես<span class="w"> </span>/etc-ում<span class="w"> </span>եմ
+PID<span class="w"> </span><span class="m">1234</span>,<span class="w"> </span>SHLVL<span class="w"> </span><span class="m">1</span>
+
+$<span class="w"> </span><span class="nb">pwd</span>
+/etc<span class="w">              </span><span class="c1"># ✅ փոխվել է (source)</span>
+</code></pre></div>
+<p>Սպասվող արդյունք subshell-ում <code>cd</code>-ն կորչում է, PID/SHLVL-ը փոխվում են. source-ում ամենը պահպանվում է, PID-ը նույնը.</p>
+<h3 id="lab-2-exit-codes-set-euo-pipefail">Lab 2: Exit codes և <code>set -euo pipefail</code><a class="headerlink" href="#lab-2-exit-codes-set-euo-pipefail" title="Permanent link">&para;</a></h3>
+<p>Ինտերակտիվ shell-ում ստուգիր exit codes-ը.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>true<span class="p">;</span><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span><span class="w">        </span><span class="c1"># 0 - հաջողություն</span>
+$<span class="w"> </span>false<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span><span class="w">        </span><span class="c1"># 1 - սխալ</span>
+$<span class="w"> </span>ls<span class="w"> </span>/no_such_dir<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span><span class="w">   </span><span class="c1"># 2 - սխալ օգտագործում</span>
+</code></pre></div>
+<p>Ստեղծիր script, որն օգտագործում է <code>set -euo pipefail</code> և միտումնավոր սխալ է պարունակում.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+<span class="nb">cd</span><span class="w"> </span>/root/non_existing_dir<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Cannot cd"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Սա չի տպվի"</span><span class="w">      </span><span class="c1"># script-ը կանգնում է cd-ի ձախողումից</span>
+</code></pre></div>
+<p>Սպասվող արդյունք. script-ը ավարտվում է 1-ով, <code>cd</code>-ի ձախողումից հետո. <code>echo</code>-ն չի աշխատում. Ավելացրու նաև <code>echo "$undefined_var"</code> և տես <code>set -u</code>-ի unbound variable սխալը.</p>
+<h3 id="lab-3-idempotent-setup-script">Lab 3: Idempotent setup script<a class="headerlink" href="#lab-3-idempotent-setup-script" title="Permanent link">&para;</a></h3>
+<p>Գրիր <code>setup.sh</code>, որը կարելի է բազմիցս գործարկել նույն արդյունքով.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+mkdir<span class="w"> </span>-p<span class="w"> </span>/tmp/demo_env
+<span class="o">[</span><span class="w"> </span>-f<span class="w"> </span>/tmp/demo_env/info.txt<span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"first"</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/demo_env/info.txt
+grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">"127.0.0.1 demo.local"</span><span class="w"> </span>/etc/hosts<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"127.0.0.1 demo.local"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Done"</span>
+</code></pre></div>
+<p>Գործարկիր երկու անգամ.</p>
+<div class="highlight"><pre><span></span><code>./setup.sh<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span><span class="p">;</span><span class="w"> </span>cat<span class="w"> </span>/tmp/demo_env/info.txt
+./setup.sh<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span><span class="p">;</span><span class="w"> </span>cat<span class="w"> </span>/tmp/demo_env/info.txt
+</code></pre></div>
+<p>Սպասվող արդյունք երկու run-ն էլ ավարտվում է 0-ով, իսկ <code>info.txt</code>-ի պարունակությունը չի կրկնվում script-ը idempotent է.</p>
+<h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
+<h3 id="_5">Ախտանիշ<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>Production ինժեները գրել է backup/log-rotation script, որը պետք է ամեն գիշեր cron-ից գնա <code>/var/log/application</code>-ը, արխիվացնի log ֆայլերը և փոխանցի <code>/backup/logs</code>-ին։ Փորձարկման ժամանակ նկատվում է արխիվացված ֆայլերը հայտնվում են սխալ directory-ում, և script-ը չի գտնում log ֆայլերը, քանի որ աշխատում է սխալ directory-ում.</p>
+<h3 id="_6">Ախտորոշում<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>ps -f</code>-ով և <code>echo $$</code>, <code>echo $SHLVL</code>-ով ստուգիր script-ն աշխատում է subshell-ում, իսկ <code>cd</code>-ն script-ի ավարտից հետո կորչում է,</li>
+<li>Ստուգիր script-ը կախված է ընթացիկ working directory-ից (relative paths, մենակ <code>cd</code>),</li>
+<li>Հաշվի առ cron-ը script-ը գործարկում է minimal environment-ով առանց <code>.bashrc</code>, բայց interactive shell-ում դու PATH-ն ու relative path-ները սովոր ես տեսնել.</li>
+</ol>
+<h3 id="_7">Լուծում<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>Սկրիպտը վերածիր absolute paths-ով գործարկման եղանակից անկախ.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+<span class="nv">LOG_DIR</span><span class="o">=</span><span class="s2">"/var/log/application"</span>
+<span class="nv">BACKUP_DIR</span><span class="o">=</span><span class="s2">"/backup/logs"</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">"</span><span class="nv">$BACKUP_DIR</span><span class="s2">"</span>
+<span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$LOG_DIR</span><span class="s2">"</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Cannot change dir"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+tar<span class="w"> </span>-czf<span class="w"> </span><span class="s2">"</span><span class="nv">$BACKUP_DIR</span><span class="s2">/backup_</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span><span class="s2">.tar.gz"</span><span class="w"> </span>*.log
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Backup ready"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>logger<span class="w"> </span>-t<span class="w"> </span>backup_script
+</code></pre></div>
+<p>Crontab-ում նշել ամբողջական ճանապարհը.</p>
+<div class="highlight"><pre><span></span><code>0 2 * * * /usr/local/bin/backup_logs.sh
+</code></pre></div>
+<p>Ստուգիր արդյունքը.</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-la<span class="w"> </span>/backup/logs
+tar<span class="w"> </span>-tzf<span class="w"> </span>/backup/logs/backup_*.tar.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-20
+journalctl<span class="w"> </span>-t<span class="w"> </span>backup_script<span class="w"> </span>--since<span class="w"> </span><span class="s2">"1 hour ago"</span>
+</code></pre></div>
+<h3 id="_8">Կանխարգելում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Բոլոր scripts-ներում օգտագործիր absolute paths. անկախ գործարկման միջավայրից (cron, systemd, CI/CD),</li>
+<li>Սկզբում <code>set -euo pipefail</code>,</li>
+<li>Դիր idempotent միջոց <code>mkdir -p</code> և այլն,</li>
+<li>Cron/systemd-ի համար unit-ում նշիր WorkingDirectory-ը, script-ի աշխատանքը գրանցիր syslog-ում.</li>
+</ul>
+<h2 id="_9">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<h3 id="scriptsh-directory-">Ինչու՞ է <code>./script.sh</code>-ով գործարկելիս directory-ի փոփոխությունը չպահպանվում, և ինչպե՞ս լուծել<a class="headerlink" href="#scriptsh-directory-" title="Permanent link">&para;</a></h3>
+<p><code>./script.sh</code>-ն նոր subshell (child process) է ստեղծում, որտեղ կատարվում է <code>cd</code>-ը. subshell-ի ավարտից հետո փոփոխությունները կորչում են, և ծնող shell-ը մնում է նախկին directory-ում. Պահպանելու համար <code>source script.sh</code> կամ <code>. script.sh</code>-ը որը կատարում է ընթացիկ shell-ում. Production-ում սակայն, նախընտրում են absolute paths-ով գործարկման եղանակից անկախ.</p>
+<h3 id="script-subshell-source-">Ինչպե՞ս ստուգել script-ը subshell-ում է, թե source-ով<a class="headerlink" href="#script-subshell-source-" title="Permanent link">&para;</a></h3>
+<p><code>$$</code>-ը համեմատիր <code>$PPID</code>-ի հետ. source-ով <code>$$</code>-ը ծնողի PID-ն է նույն shell-ը. subshell-ում <code>$$</code>-ը նոր PID է, և <code>$SHLVL</code>-ը 1-ով մեծ է. Բացի դա <code>ps -f</code>-ի PID/PPID/CMD սյունակներն են ցույց տալիս որտեղ է աշխատում script-ը.</p>
+<h3 id="subshell-source-">Ի՞նչ ռիսկեր կան subshell-ի և source-ի հետ ավտոմատացված միջավայրերում<a class="headerlink" href="#subshell-source-" title="Permanent link">&para;</a></h3>
+<p>Ենթադրությունները որ script-ն աշխատում է որոշակի directory-ում կամ environment-ով. cron-ը minimal environment-ով է առանց <code>.bashrc</code>-ի. source-ը կարող է անսպասելիորեն փոխել CI/CD pipeline-ի shell-ի միջավայրը. Լուծում absolute paths, PATH-ի սահմանում script-ի սկզբում, <code>set -euo pipefail</code>, WorkingDirectory unit-ում, logging, և pipeline-ում subshell-ի նախընտրում եթե script-ը չպետք է ազդի shell-ի վրա.</p>
+<h3 id="idempotency-devops-">Ի՞նչ է idempotency, և ինչո՞ւ այն կարևոր DevOps-ում<a class="headerlink" href="#idempotency-devops-" title="Permanent link">&para;</a></h3>
+<p>Գործողությունը idempotent է, եթե կրկնակի կատարումը տալիս է նույն արդյունքը առանց կողմնակի ազդեցության. Այն թույլ է տալիս անվտանգորեն կրկնել cron-ը, CI/CD-ն, recovery-ն առանց միջավայրը փչացնելու. ոչ idempotent-ը վտանգավոր. Օրինակ <code>mkdir -p</code>-ի և <code>mkdir</code>-ի տարբերությունը.</p>
+<h2 id="_10">Ինքնաստուգում<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Ի՞նչ է shebang-ը և ինչո՞ւ այն դրվում է սկրիպտի առաջին տողում</li>
+<li>Ի՞նչ տարբերություն է subshell-ի և source-ի միջև. ե՞րբ կկորցնես <code>cd</code>-ի փոփոխությունը</li>
+<li>Ի՞նչ է ցույց տալիս <code>$?</code>-ը, և ե՞րբ է «ոչ զրոյական» exit code-ը համարվում սխալ</li>
+<li>Ի՞նչ է անում <code>set -euo pipefail</code>-ը և ինչո՞ւ է այն կարևոր</li>
+<li>Ինչպե՞ս կդարձնես directory-ի ստեղծումը idempotent</li>
+</ol>
+<h2 id="_11">Հաջորդ քայլեր<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>Շարունակիր filesystem permissions (1.4) կամ systemd (1.5) թեմայով. կիրառիր ձեր գրած scripts-ում <code>set -euo pipefail</code>, absolute paths և idempotent մեթոդներ (տես նաև <a href="../processes/">Linux Processes</a>)։</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Վերադառնալ սկիզբ
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u054a\u0561\u057f\u0573\u0565\u0576\u057e\u0561\u056e \u0567", "clipboard.copy": "\u054a\u0561\u057f\u0573\u0565\u0576\u0565\u056c", "search.result.more.one": "\u0587\u057d 1-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.more.other": "\u0587\u057d #-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.none": "\u0531\u0580\u0564\u0575\u0578\u0582\u0576\u0584\u0576\u0565\u0580 \u0579\u056f\u0561\u0576", "search.result.one": "1 \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.other": "# \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.placeholder": "\u0544\u0578\u0582\u057f\u0584\u0561\u0563\u0580\u0565\u0584 \u0578\u0580\u0578\u0576\u0565\u056c\u0578\u0582 \u0570\u0561\u0574\u0561\u0580", "search.result.term.missing": "\u0532\u0561\u0581\u0561\u056f\u0561\u0575\u0578\u0582\u0574 \u0567", "select.version": "\u0538\u0576\u057f\u0580\u0565\u056c \u057f\u0561\u0580\u0562\u0565\u0580\u0561\u056f\u0568"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
