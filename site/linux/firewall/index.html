@@ -1,0 +1,1742 @@
+
+<!doctype html>
+<html lang="hy" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Հայերեն, գործնական DevOps ուղեցույց">
+      
+      
+      
+        <link rel="canonical" href="https://example.invalid/devops-book/linux/firewall/">
+      
+      
+        <link rel="prev" href="../networking/">
+      
+      
+        <link rel="next" href="../../networking/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Firewall - DevOps ուսումնական ձեռնարկ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ubuntu-firewall-ufw-nftables" class="md-skip">
+          Անցնել պարունակությանը
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Գլխագիր">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-header__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DevOps ուսումնական ձեռնարկ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Firewall
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Որոնում" placeholder="Որոնում" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Որոնում">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Ջնջել" aria-label="Ջնջել" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Որոնում
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Ներդիրներ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Սկիզբ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Linux
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../networking/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Networks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../git-ci-cd/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Git և CI/CD
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../docker-kubernetes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Docker և Kubernetes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../cloud-security-observability/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Cloud, Security, Observability
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Բառարան
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Տեղորոշում" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-nav__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DevOps ուսումնական ձեռնարկ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Սկիզբ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bash-scripting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bash Scripting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cgroups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cgroups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firewall
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firewall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ubuntu-firewall-ufw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ubuntu-ի լռելյայն firewall-ը՝ UFW
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ufw-nftables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UFW-ի հենքը՝ nftables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netfilter-hooks-tables-chains-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմքում ընկած համակարգը՝ Netfilter, hooks, tables, chains, rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է ցույց տալիս type-ը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sets. մեծ ցուցակների արդյունավետ կառավարում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ct-connection-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ct. connection tracking (կապերի հետևում)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-firewall-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker-ը և firewall-ը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloudflare-ip-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloudflare-ի հետ աշխատանքը. իրական IP-ն «թաքցնելու» սխեման
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ufw-firewall-ubuntu-mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է UFW-ն, և ո՞ր firewall-ն է իրականում աշխատում Ubuntu-ի նոր տարբերակներում (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-filtered-firewall-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս եք տարբերակում «open» և «filtered» պորտը, և ի՞նչ է այն ասում ձեր firewall-ի մասին (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git-ci-cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git և CI/CD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker և Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud, Security, Observability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Բառարան
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ubuntu-firewall-ufw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ubuntu-ի լռելյայն firewall-ը՝ UFW
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ufw-nftables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UFW-ի հենքը՝ nftables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netfilter-hooks-tables-chains-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմքում ընկած համակարգը՝ Netfilter, hooks, tables, chains, rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է ցույց տալիս type-ը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sets. մեծ ցուցակների արդյունավետ կառավարում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ct-connection-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ct. connection tracking (կապերի հետևում)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-firewall-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker-ը և firewall-ը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cloudflare-ip-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cloudflare-ի հետ աշխատանքը. իրական IP-ն «թաքցնելու» սխեման
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ufw-firewall-ubuntu-mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է UFW-ն, և ո՞ր firewall-ն է իրականում աշխատում Ubuntu-ի նոր տարբերակներում (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#open-filtered-firewall-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս եք տարբերակում «open» և «filtered» պորտը, և ի՞նչ է այն ասում ձեր firewall-ի մասին (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ubuntu-firewall-ufw-nftables">Ubuntu Firewall. UFW և nftables<a class="headerlink" href="#ubuntu-firewall-ufw-nftables" title="Permanent link">&para;</a></h1>
+<h2 id="_1">Տեսություն<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>Firewall-ը</strong> (հայերեն՝ «պատնեշ») համակարգի կամ ցանցի բաղադրիչ է, որը վերահսկում է, թե ինչ մուտքային (incoming) և ելքային (outgoing) կապեր են թույլատրվում։ Սերվերի վրա դա սովորաբար <strong>host-based firewall</strong> է, որն աշխատում է Linux-ի միջուկի (kernel) ներսում՝ դեռ ծրագրերին հասնելուց առաջ ֆիլտրելով ցանցային փաթեթները։</p>
+<h3 id="ubuntu-firewall-ufw">Ubuntu-ի լռելյայն firewall-ը՝ UFW<a class="headerlink" href="#ubuntu-firewall-ufw" title="Permanent link">&para;</a></h3>
+<p>Ubuntu-ի վերջին տարբերակներում (ներառյալ 22.04 / 24.04 LTS) լռելյայն firewall-կառավարման գործիքը <strong>UFW</strong>-ն է (<strong>U</strong>ncomplicated <strong>F</strong>irewall՝ «ոչ բարդ firewall»)։ Կարևոր է հասկանալ, որ UFW-ն <strong>frontend</strong> է (միջերես), ոչ թե առանձին firewall. այն պարզ հրամաններով կառավարում է kernel-ի իրական firewall-մեխանիզմը, որպեսզի օգտատերը ստիպված չլինի ուղղակի աշխատել բարդ iptables-ի հետ։</p>
+<p>Երկու կարևոր փաստ UFW-ի մասին.</p>
+<ul>
+<li><strong>Նախապես տեղադրված է</strong> (available by default) Ubuntu-ի բոլոր տեղադրումներում (8.04-ից մինչև այսօր)։</li>
+<li><strong>Լռելյայն անջատված է</strong> (inactive). Տեղադրելուց հետո բոլոր մուտքային կապերը բաց են, մինչև այն ձեռքով միացնենք։ Սա զգուշավոր քայլ է, որ նոր համակարգը «կողպված» չմնա դեռևս կարգաբերված չլինելու պատճառով. միացնում ենք <code>sudo ufw enable</code> հրամանով:</li>
+</ul>
+<h3 id="ufw-nftables">UFW-ի հենքը՝ nftables<a class="headerlink" href="#ufw-nftables" title="Permanent link">&para;</a></h3>
+<p>Ubuntu-ի 20.04-ից UFW-ն աշխատում է <strong>nftables</strong>-ի վրա (նախկինում՝ iptables-ի)։ Դա կարևոր է հասկանալ, որ պատասխանենք «ո՞ր firewall-ն է իմ մոտ ակտիվ» հարցին.</p>
+<ul>
+<li><strong>nftables</strong> (կամ կարճ՝ <code>nft</code>) Linux-ի kernel-ի firewall-ի ժամանակակից շրջանակն է (framework), որը նախատեսված է հին <strong>iptables</strong>-ը (legacy xtables) փոխարինելու համար։</li>
+<li>UFW-ն, սակայն, դեռ օգտագործում է <strong>iptables-nft</strong> համատեղելիության շերտը. այս շերտը «թարգմանում» է iptables-ի հրամանները nftables-ի kernel-ի մակարդակի համար։ Դրա արդյունքում.</li>
+<li><code>sudo iptables -L -n -v</code> հրամանը ցույց է տալիս նույն կանոնները, բայց iptables-ի հին ձևաչափով (սա <strong>wrapper</strong> է, ոչ թե առանձին firewall) ;</li>
+<li><code>sudo nft list ruleset</code>-ը ցույց է տալիս նույն կանոնները՝ բայց nftables-ի «մաքուր» ձևաչափով՝ հենց այն, ինչ իրականում տեսնում է kernel-ը:</li>
+</ul>
+<p>Որպես հիշեցում՝ <code>nft list ruleset</code>-ի ելքում կարող եք տեսնել նախազգուշացում.</p>
+<div class="highlight"><pre><span></span><code># Warning: table ip filter is managed by iptables-nft, do not touch!
+</code></pre></div>
+<p>Այն ասում է, որ այդ աղյուսակը կառավարվում է iptables-nft-ի միջոցով, բայց ֆիզիկապես գտնվում է nftables-ում։ Ուստի եզրակացությունը մեկն է՝ <strong>միշտ աշխատում է nftables-ը, իսկ UFW-ն ու iptables-ը ընդամենը կառավարման միջերեսներ են։</strong></p>
+<h3 id="netfilter-hooks-tables-chains-rules">Հիմքում ընկած համակարգը՝ Netfilter, hooks, tables, chains, rules<a class="headerlink" href="#netfilter-hooks-tables-chains-rules" title="Permanent link">&para;</a></h3>
+<p>Kernel-ի firewall-ենթակառուցվածքը կոչվում է <strong>Netfilter</strong>։ nftables-ն այն կարգավորելու հրամանատարն է, իսկ UFW-ն՝ դրանից էլ ավելի վերևում կանգնած հեշտ ինտերֆեյսը։</p>
+<p><strong>Hooks (կեռիկներ):</strong> Փաթեթը Linux-ի ցանցային ստեկում անցնում է 5 հիմնական կետով, և կանոնները կարելի է «կախել» այդ կետերից՝ կախված նրանից, ինչ ենք ուզում անել.</p>
+<table>
+<thead>
+<tr>
+<th>Hook</th>
+<th>Երբ է ակտիվանում</th>
+<th>Հիմնական կիրառում</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PREROUTING</code></td>
+<td>Փաթեթը հենց մտավ ցանցային քարտից՝ routing-ից առաջ</td>
+<td>DNAT (պորտերի/հասցեների վերահասցեավորում)</td>
+</tr>
+<tr>
+<td><code>INPUT</code></td>
+<td>Փաթեթը հասցեագրված է հենց այս սերվերին</td>
+<td>Սերվերի մուտքային տրաֆիկի զտում</td>
+</tr>
+<tr>
+<td><code>FORWARD</code></td>
+<td>Փաթեթը պետք է անցնի սերվերի միջով (router, bridge)</td>
+<td>Տրաֆիկի փոխանցման (forwarding) զտում՝ օր. Docker-ի ցանցերում</td>
+</tr>
+<tr>
+<td><code>OUTPUT</code></td>
+<td>Փաթեթը ստեղծվում է հենց սերվերի կողմից</td>
+<td>Սերվերի ելքային տրաֆիկի զտում</td>
+</tr>
+<tr>
+<td><code>POSTROUTING</code></td>
+<td>Փաթեթը պատրաստ է դուրս գալ ցանցային քարտից</td>
+<td>SNAT/masquerade</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tables (աղյուսակներ):</strong> Խմբավորում են շղթաներն ըստ «ընտանիքի» (family).</p>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Նշանակություն</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ip</code></td>
+<td>Միայն IPv4</td>
+</tr>
+<tr>
+<td><code>ip6</code></td>
+<td>Միայն IPv6</td>
+</tr>
+<tr>
+<td><code>inet</code></td>
+<td>Միավորում է IPv4-ը և IPv6-ը մեկ աղյուսակում (<em>best practice</em>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chains (շղթաներ):</strong> Կանոնների հերթական ցուցակ. երկու տիպ.</p>
+<table>
+<thead>
+<tr>
+<th>Տիպ</th>
+<th>Նկարագրություն</th>
+<th>Օրինակ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base chain</td>
+<td>Ամրացված է hook-ին, ունի <code>type</code> և <code>priority</code></td>
+<td><code>chain input { type filter hook input priority filter; policy drop; }</code></td>
+</tr>
+<tr>
+<td>Regular chain</td>
+<td>Համակարգ ստեղծած, hook-ին չի ամրացվում, կանչվում է <code>jump</code>-ով</td>
+<td><code>chain ufw-user-input</code> (UFW-ի կանոնների շղթան)</td>
+</tr>
+</tbody>
+</table>
+<p><code>jump</code>-ը, կատարելուց հետո, վերադառնում է այն կետը, որտեղից կանչվել էր. իսկ <code>goto</code>-ն՝ ոչ (մոռանում է մնացածը)։ UFW-ն ձևավորում է իր <code>ufw-user-input</code> regular chain-ները և base chain-երից <code>jump</code>-ով «մատնացույց է անում» դրանց պարունակությանը։</p>
+<p><strong>Rules (կանոններ):</strong> Յուրաքանչյուր կանոն = <code>match</code> (պայման) + <code>verdict</code> (որոշում)։ Օրինակ՝ <code>ip saddr 104.16.0.0/13 tcp dport 443 accept</code> նշանակում է՝ «եթե աղբյուրը 104.16.0.0/13 է և պորտը 443-ն է, ապա ընդունիր»։ Verdict-ներն են՝ <code>accept</code> (թողնել), <code>drop</code> (լուռ գցել), <code>reject</code> (գցել և պատասխան ուղարկել), <code>jump</code>, <code>log</code>։</p>
+<h3 id="type-">Ի՞նչ է ցույց տալիս <code>type</code>-ը<a class="headerlink" href="#type-" title="Permanent link">&para;</a></h3>
+<p>Base chain-ը պարտադիր ունի <code>type</code> դաշտը, որն ասում է, թե ինչով է զբաղվում շղթան.</p>
+<table>
+<thead>
+<tr>
+<th><code>type</code></th>
+<th>Դերը</th>
+<th>Ինչ verdict-ներ է թույլատրվում</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filter</code></td>
+<td>Զտում (<code>accept</code>/<code>drop</code>/<code>reject</code>)</td>
+<td>Ամենատարածվածը՝ INPUT/OUTPUT/FORWARD-ի համար</td>
+</tr>
+<tr>
+<td><code>nat</code></td>
+<td>Հասցեների փոխարկում</td>
+<td><code>snat</code>, <code>dnat</code>, <code>masquerade</code> (միայն նախատեսված hook-երում)</td>
+</tr>
+<tr>
+<td><code>route</code></td>
+<td>Փաթեթի վերաուղղորդում (հազվադեպ)</td>
+<td><code>dup</code>, <code>fwd</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>type</code>-ը աշխատում է նաև <code>priority</code>-ի հետ, ինչը որոշում է կատարման հերթականությունը նույն hook-ի վրա. օրինակ՝ NAT-ն աշխատում է filter-ից առաջ՝ որովհետև նախ պետք է փոխել հասցեն, հետո զտել։ Regular chain-երը <code>type</code> չունեն՝ քանի որ ժառանգում են իրենց կանչող base chain-ի համատեքստը։</p>
+<h3 id="sets">Sets. մեծ ցուցակների արդյունավետ կառավարում<a class="headerlink" href="#sets" title="Permanent link">&para;</a></h3>
+<p>nftables-ի ամենաուժեղ հնարավորություններից մեկը <strong>sets</strong>-ն է (հավաքածուներ)՝ IP-ների, պորտերի և այլ արժեքների ցուցակ, որը kernel-ում պահվում և որոնվում է որպես մեկ կառուցվածք։ Սա հատկապես օգտակար է մեծ ցուցակների դեպքում՝ օրինակ՝ Cloudflare-ի IP-ների։ Մեկ set-ով մենք գրում ենք <strong>մեկ</strong> կանոն՝ փոխանակ յուրաքանչյուր subnet-ի համար առանձին տող գրելու.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># set-ի սահմանում և ավելացում</span>
+sudo<span class="w"> </span>nft<span class="w"> </span>add<span class="w"> </span><span class="nb">set</span><span class="w"> </span>inet<span class="w"> </span>filter<span class="w"> </span>cloudflare_v4<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">type</span><span class="w"> </span>ipv4_addr<span class="p">;</span><span class="w"> </span>flags<span class="w"> </span>interval<span class="p">;</span><span class="w"> </span><span class="o">}</span>
+sudo<span class="w"> </span>nft<span class="w"> </span>add<span class="w"> </span>element<span class="w"> </span>inet<span class="w"> </span>filter<span class="w"> </span>cloudflare_v4<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="m">104</span>.16.0.0/13,<span class="w"> </span><span class="m">172</span>.64.0.0/13,<span class="w"> </span><span class="m">162</span>.158.0.0/15<span class="w"> </span><span class="o">}</span>
+<span class="c1"># մեկ կանոն` ամբողջ set-ի համար</span>
+sudo<span class="w"> </span>nft<span class="w"> </span>add<span class="w"> </span>rule<span class="w"> </span>inet<span class="w"> </span>filter<span class="w"> </span>input<span class="w"> </span>ip<span class="w"> </span>saddr<span class="w"> </span>@cloudflare_v4<span class="w"> </span>tcp<span class="w"> </span>dport<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="m">80</span>,<span class="w"> </span><span class="m">443</span><span class="w"> </span><span class="o">}</span><span class="w"> </span>accept
+</code></pre></div>
+<h3 id="ct-connection-tracking">ct. connection tracking (կապերի հետևում)<a class="headerlink" href="#ct-connection-tracking" title="Permanent link">&para;</a></h3>
+<p><code>ct</code>-ն <strong>connection tracking</strong>-ի հապավումն է՝ kernel-ի մեխանիզմ, որը «հիշում է» կապերի վիճակը։ Այն թույլ է տալիս firewall-ին տարբերել՝ «սա վտանգավոր անծանոթն է» (new/invalid) և «սա մեր հին բարեկամն է» (established/related)։ Հիմնական վիճակները.</p>
+<ul>
+<li><code>new</code> — նոր կապ (օրինակ՝ առաջին SYN-փաթեթը) ;</li>
+<li><code>established</code> — արդեն հաստատված կապ՝ տրաֆիկի գերակշիռ մասը (օրինակ՝ սերվերի պատասխան փաթեթները) ;</li>
+<li><code>related</code> — առնչվող կապ (FTP-ի տվյալային կապ, ICMP սխալ) ;</li>
+<li><code>invalid</code> — անվավեր/կեղծ փաթեթ՝ հաճախ հաքերային ;</li>
+</ul>
+<p>Գրեթե յուրաքանչյուր firewall-ի առաջին կանոնը <code>ct state { established, related } accept</code> է՝ արդեն հաստատված կապերը չմշակելու և արագություն ապահովելու համար։ <code>invalid</code>-ները սովորաբար անմիջապես <code>drop</code> են արվում։ Connection tracking-ի աղյուսակը կարելի է դիտել՝ <code>sudo conntrack -L</code> կամ <code>cat /proc/net/nf_conntrack</code> հրամանով։</p>
+<h3 id="docker-firewall-">Docker-ը և firewall-ը<a class="headerlink" href="#docker-firewall-" title="Permanent link">&para;</a></h3>
+<p>Docker-ը ինքնուրույն է կառավարում firewall-ի կանոնները՝ iptables/nftables-ի միջոցով (հիմնականում NAT-ը և FORWARD-ը)։ Սա կարևոր նրբություն է.</p>
+<ul>
+<li>Docker-ը ստեղծում է իր <code>DOCKER</code>, <code>DOCKER-FORWARD</code>, <code>DOCKER-USER</code> շղթաները և՝ <code>FORWARD</code>-ի <code>policy drop</code>-ի ֆոնին՝ ավելացնում է ներքին ցանցերի միջև տրաֆիկի թույլտվություններ։</li>
+<li>Ձեր host firewall-ը (UFW/nftables) չի խանգարում Docker-ի ներքին ցանցերին, բայց վերահսկում է դեպի <strong>host-ի 0.0.0.0</strong> պորտերը եկող մուտքային տրաֆիկը (օրինակ՝ proxy-ի 80/443-ը)։</li>
+<li>Զգուշացում՝ «# Warning: ... do not touch!» տողը նշանակում է, որ այդ աղյուսակը կառավարում է Docker-ը/iptables-nft-ը. ձեռքով կարգավորվող են միայն ձեր աղյուսակները. իսկ Docker-ի աղյուսակները ջնջելը կկանգնեցնի Docker-ի աշխատանքը՝ և ջնջվածն էլ նորից կստեղծվի գործարկման ժամանակ:</li>
+</ul>
+<h3 id="cloudflare-ip-">Cloudflare-ի հետ աշխատանքը. իրական IP-ն «թաքցնելու» սխեման<a class="headerlink" href="#cloudflare-ip-" title="Permanent link">&para;</a></h3>
+<p>Պրոդաքշն WordPress/nginx սերվերները հաճախ ծածկվում են <strong>Cloudflare</strong>-ով՝ DDoS-ից պաշտպանության համար։ Այս սխեմայում.</p>
+<ul>
+<li>Հաճախորդի հարցումը գնում է Cloudflare, այլ ոչ թե ուղիղ ձեր սերվերի IP-ին.</li>
+<li>Cloudflare-ը զտում է այն և հարցումն ուղարկում ձեր սերվերի իրական IP-ին՝ <strong>Cloudflare-ի IP-ներից</strong> (ցուցակը՝ <code>https://www.cloudflare.com/ips-v4</code> և <code>ips-v6</code>),</li>
+<li>Ձեր firewall-ը կարող է սահմանել, որ 80/443 պորտերը ընդունվեն <strong>միայն</strong> Cloudflare-ի IP-ներից՝ այսպես հաքերը չի կարող ուղիղ միանալ ձեր իրական IP-ին (կհայտնվի firewall-ի DROP-ի առաջ),</li>
+<li>SSH-ը (22) պահվում է բաց՝ ձեր կառավարման կապը չկորցնելու համար.</li>
+</ul>
+<p>Ստուգման ժամանակ <code>nmap</code>-ը ցույց է տալիս, որ 22-ը <code>open</code> է (հասանելի է), իսկ 80-ը/443-ը՝ <code>filtered</code> (ոչ-Cloudflare աղբյուրից միանալու դեպքում)՝ հենց այդ «միայն Cloudflare» քաղաքականության արդյունքն է։</p>
+<h2 id="_2">Հիմնական հրամաններ<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Հրաման</th>
+<th>Նպատակ</th>
+<th>Սպասվող արդյունք</th>
+<th>Անվտանգության ռիսկ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sudo ufw status</code></td>
+<td>UFW-ի կարգավիճակի ստուգում</td>
+<td><code>Status: inactive</code> կամ <code>active</code> + կանոններ</td>
+<td>Չկա</td>
+</tr>
+<tr>
+<td><code>sudo ufw allow ssh</code></td>
+<td>Բացել 22-րդ պորտը (SSH) բոլորի համար</td>
+<td>22-ը թույլատրված է</td>
+<td>SSH-ը հասանելի է արտաքին աշխարհին. խորհուրդ՝ IP-ով սահմանափակել</td>
+</tr>
+<tr>
+<td><code>sudo ufw allow from &lt;IP&gt; to any port 22 proto tcp</code></td>
+<td>SSH-ը սահմանափակել կոնկրետ IP/ցանցով</td>
+<td>Աղբյուրով սահմանափակված կանոն</td>
+<td>Ցածր՝ միայն ձեր IP-ը</td>
+</tr>
+<tr>
+<td><code>sudo ufw enable</code></td>
+<td>Միացնել UFW-ն</td>
+<td>«Firewall is active»</td>
+<td><strong>Կարող է կտրել SSH կապը</strong>՝ եթե 22-ը առաջ բացած չէ</td>
+</tr>
+<tr>
+<td><code>sudo ufw allow 80/tcp</code> / <code>443/tcp</code></td>
+<td>Բացել HTTP/HTTPS</td>
+<td>Կանոն</td>
+<td>Բոլորին բացելը մերկացնում է իրական IP-ն. ավելի լավ՝ միայն Cloudflare-ի IP-ներով</td>
+</tr>
+<tr>
+<td><code>sudo nft list ruleset</code></td>
+<td>Դիտել kernel-ի բոլոր ակտիվ կանոնները</td>
+<td>nftables-ի «մաքուր» ցուցակ</td>
+<td>Չկա (միայն կարդալ)</td>
+</tr>
+<tr>
+<td><code>sudo nft --handle list ruleset</code></td>
+<td>Դիտել կանոններն իրենց <code>handle</code>-ներով</td>
+<td>Յուրաքանչյուր կանոնի ID</td>
+<td>Չկա (միայն կարդալ)</td>
+</tr>
+<tr>
+<td><code>sudo nft delete rule inet filter input handle &lt;ID&gt;</code></td>
+<td>Ջնջել կոնկրետ կանոնը</td>
+<td>Կանոնը հեռացված</td>
+<td>Սխալ ID-ը ջնջում է պաշտպանիչ կանոն</td>
+</tr>
+<tr>
+<td><code>sudo nft flush ruleset</code></td>
+<td>Ջնջել <strong>բոլոր</strong> կանոնները</td>
+<td>Բոլորը մաքրված՝ բոլոր պորտերը բաց</td>
+<td><strong>Շատ վտանգավոր</strong>՝ միայն վթարային դեպքում</td>
+</tr>
+<tr>
+<td><code>sudo nft -c -f /etc/nftables.conf</code></td>
+<td>Կոնֆիգի շարահյուսության ստուգում (dry-run)</td>
+<td>Սխալ/հաջող հաղորդում</td>
+<td>Չկա</td>
+</tr>
+<tr>
+<td><code>sudo nft -f /etc/nftables.conf</code></td>
+<td>Կիրառել կոնֆիգը ֆայլից</td>
+<td>Կանոնները թարմացված</td>
+<td>Կտրում է կապը՝ եթե SSH-ը բաց չէ կոնֆիգում</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lab">Փորձարկում (Lab)<a class="headerlink" href="#lab" title="Permanent link">&para;</a></h2>
+<p><strong>Միջավայր.</strong> Սովորական Linux VM (Ubuntu 22.04+) կամ կոնտեյներ՝ SSH-մուտքով։ Թիրախը՝ կառավարել nftables-ը ուղիղ՝ <code>inet</code> աղյուսակով՝ ապահովելով, որ SSH-ը մնա բաց, իսկ մնացածը՝ փակ։ Օգտագործվող ցանցերը (192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24) <strong>TEST-NET</strong> (RFC 5737)՝ ուսումնական, ինտերնետում չուղղորդվող հասցեներ՝ միայն թեստավորման համար. փոխարինեք դրանք ձեր իրական IP/ցանցով։</p>
+<ol>
+<li>
+<p><strong>Ստուգեք, ինչ back-end է օգտագործում UFW-ն</strong>
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ufw<span class="w"> </span>status
+ls<span class="w"> </span>-l<span class="w"> </span>/etc/ufw/
+</code></pre></div>
+   Նկատեք՝ <code>/etc/ufw/*.rules</code> ֆայլերը. UFW-ն կանոնները պահում է տեքստային ֆայլերում՝ աշխատելու՝ iptables-restore/nft-ի միջերեսի հետ։</p>
+</li>
+<li>
+<p><strong>Միացրեք UFW-ն և դիտեք iptables/nft-ի տարբերությունը</strong>
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span>from<span class="w"> </span><span class="m">192</span>.0.2.0/24<span class="w"> </span>to<span class="w"> </span>any<span class="w"> </span>port<span class="w"> </span><span class="m">22</span><span class="w"> </span>proto<span class="w"> </span>tcp<span class="w">   </span><span class="c1"># TEST-NET` ձեր IP-ով</span>
+sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</span>
+sudo<span class="w"> </span>iptables<span class="w"> </span>-L<span class="w"> </span>-n<span class="w"> </span>-v<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">30</span><span class="w">   </span><span class="c1"># UFW-ի կանոնները` iptables-ի ձևաչափով</span>
+sudo<span class="w"> </span>nft<span class="w"> </span>list<span class="w"> </span>ruleset<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">50</span><span class="w">    </span><span class="c1"># նույնը` nft-ի «մաքուր» ձևաչափով</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Ստեղծեք սեփական nftables-ի կոնֆիգ</strong> <code>/etc/nftables.conf</code>-ում (նախ <code>backup)</code>
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cp<span class="w"> </span>/etc/nftables.conf<span class="w"> </span>/etc/nftables.conf.bak
+</code></pre></div>
+   և տեղադրեք <code>inet filter</code> աղյուսակ <code>input</code> շղթա՝ <code>policy drop</code>-ով <code>որտեղ</code> առաջին հերթին <code>ct state established,related</code>-ը, loopback-ը և SSH-ը թույլատրվում են։ Ապա.
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nft<span class="w"> </span>-c<span class="w"> </span>-f<span class="w"> </span>/etc/nftables.conf<span class="w">   </span><span class="c1"># dry-run` շարահյուսության ստուգում</span>
+sudo<span class="w"> </span>nft<span class="w"> </span>-f<span class="w"> </span>/etc/nftables.conf<span class="w">      </span><span class="c1"># կիրառել</span>
+sudo<span class="w"> </span>nft<span class="w"> </span>--handle<span class="w"> </span>list<span class="w"> </span>chain<span class="w"> </span>inet<span class="w"> </span>filter<span class="w"> </span>input
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Ստուգեք, արդյոք SSH-ը մնաց բաց, իսկ արտաքինից (այլ IP) մուտքը՝ փակ</strong>
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nft<span class="w"> </span>list<span class="w"> </span>chain<span class="w"> </span>inet<span class="w"> </span>filter<span class="w"> </span>input
+ss<span class="w"> </span>-tlnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">':(22|80|443)'</span>
+</code></pre></div></p>
+</li>
+</ol>
+<p>Եզրակացություն. Lab-ը ցույց է տալիս, որ UFW-ն և nftables-ը նույն kernel-ի firewall-ի երկու միջերեսն են և որ <code>/etc/nftables.conf</code>-ի կիրառումը պաշտպանում է SSH-ը՝ միաժամանակ փակելով մնացածը:</p>
+<p>! Best Practices
+    - Firewall-ի ցանկացած փոփոխությունից առաջ (հատկապես <code>ufw enable</code> կամ <code>nft -f</code>) համոզվեք, որ SSH (22) կանոնն արդեն կա, և ունեք out-of-band (կոնսոլային) մուտք՝ կապը չկորցնելու համար:
+    - <code>INPUT</code>-ի/<code>FORWARD</code>-ի համար դրեք <code>policy drop</code>, իսկ <code>OUTPUT</code>-ը՝ <code>accept</code> (կամ՝ եթե խիստ եք՝ <code>drop</code> + միայն անհրաժեշտ ելքային պորտերը):
+    - <code>ct state { established, related } accept</code> դրեք <code>input</code>-ի <strong>ամենասկզբում</strong> (կատարողականության համար):
+    - Cloudflare-ի կամ մեծ IP-ցուցակների համար օգտագործեք nftables <strong>sets</strong>, ոչ թե յուրաքանչյուր subnet-ի համար առանձին կանոն:
+    - Կանոնները պահեք ֆայլում և կիրառեք նախ <code>nft -c</code> (dry-run), այնուհետև <code>-f</code>-ով live:
+    - <code>nft flush ruleset</code>-ը մի օգտագործեք պրոդաքշնում՝ այն ջնջում է ամբողջ ruleset-ը:</p>
+<h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
+<h3 id="_3">Ախտանիշ<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>Աշխատող սերվերում (Ubuntu, Docker + nginx) որոշվեց 80/443 պորտերը թողնել միայն Cloudflare-ի համար։ Սակայն <code>sudo nmap -sS -Pn -p 22,80,443 &lt;server_ip&gt;</code>-ի արդյունքում 22-ը <code>open</code> է, 80/443-ը՝ նույնպես <code>open</code> (ոչ <code>filtered</code>), և մյուս պորտերը ևս երևում են արտաքինից՝ չնայած Cloudflare-ի «միայն» կանոններին, որոնք պետք է ցույց տային <code>filtered</code>:</p>
+<h3 id="_4">Ախտորոշում<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Ստուգեք UFW-ի կարգավիճակը.
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ufw<span class="w"> </span>status
+</code></pre></div>
+   Եթե <code>inactive</code> է՝ firewall-ն ընդհանրապես չի աշխատում՝ ինչն էլ բացատրում է ամեն ինչ:</p>
+</li>
+<li>
+<p>Դիտեք kernel-ի ակտիվ կանոնները՝ nftables-ով.
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nft<span class="w"> </span>list<span class="w"> </span>ruleset
+</code></pre></div>
+   Փնտրեք արդյոք կան <code>policy accept</code> ունեցող <strong>դատարկ</strong> <code>INPUT</code> base chain-եր <code>ip filter</code>/<code>ip6 filter</code> աղյուսակներում (հին iptables/UFW-ի մնացորդներ)։ Եթե կան՝ դրանք նույն hook-ի վրա <strong>շրջանցում են</strong> ձեր <code>inet filter</code>-ի <code>policy drop</code>-ը՝ ընդունելով ամեն ինչ, ինչու է nmap-ը ցույց տալիս <code>open</code>:</p>
+</li>
+<li>
+<p>Համեմատեք <code>sudo iptables -L -n -v</code>-ի և <code>sudo nft list ruleset</code>-ի ցուցադրությունը՝ բացահայտելով՝ որ աղյուսակներն են Docker-ի (և ունեն «# Warning ... do not touch!»), իսկ որոնք՝ ձերը:</p>
+</li>
+</ol>
+<h3 id="_5">Լուծում<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Եթե UFW-ն <code>inactive</code> էր միացրեք նախ SSH-ով ապահովելով 22-ը, հետո՝ Cloudflare-ի IP-ներից՝ 80/443:
+  <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span>from<span class="w"> </span><span class="m">203</span>.0.113.0/24<span class="w"> </span>to<span class="w"> </span>any<span class="w"> </span>port<span class="w"> </span><span class="m">22</span><span class="w"> </span>proto<span class="w"> </span>tcp<span class="w">   </span><span class="c1"># TEST-NET` ձեր IP/ցանցով</span>
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">80</span>/tcp
+sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">443</span>/tcp<span class="w">   </span><span class="c1"># կամ` միայն Cloudflare-ի IP-ներից (set մոտեցում)</span>
+sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</span>
+</code></pre></div></li>
+<li>Եթե դատարկ <code>policy accept</code> աղյուսակները (մնացորդներ) խանգարում են ձեր <code>inet filter</code>-ին՝ ջնջեք դրանք<strong>միայն</strong> այն դեպքում, երբ վստահ եք, որ դրանք ձերն են (ոչ Docker-ի <code>#Warning</code> աղյուսակները):
+  <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nft<span class="w"> </span>delete<span class="w"> </span>table<span class="w"> </span>ip<span class="w"> </span>filter
+sudo<span class="w"> </span>nft<span class="w"> </span>delete<span class="w"> </span>table<span class="w"> </span>ip6<span class="w"> </span>filter
+</code></pre></div>
+  Ապա ստուգեք, որ 80/443 այժմ <code>filtered</code> են, իսկ SSH-ը՝ <code>open</code>:
+  <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nft<span class="w"> </span>list<span class="w"> </span>chain<span class="w"> </span>inet<span class="w"> </span>filter<span class="w"> </span>input
+</code></pre></div></li>
+<li>Վթարային դեպքում (կապը կորել է)՝ կոնսոլից՝ <code>sudo nft flush ruleset</code> + <code>sudo iptables -P INPUT ACCEPT</code>, ապա նորից կիրառեք աշխատող ֆայլը:</li>
+</ul>
+<h3 id="_6">Կանխարգելում<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Պահեք աշխատող կանոնակազմը <code>/etc/nftables.conf</code>-ում և <code>systemctl enable nftables</code>-ով ապահովեք boot-ի ժամանակ վերականգնումը.</li>
+<li>Բոլոր փոփոխություններից առաջ՝ dry-run (<code>nft -c</code>) և backup SSH/կոնսոլ.</li>
+<li>Պարբերաբար, որոշ կայուն IP-ից՝ nmap-ի սկան՝ որպես ռեգրեսիոն թեստ՝ ակնկալելով՝ 22-ը՝ <code>open</code>, իսկ 80/443-ը՝ <code>filtered</code> ոչ-Cloudflare-ից:</li>
+<li>Թարմացրեք runbook-ը՝ նկարագրելով՝ որ աղյուսակի/շղթայի վրա է հիմնված պետությունը, և ինչպես զատել nftables-ի և Docker-ի աղյուսակները:</li>
+</ul>
+<h2 id="_7">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h3 id="ufw-firewall-ubuntu-mid-level">Ի՞նչ է UFW-ն, և ո՞ր firewall-ն է իրականում աշխատում Ubuntu-ի նոր տարբերակներում (mid-level)<a class="headerlink" href="#ufw-firewall-ubuntu-mid-level" title="Permanent link">&para;</a></h3>
+<p>UFW-ն (Uncomplicated Firewall, «ոչ բարդ firewall») Ubuntu-ի լռելյայն firewall-ի <strong>կառավարման frontend</strong> գործիքն է՝ նախապես տեղադրված, բայց լռելյայն <code>inactive</code> վիճակում՝ մինչև <code>sudo ufw enable</code>-ը։ Իրական firewall-մեխանիզմը, որը ֆիլտրում է փաթեթները, kernel-ի <strong>Netfilter</strong>-ն է՝ ժամանակակից Ubuntu-ում (20.04-ից) կարգավորվող՝ <strong>nftables</strong>-ի միջոցով։ UFW-ն օգտագործում է <code>iptables-nft</code> համատեղելիության շերտը, ուստի նույն կանոնները երևում են և՛ <code>iptables -L</code>-ում, և՛ <code>nft list ruleset</code>-ում՝ տարբեր ձևաչափով։ Իսկապես ակտիվը՝ nftables-ն է (kernel-ի մակարդակ), մինչդեռ UFW-ն ու iptables-ը միայն կառավարման միջերեսներ են։</p>
+<h3 id="open-filtered-firewall-senior-level">Ինչպե՞ս եք տարբերակում «open» և «filtered» պորտը, և ի՞նչ է այն ասում ձեր firewall-ի մասին (senior-level)<a class="headerlink" href="#open-filtered-firewall-senior-level" title="Permanent link">&para;</a></h3>
+<p>Nmap-ի համար՝ «open» նշանակում է, որ պորտը պատասխանում է SYN-ACK-ով (հասանելի է), «filtered»՝ որ firewall-ը DROP է անում (կամ պատասխան չի գալիս), ուստի պորտի վիճակն անորոշ է, բայց մուտքը մերժված է։ Այս երկուսի տարբերությունն ախտորոշիչ արժեք ունի. օրինակ՝ եթե 80/443-ը <code>filtered</code> են ձեր (ոչ-Cloudflare) IP-ից՝ ապա «միայն Cloudflare» քաղաքականությունն աշխատում է. իսկ եթե դրանք <code>open</code> են՝ ապա scope-ի սահմանափակումը թերի է (օրինակ՝ դատարկ <code>policy accept</code> base chain-ը nftables-ում, որը շրջանցում է ձեր <code>inet filter</code>-ը)։ Senior-ը կսկսի <code>sudo nft list ruleset</code>-ից՝ փնտրելով նման աղյուսակներ, և՝ միայն ապա՝ ջնջել service-ին չպատկանող, կասկածելի base chain-երը.</p>
+<h2 id="_8">Ինքնաստուգում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Ի՞նչ է UFW-ն, և ինչո՞ւ է այն լռելյայն <code>inactive</code> Ubuntu-ում՝ չնայած, որ «firewall-ը» տեղադրված է։</li>
+<li>Ի՞նչ back-end է օգտագործում UFW-ն Ubuntu-ի 20.04+-ում՝ nftables, թե iptables, և ի՞նչ դեր ունի <code>iptables-nft</code>-ը.</li>
+<li>Նշեք Netfilter-ի 5 hooks-ը և ինչի համար են դրանցից յուրաքանչյուրը (INPUT, OUTPUT, FORWARD, PREROUTING, POSTROUTING)։</li>
+<li>Ի՞նչ տարբերություն կա Base chain-ի և Regular chain-ի միջև nftables-ում, և ի՞նչ դեր ունի <code>jump</code>-ը.</li>
+<li>Ի՞նչ է <code>ct state { established, related }</code>-ը, և ինչո՞ւ են այն դնում input-ի ամենասկզբում։</li>
+<li>Ի՞նչ է nftables-ի set-ը, և ինչո՞ւ է մեկ set ավելի արդյունավետ, քան Cloudflare-ի IP-ների համար առանձին կանոնների երկար ցուցակը։</li>
+<li>Ինչո՞ւ է <code>sudo nft flush ruleset</code>-ը «վտանգավոր», և ինչպե՞ս է կոնֆիգը վերականգնվում boot-ից հետո (<code>systemctl enable nftables</code>)։</li>
+<li>Ի՞նչ է ցույց տալիս nmap-ի <code>filtered</code> վիճակը, և ինչպե՞ս է այն կապված «միայն Cloudflare» firewall-քաղաքականության հետ.</li>
+</ol>
+<h2 id="_9">Հաջորդ քայլեր<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>Շարունակիր <a href="../../networking/">Networks</a> բաժնով՝ հետագա՝ TCP/IP, routing, DNS և TLS-ի մասին. firewall-ը ցանցային շղթայի «վերջին դարպասն» է դեպի սերվեր։ Ավելի խոր՝ <a href="../networking/">Linux-ի ցանցային կարգավորումներ</a>՝ ինտերֆեյսների ու routing-ի համար։ Քանի որ Docker-ն ինքնուրույն է կառավարում iptables/nftables-ը, ֆայլը սերտորեն կապված է <a href="../../docker-kubernetes/">Docker և Kubernetes</a> բաժնի հետ՝ արժե կարդալ՝ նախքան կոնտեյներների ցանցային պորտերի մեկուսացումը պրակտիկայում կիրառելը։</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Վերադառնալ սկիզբ
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u054a\u0561\u057f\u0573\u0565\u0576\u057e\u0561\u056e \u0567", "clipboard.copy": "\u054a\u0561\u057f\u0573\u0565\u0576\u0565\u056c", "search.result.more.one": "\u0587\u057d 1-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.more.other": "\u0587\u057d #-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.none": "\u0531\u0580\u0564\u0575\u0578\u0582\u0576\u0584\u0576\u0565\u0580 \u0579\u056f\u0561\u0576", "search.result.one": "1 \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.other": "# \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.placeholder": "\u0544\u0578\u0582\u057f\u0584\u0561\u0563\u0580\u0565\u0584 \u0578\u0580\u0578\u0576\u0565\u056c\u0578\u0582 \u0570\u0561\u0574\u0561\u0580", "search.result.term.missing": "\u0532\u0561\u0581\u0561\u056f\u0561\u0575\u0578\u0582\u0574 \u0567", "select.version": "\u0538\u0576\u057f\u0580\u0565\u056c \u057f\u0561\u0580\u0562\u0565\u0580\u0561\u056f\u0568"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -236,7 +236,7 @@ fi
 grep -q "myapp.local" /etc/hosts 2> /dev/null || echo "127.0.0.1 myapp.local" >> /etc/hosts
 ```
 
-Իդեմպոտենտ գրելաձևի idioms` `mkdir -p`, `id user || useradd`, `getent group g || groupadd g`, `[ -f file ] || touch file`, `grep -q "line" file || echo "line" >> file`, `[ -L link ] || ln -s target link`, `dpkg -l pkg || apt-get install -y pkg`, `[ -d repo ] || git clone url repo. Իդեմպոտենտությունը ստուգվում է` script-ը 2-3 անգամ գործարկելով` output-ը պետք է նույնը լինի.
+Իդեմպոտենտ գրելաձևի idioms՝ `mkdir -p`, `id user || useradd`, `getent group g || groupadd g`, `[ -f file ] || touch file`, `grep -q "line" file || echo "line" >> file`, `[ -L link ] || ln -s target link`, `dpkg -l pkg || apt-get install -y pkg`, `[ -d repo ] || git clone url repo. Իդեմպոտենտությունը ստուգվում է` script-ը 2-3 անգամ գործարկելով՝ output-ը պետք է նույնը լինի.
 
 ## Հիմնական հրամաններ
 

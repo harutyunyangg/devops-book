@@ -888,6 +888,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../firewall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firewall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1374,7 +1402,7 @@
 <ul>
 <li>Systemd-ն յուրաքանչյուր <strong>service</strong> (ծառայության) համար ավտոմատ ստեղծում է առանձին cgroup, ինչը թույլ է տալիս դիտել նրա ռեսուրսների ծախսը և ծառայությունը կանգնեցնելիս անվտանգ դադարեցնել դրա բոլոր պրոցեսները (մեկ հրամանով, առանց «մոռացված» child process-ների)։</li>
 <li>Systemd-ը կազմակերպում է cgroups-ները <strong>slices</strong>-ների մեջ. <code>system.slice</code> (համակարգային ծառայություններ), <code>user.slice</code> (օգտատիրոջ սեսիաներ), <code>machine.slice</code> (վիրտուալ մեքենաներ, կոնտեյներներ)։ Այս slice-ների վրա կարելի է դնել ընդհանուր սահմանափակումներ, իսկ ծառայությունը կարող է նշանակվել կոնկրետ slice-ի մեջ։</li>
-<li>Կոնտեյներների տեխնոլոգիաները (օրինակ<code>Docker, LXD) ևս հիմնված են cgroups-ի վրա</code> յուրաքանչյուր կոնտեյների համար ռեսուրսների սահմանափակում և մեկուսացում ապահովելու համար։ Namespace-ները մեկուսացնում են «ինչ է տեսնում» կոնտեյները, իսկ cgroups-ը սահմանափակում է «ինչքան կարող է օգտագործել»։</li>
+<li>Կոնտեյներների տեխնոլոգիաները (օրինակ՝ Docker, LXD) ևս հիմնված են cgroups-ի վրա՝ յուրաքանչյուր կոնտեյների համար ռեսուրսների սահմանափակում և մեկուսացում ապահովելու համար։ Namespace-ները մեկուսացնում են «ինչ է տեսնում» կոնտեյները, իսկ cgroups-ը սահմանափակում է «ինչքան կարող է օգտագործել»։</li>
 </ul>
 <h3 id="cgroups-_1">Cgroups-ով կառավարվող հիմնական ռեսուրսները<a class="headerlink" href="#cgroups-_1" title="Permanent link">&para;</a></h3>
 <table>
@@ -1431,7 +1459,7 @@
 </tr>
 <tr>
 <td><code>sudo systemctl edit &lt;service&gt;</code></td>
-<td>Բացել ծառայության override ֆայլը` ռեսուրսների սահմանափակումներ ավելացնելու համար</td>
+<td>Բացել ծառայության override ֆայլը՝ ռեսուրսների սահմանափակումներ ավելացնելու համար</td>
 <td>Խմբագրումը պետք է ճիշտ սինտաքսով լինի. սխալը կարող է ծառայությունը չգործարկել</td>
 </tr>
 <tr>
@@ -1457,7 +1485,7 @@
 <tr>
 <td><code>systemd-cgtop</code></td>
 <td>Իրական ժամանակում ցույց է տալիս cgroups-ների ռեսուրսների օգտագործումը</td>
-<td>Ինտերակտիվ գործիք. ելքին<code></code>q`</td>
+<td>Ինտերակտիվ գործիք. ելքին՝ <code>q</code></td>
 </tr>
 <tr>
 <td><code>cat /sys/fs/cgroup/.../memory.current</code></td>
@@ -1472,16 +1500,16 @@
 </tbody>
 </table>
 <h2 id="lab">Փորձարկում (Lab)<a class="headerlink" href="#lab" title="Permanent link">&para;</a></h2>
-<p>Այս փորձը նախատեսված է սովորական Linux VM-ի (օրինակ<code>Ubuntu 22.04+ cgroups v2-ով) վրա. չօգտագործեք production սերվեր և իրական գաղտնիքներ։ Թիրախը</code> սահմանափակումներ դնել, դրանք ավելացնել և հետևելն է.</p>
+<p>Այս փորձը նախատեսված է սովորական Linux VM-ի (օրինակ՝ Ubuntu 22.04+ cgroups v2-ով) վրա. չօգտագործեք production սերվեր և իրական գաղտնիքներ։ Թիրախը՝ սահմանափակումներ դնել, դրանք ավելացնել և հետևելն է.</p>
 <h3 id="1-cgroups-v2-">Քայլ 1. Ստուգել cgroups v2-ը<a class="headerlink" href="#1-cgroups-v2-" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>mount<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>cgroup
 <span class="c1"># Սպասվող. cgroup2 on /sys/fs/cgroup type cgroup2 ...</span>
 </code></pre></div>
 <h3 id="2-systemd">Քայլ 2. Ծառայության համար ռեսուրսների սահմանափակում (systemd)<a class="headerlink" href="#2-systemd" title="Permanent link">&para;</a></h3>
-<p>Ստեղծեք փորձնական unit-ի override-ը` սահմանափակումներ ավելացնելու համար.</p>
+<p>Ստեղծեք փորձնական unit-ի override-ը՝ սահմանափակումներ ավելացնելու համար.</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>edit<span class="w"> </span>cgroup-lab.service
 </code></pre></div>
-<p>Եթե <code>cgroup-lab.service</code> unit-ը դեռ գոյություն չունի, <code>systemctl edit</code>-ը միայն override-ի դրվագ է ստեղծում. ամենաճիշտը սկզբում ստեղծել պարզ test service-ը<code>ավելի ուշ ջնջելու պարզությամբ</code> օրինակ<code></code>systemd-run`-ով (տես Քայլ 3)։ Այնուամենայնիվ, override-ի պարունակությունը հետևյալն է.</p>
+<p>Եթե <code>cgroup-lab.service</code> unit-ը դեռ գոյություն չունի, <code>systemctl edit</code>-ը միայն override-ի դրվագ է ստեղծում. ամենաճիշտը սկզբում ստեղծել պարզ test service-ը՝ ավելի ուշ ջնջելու պարզությամբ՝ օրինակ՝ <code>systemd-run</code>-ով (տես Քայլ 3)։ Այնուամենայնիվ, override-ի պարունակությունը հետևյալն է.</p>
 <div class="highlight"><pre><span></span><code><span class="k">[Service]</span>
 <span class="na">CPUQuota</span><span class="o">=</span><span class="s">50%</span>
 <span class="na">MemoryMax</span><span class="o">=</span><span class="s">512M</span>
@@ -1493,33 +1521,33 @@
 sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>cgroup-lab.service
 systemctl<span class="w"> </span>show<span class="w"> </span>cgroup-lab.service<span class="w"> </span>--property<span class="o">=</span>CPUQuota,MemoryMax,MemoryHigh,IOWeight
 </code></pre></div>
-<p>Սպասվող արդյունք. նշված հատկությունները ցուցադրվում են կիրառված արժեքներով, իսկ ծառայությունն աշխատում է այդ սահմանների ներքո։ Ուշադրություն<code></code>CPUQuota=50%<code>-ը նշանակում է մեկ CPU միջուկի 50%-ը (այսինքն</code> միջուկի կեսը)։ 100% = մեկ ամբողջ միջուկ, 200% = երկու միջուկ, և այլն։</p>
+<p>Սպասվող արդյունք. նշված հատկությունները ցուցադրվում են կիրառված արժեքներով, իսկ ծառայությունն աշխատում է այդ սահմանների ներքո։ Ուշադրություն՝ <code>CPUQuota=50%</code>-ը նշանակում է մեկ CPU միջուկի 50%-ը (այսինքն՝ միջուկի կեսը)։ 100% = մեկ ամբողջ միջուկ, 200% = երկու միջուկ, և այլն։</p>
 <h3 id="3-systemd-run">Քայլ 3. Ժամանակավոր սահմանափակում մեկ հրամանի համար (<code>systemd-run</code>)<a class="headerlink" href="#3-systemd-run" title="Permanent link">&para;</a></h3>
-<p>Եթե ցանկանում եք արագ գործարկել մեկ հրաման` սահմանափակումներով, առանց unit ֆայլ խմբագրելու.</p>
+<p>Եթե ցանկանում եք արագ գործարկել մեկ հրաման՝ սահմանափակումներով, առանց unit ֆայլ խմբագրելու.</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemd-run<span class="w"> </span>--scope<span class="w"> </span>-p<span class="w"> </span><span class="nv">MemoryMax</span><span class="o">=</span>512M<span class="w"> </span>-p<span class="w"> </span><span class="nv">CPUQuota</span><span class="o">=</span><span class="m">50</span>%<span class="w"> </span>sleep<span class="w"> </span><span class="m">30</span>
 </code></pre></div>
-<p>Սպասվող արդյունք. հրամանը (<code>sleep 30</code>) գործարկվում է ժամանակավոր cgroup-ի ներսում<code>տվյալ սահմանափակումներով, և այն երևում է հաջորդ քայլի մոնիտորինգում։ Ուշադրություն</code> միշտ նշեք անմեղ հրաման (օրինակ<code></code>sleep<code>), ոչ թե կործանարար բան</code> սահմանափակումների ազդեցությունը ստուգելու համար։</p>
+<p>Սպասվող արդյունք. հրամանը (<code>sleep 30</code>) գործարկվում է ժամանակավոր cgroup-ի ներսում՝ տվյալ սահմանափակումներով, և այն երևում է հաջորդ քայլի մոնիտորինգում։ Ուշադրություն՝ միշտ նշեք անմեղ հրաման (օրինակ՝ <code>sleep</code>), ոչ թե կործանարար բան՝ սահմանափակումների ազդեցությունը ստուգելու համար։</p>
 <h3 id="4">Քայլ 4. Մոնիտորինգ<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>systemd-cgtop
 <span class="c1"># և կոնկրետ cgroup-ի ընթացիկ հիշողությունը.</span>
 cat<span class="w"> </span>/sys/fs/cgroup/system.slice/cgroup-lab.service/memory.current
 </code></pre></div>
-<p>Սպասվող արդյունք. <code>systemd-cgtop</code>-ում երևում է ձեր unit-ի/հրամանի cgroup-ը<code>ընթացիկ CPU/RAM օգտագործմամբ, իսկ</code>memory.current`-ը ցույց է տալիս իրական ընթացիկ արժեքը (բայթերով)։</p>
+<p>Սպասվող արդյունք. <code>systemd-cgtop</code>-ում երևում է ձեր unit-ի/հրամանի cgroup-ը՝ ընթացիկ CPU/RAM օգտագործմամբ, իսկ <code>memory.current</code>-ը ցույց է տալիս իրական ընթացիկ արժեքը (բայթերով)։</p>
 <h3 id="5">Քայլ 5. Դինամիկ փոփոխություն<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>set-property<span class="w"> </span>--runtime<span class="w"> </span>cgroup-lab.service<span class="w"> </span><span class="nv">CPUQuota</span><span class="o">=</span><span class="m">25</span>%
 systemctl<span class="w"> </span>show<span class="w"> </span>cgroup-lab.service<span class="w"> </span>--property<span class="o">=</span>CPUQuota
 </code></pre></div>
-<p>Սպասվող արդյունք. քվոտան փոխվում է անմիջապես<code>առանց ֆայլի խմբագրման։</code>--runtime<code>-ով փոփոխությունը ժամանակավոր է և կկորչի վերագործարկումից հետո. սա օգտակար է արագ փորձերի համար։ Ավարտելուց հետո մաքրեք փորձնական unit-ը</code> <code>sudo systemctl stop cgroup-lab.service</code>-ով, անհրաժեշտության դեպքում<code></code>sudo systemctl reset-failed cgroup-lab.service<code>-ով, իսկ</code>systemctl edit<code>-ով ստեղծած override-ը ջնջեք</code>/etc/systemd/system/cgroup-lab.service.d/<code>պանակից</code> այնպես, որ test-ից ոչինչ չմնա համակարգում.</p>
+<p>Սպասվող արդյունք. քվոտան փոխվում է անմիջապես՝ առանց ֆայլի խմբագրման։ <code>--runtime</code>-ով փոփոխությունը ժամանակավոր է և կկորչի վերագործարկումից հետո. սա օգտակար է արագ փորձերի համար։ Ավարտելուց հետո մաքրեք փորձնական unit-ը՝ <code>sudo systemctl stop cgroup-lab.service</code>-ով, անհրաժեշտության դեպքում՝ <code>sudo systemctl reset-failed cgroup-lab.service</code>-ով, իսկ <code>systemctl edit</code>-ով ստեղծած override-ը ջնջեք <code>/etc/systemd/system/cgroup-lab.service.d/</code> պանակից՝ այնպես, որ test-ից ոչինչ չմնա համակարգում.</p>
 <div class="admonition note">
 <p class="admonition-title">MemoryMax vs MemoryHigh</p>
 <ul>
-<li><code>MemoryMax</code> — <strong>կոշտ</strong> սահման (hard limit). այն գերազանցելու դեպքում kernel-ի OOM killer-ը սպանում է cgroup-ի պրոցեսը/ծառայությունը` դրանով հետ պահելով համակարգի ամբողջական քանդումից։</li>
-<li><code>MemoryHigh</code> — <strong>փափուկ</strong> սահման (soft limit). այն գերազանցելու դեպքում kernel-ը սկսում է «ճնշել» (throttle) ծառայության հիշողությունը<code>ակտիվորեն ազատելով (reclaim), և հիշողության ճնշման (memory pressure) պայմաններում կարող է սպանել կամ swap նետել։ Օգտագործեք այն</code> ծառայությունը զսպելու համար<code>առանց անհապաղ termination-ի, որպեսզի այն կայուն աշխատի սահմանի ներսում</code> չնայած հիշողության աճին։</li>
+<li><code>MemoryMax</code> — <strong>կոշտ</strong> սահման (hard limit). այն գերազանցելու դեպքում kernel-ի OOM killer-ը սպանում է cgroup-ի պրոցեսը/ծառայությունը՝ դրանով հետ պահելով համակարգի ամբողջական քանդումից։</li>
+<li><code>MemoryHigh</code> — <strong>փափուկ</strong> սահման (soft limit). այն գերազանցելու դեպքում kernel-ը սկսում է «ճնշել» (throttle) ծառայության հիշողությունը՝ ակտիվորեն ազատելով (reclaim), և հիշողության ճնշման (memory pressure) պայմաններում կարող է սպանել կամ swap նետել։ Օգտագործեք այն՝ ծառայությունը զսպելու համար՝ առանց անհապաղ termination-ի, որպեսզի այն կայուն աշխատի սահմանի ներսում՝ չնայած հիշողության աճին։</li>
 </ul>
 </div>
 <h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
 <h3 id="_5">Ախտանիշ<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
-<p>Նույն host-ի վրա աշխատում են մի քանի ծառայություն/կոնտեյներ։ Դրանցից մեկում (օրինակ<code>հավելված</code> հիշողության արտահոսքով / memory leak) սկսում է անդադար աճել RAM-ի օգտագործումը. շուտով host-ի ամբողջ հիշողությունը սպառվում է, մյուս ծառայությունների արձագանքման ժամանակը կտրուկ աճում է, հայտնվում են OOM-ի նշաններ, և հատկապես «անմեղ» ծառայությունը սկսում է crash անել կամ ավտոմատ վերագործարկվել (restart loop)։</p>
+<p>Նույն host-ի վրա աշխատում են մի քանի ծառայություն/կոնտեյներ։ Դրանցից մեկում (օրինակ՝ հավելված՝ հիշողության արտահոսքով / memory leak) սկսում է անդադար աճել RAM-ի օգտագործումը. շուտով host-ի ամբողջ հիշողությունը սպառվում է, մյուս ծառայությունների արձագանքման ժամանակը կտրուկ աճում է, հայտնվում են OOM-ի նշաններ, և հատկապես «անմեղ» ծառայությունը սկսում է crash անել կամ ավտոմատ վերագործարկվել (restart loop)։</p>
 <h3 id="_6">Ախտորոշում<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Տեսեք, թե որ cgroup-ն է սպառում հիշողությունը.</li>
@@ -1536,7 +1564,7 @@ cat<span class="w"> </span>/sys/fs/cgroup/system.slice/&lt;service&gt;/memory.cu
 <li>Հաստատեք, որ աճի աղբյուրը տվյալ ծառայությունն է (leak-ը), այլ ոչ թե համակարգային այլ պրոցես. <code>top</code>/<code>ps</code>-ով գտեք առավել RAM-ագույն պրոցեսը և համոզվեք, որ այն պատկանում է այն slice-ին, որը մեծանում է <code>systemd-cgtop</code>-ում։</li>
 </ol>
 <h3 id="_7">Լուծում<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
-<p>Հիմնական լուծումը` սահմանափակումներ դնել, որպեսզի անսարք ծառայությունը, նույնիսկ leak-ի դեպքում, չկարողանա «ուտել» host-ի բոլոր ռեսուրսները.</p>
+<p>Հիմնական լուծումը՝ սահմանափակումներ դնել, որպեսզի անսարք ծառայությունը, նույնիսկ leak-ի դեպքում, չկարողանա «ուտել» host-ի բոլոր ռեսուրսները.</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>edit<span class="w"> </span>&lt;service&gt;
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="k">[Service]</span>
@@ -1547,32 +1575,32 @@ cat<span class="w"> </span>/sys/fs/cgroup/system.slice/&lt;service&gt;/memory.cu
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
 sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>&lt;service&gt;
 </code></pre></div>
-<p>Արդյունք. եթե ծրագիրը գերազանցի 1G-ը, kernel-ը սկզբում «ճնշում» (throttle) է անում<code></code>MemoryHigh<code>-ի շնորհիվ, իսկ 1.5G-ից հետո OOM killer-ը սպանում է միայն այս ծառայությունը</code> առանց մյուսների վրա ազդելու։ Այս կերպ սահմանափակվում է «բլաստ շառավիղը» (blast radius)։ Զգույշ եղեք<code>սահմանը չափազանց ցածր չդնեք</code> նախ հաշվարկեք ծառայության իրական baseline հիշողությունը այլապես նորմալ աշխատող ծառայությունը կսկսի crash անել, երբ էլ հատի սահմանը` պատճառելով նոր տիպի խնդիր։</p>
+<p>Արդյունք. եթե ծրագիրը գերազանցի 1G-ը, kernel-ը սկզբում «ճնշում» (throttle) է անում՝ <code>MemoryHigh</code>-ի շնորհիվ, իսկ 1.5G-ից հետո OOM killer-ը սպանում է միայն այս ծառայությունը՝ առանց մյուսների վրա ազդելու։ Այս կերպ սահմանափակվում է «բլաստ շառավիղը» (blast radius)։ Զգույշ եղեք՝ սահմանը չափազանց ցածր չդնեք՝ նախ հաշվարկեք ծառայության իրական baseline հիշողությունը այլապես նորմալ աշխատող ծառայությունը կսկսի crash անել, երբ էլ հատի սահմանը՝ պատճառելով նոր տիպի խնդիր։</p>
 <h3 id="_8">Կանխարգելում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Բոլոր ծառայությունների և կոնտեյներների համար դրեք <code>MemoryMax</code>/<code>MemoryHigh</code>, իսկ անհրաժեշտության դեպքում<code></code>CPUQuota<code>և</code>TasksMax` (fork bomb-ից պաշտպանության համար)։</li>
-<li>Մոնիտորինգ դրեք cgroups-ի ռեսուրսների օգտագործման վրա և alert<code>սահմանի 80%-ին հասնելիս</code> մոտալուտ սպառման մասին նախազգուշացնելու համար։</li>
-<li>Capacity planning. հաշվարկեք յուրաքանչյուր ծառայության baseline-ը, և վերապահեք host-ի ռեսուրսներից headroom` spike-ների համար. համոզվեք, որ բոլոր սահմանների գումարը չի ձգտում ֆիզիկական ռեսուրսներին։</li>
-<li>Թարմացրեք runbook-ը` նկարագրելով, թե որ slice/cgroup-ն ինչ սահման ունի, ինչպես է ախտորոշվում ու վերականգնվում ռեսուրսների գերածախսը։</li>
+<li>Բոլոր ծառայությունների և կոնտեյներների համար դրեք <code>MemoryMax</code>/<code>MemoryHigh</code>, իսկ անհրաժեշտության դեպքում՝ <code>CPUQuota</code> և <code>TasksMax</code> (fork bomb-ից պաշտպանության համար)։</li>
+<li>Մոնիտորինգ դրեք cgroups-ի ռեսուրսների օգտագործման վրա և alert՝ սահմանի 80%-ին հասնելիս՝ մոտալուտ սպառման մասին նախազգուշացնելու համար։</li>
+<li>Capacity planning. հաշվարկեք յուրաքանչյուր ծառայության baseline-ը, և վերապահեք host-ի ռեսուրսներից headroom՝ spike-ների համար. համոզվեք, որ բոլոր սահմանների գումարը չի ձգտում ֆիզիկական ռեսուրսներին։</li>
+<li>Թարմացրեք runbook-ը՝ նկարագրելով, թե որ slice/cgroup-ն ինչ սահման ունի, ինչպես է ախտորոշվում ու վերականգնվում ռեսուրսների գերածախսը։</li>
 </ul>
 <h2 id="_9">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
 <h3 id="cgroup-mid-level">Ի՞նչ է cgroup-ը և ի՞նչ խնդիր է այն լուծում (mid-level)<a class="headerlink" href="#cgroup-mid-level" title="Permanent link">&para;</a></h3>
-<p>Cgroup-ը (Control Group) Linux-ի kernel-ի մեխանիզմ է, որը պրոցեսները խմբավորում և սահմանափակում է, թե խմբերից յուրաքանչյուրը որքան ռեսուրս (CPU, հիշողություն, I/O, պրոցեսների քանակ) կարող է օգտագործել։ Այս կերպ մեկ անսարք կամ չարամիտ պրոցես չի կարող սպառել host-ի բոլոր ռեսուրսները և խաթարել մյուս ծառայությունները. սա ռեսուրսների մեկուսացման և կայունության հիմքն է` և՛ systemd-ում, և՛ կոնտեյներներում (Docker, LXD)։</p>
+<p>Cgroup-ը (Control Group) Linux-ի kernel-ի մեխանիզմ է, որը պրոցեսները խմբավորում և սահմանափակում է, թե խմբերից յուրաքանչյուրը որքան ռեսուրս (CPU, հիշողություն, I/O, պրոցեսների քանակ) կարող է օգտագործել։ Այս կերպ մեկ անսարք կամ չարամիտ պրոցես չի կարող սպառել host-ի բոլոր ռեսուրսները և խաթարել մյուս ծառայությունները. սա ռեսուրսների մեկուսացման և կայունության հիմքն է՝ և՛ systemd-ում, և՛ կոնտեյներներում (Docker, LXD)։</p>
 <h3 id="cgroups-v1-v2-v2-senior-level">Ի՞նչ տարբերություն կա cgroups v1-ի և v2-ի միջև, և ինչո՞ւ է v2-ը նախընտրելի (senior-level)<a class="headerlink" href="#cgroups-v1-v2-v2-senior-level" title="Permanent link">&para;</a></h3>
-<p>Հիմնական տարբերությունը կառուցվածքում է. v1-ը յուրաքանչյուր controller-ի (memory, cpu և այլն) համար ունի առանձին, անկախ հիերարխիա, որի պատճառով տարբեր ռեսուրսների սահմանափակումները դժվար է համակարգել մեկ cgroup-ի վրա։ v2-ն օգտագործում է մեկ միասնական հիերարխիա բոլոր controller-ների համար. դա հեշտացնում է կառավարումը, ապահովում է հետևողական վարքագիծ և «no internal processes» մոդելը (cgroup-ն ունի կա՛մ պրոցեսներ, կա՛մ ենթահիերարխիա` ոչ երկուսն էլ), և ծագում է ժամանակակից workflow-ների համար (systemd, Kubernetes, վերջին Docker)։ Դրա համար էլ v2-ը դարձել է նախընտրելի և լռելյայն տարբերակը ժամանակակից Ubuntu-ում նոր ռեսուրսների սահմանափակումների մեծ մասի համար։</p>
+<p>Հիմնական տարբերությունը կառուցվածքում է. v1-ը յուրաքանչյուր controller-ի (memory, cpu և այլն) համար ունի առանձին, անկախ հիերարխիա, որի պատճառով տարբեր ռեսուրսների սահմանափակումները դժվար է համակարգել մեկ cgroup-ի վրա։ v2-ն օգտագործում է մեկ միասնական հիերարխիա բոլոր controller-ների համար. դա հեշտացնում է կառավարումը, ապահովում է հետևողական վարքագիծ և «no internal processes» մոդելը (cgroup-ն ունի կա՛մ պրոցեսներ, կա՛մ ենթահիերարխիա՝ ոչ երկուսն էլ), և ծագում է ժամանակակից workflow-ների համար (systemd, Kubernetes, վերջին Docker)։ Դրա համար էլ v2-ը դարձել է նախընտրելի և լռելյայն տարբերակը ժամանակակից Ubuntu-ում նոր ռեսուրսների սահմանափակումների մեծ մասի համար։</p>
 <h2 id="_10">Ինքնաստուգում<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Ի՞նչ է ցույց տալիս <code>mount | grep cgroup</code>-ի <code>cgroup2</code> տողի առկայությունը, և ո՞րն է տարբերությունը v1-ի և v2-ի ակտիվ լինելու միջև։</li>
 <li>Ի՞նչ տարբերություն կա <code>MemoryMax</code>-ի և <code>MemoryHigh</code>-ի միջև, և ի՞նչ է կատարվում դրանցից յուրաքանչյուրի գերազանցման դեպքում։</li>
 <li>Ի՞նչ է նշանակում <code>CPUQuota=200%</code>-ը, և ինչպե՞ս է այն կապված CPU միջուկների քանակի հետ։</li>
 <li>Ի՞նչ slice-ներ կան systemd-ում (<code>system.slice</code>, <code>user.slice</code>, <code>machine.slice</code>) և ի՞նչ դեր ունեն ռեսուրսների խմբավորման մեջ։</li>
-<li>Ի՞նչ հրամանով կգործարկես մեկ հրաման<code>ժամանակավոր հիշողության սահմանմամբ</code> առանց unit ֆայլ ստեղծելու, և ի՞նչ է տալիս <code>--scope</code>-ը։</li>
+<li>Ի՞նչ հրամանով կգործարկես մեկ հրաման՝ ժամանակավոր հիշողության սահմանմամբ՝ առանց unit ֆայլ ստեղծելու, և ի՞նչ է տալիս <code>--scope</code>-ը։</li>
 <li>Ի՞նչ ռեսուրսներ կարող է սահմանափակել cgroup-ը, և ինչպե՞ս է <code>TasksMax</code>-ը պաշտպանում «fork bomb» հարձակումից։</li>
 <li>Ինչպե՞ս կախտորոշես, թե որ cgroup/ծառայությունն է սպառում host-ի հիշողությունը, և ի՞նչ alert-եր կդնես կանխարգելման համար։</li>
-<li>Ի՞նչ դեր ունի <code>/sys/fs/cgroup/</code>-ը, և ինչո՞ւ է խորհուրդ տրվում cgroups-ով աշխատել systemd-ի միջոցով` այլ ոչ թե ուղղակի ֆայլային մանիպուլյացիայով։</li>
+<li>Ի՞նչ դեր ունի <code>/sys/fs/cgroup/</code>-ը, և ինչո՞ւ է խորհուրդ տրվում cgroups-ով աշխատել systemd-ի միջոցով՝ այլ ոչ թե ուղղակի ֆայլային մանիպուլյացիայով։</li>
 </ol>
 <h2 id="_11">Հաջորդ քայլեր<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
-<p>Շարունակիր <a href="../">systemd</a> թեմայով. cgroups-ը համակարգի ռեսուրսների կառավարման «ներսի» մեխանիզմն է, իսկ systemd-ը` այն միջերեսը, որով DevOps-ն ամենից հաճախ է աշխատում դրա հետ։ Այս գիտելիքը ուղիղ կապ ունի նաև <a href="../../docker-kubernetes/">Docker և Kubernetes</a> բաժնի հետ, որտեղ cgroups-ը կոնտեյներների ռեսուրսների սահմանափակման հիմքն է։</p>
+<p>Շարունակիր <a href="../">systemd</a> թեմայով. cgroups-ը համակարգի ռեսուրսների կառավարման «ներսի» մեխանիզմն է, իսկ systemd-ը՝ այն միջերեսը, որով DevOps-ն ամենից հաճախ է աշխատում դրա հետ։ Այս գիտելիքը ուղիղ կապ ունի նաև <a href="../../docker-kubernetes/">Docker և Kubernetes</a> բաժնի հետ, որտեղ cgroups-ը կոնտեյներների ռեսուրսների սահմանափակման հիմքն է։</p>
 
 
 

@@ -645,12 +645,12 @@
   <a href="#2-load-average-cpu-io-bound" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU` I/O-bound
+        Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU՝ I/O-bound
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU` I/O-bound">
+    <nav class="md-nav" aria-label="Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU՝ I/O-bound">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -859,6 +859,34 @@
     
   
     Networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../firewall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firewall
   
 
     
@@ -1167,12 +1195,12 @@
   <a href="#2-load-average-cpu-io-bound" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU` I/O-bound
+        Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU՝ I/O-bound
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU` I/O-bound">
+    <nav class="md-nav" aria-label="Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU՝ I/O-bound">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1331,7 +1359,7 @@
 <li><code>Z</code> — zombie. ավարտվել է, բայց ծնողը դեռ չի վերցրել exit status-ը։</li>
 </ul>
 <h3 id="cpu-io-">Ինչպե՞ս տարբերել CPU-ի և I/O-ի բեռը<a class="headerlink" href="#cpu-io-" title="Permanent link">&para;</a></h3>
-<p><strong>Load Average</strong>-ը ցույց է տալիս ակտիվ process-ների միջին քանակը 1, 5 և 15 րոպեների ընթացքում (օրինակ<code></code>load average: 8.45, 7.90, 6.20<code>)։ Այն միայն CPU-ի զբաղվածությունը չի չափում. հաշվում են և՛</code>R<code>(running/runnable), և՛</code>D<code>(uninterruptible sleep, սովորաբար I/O-ի սպասում) վիճակի process-ները։ Բարձր Load-ի պատճառը գտնելու համար նայիր</code>top<code>-ի</code>%Cpu` տողին.</p>
+<p><strong>Load Average</strong>-ը ցույց է տալիս ակտիվ process-ների միջին քանակը 1, 5 և 15 րոպեների ընթացքում (օրինակ՝ <code>load average: 8.45, 7.90, 6.20</code>)։ Այն միայն CPU-ի զբաղվածությունը չի չափում. հաշվում են և՛ <code>R</code> (running/runnable), և՛ <code>D</code> (uninterruptible sleep, սովորաբար I/O-ի սպասում) վիճակի process-ները։ Բարձր Load-ի պատճառը գտնելու համար նայիր <code>top</code>-ի <code>%Cpu</code> տողին.</p>
 <table>
 <thead>
 <tr>
@@ -1375,17 +1403,17 @@
 <li>«<code>us</code> + <code>sy</code>»-ը բարձր (=80%+) և «<code>wa</code>»-ն ցածր → համակարգը <strong>CPU-bound</strong> է. բեռը տալիս են <code>R</code> process-ները.</li>
 <li>«<code>us</code> + <code>sy</code>»-ը ցածր և «<code>wa</code>»-ն բարձր (20%+) → համակարգը <strong>I/O-bound</strong> է. CPU-ն սպասում է I/O-ի, Load Average-ը աճել է <code>D</code> process-ների պատճառով.</li>
 </ul>
-<p><strong>us vs sy, ring-եր և space-ներ.</strong> <code>us</code>-ը ձեր ծրագրի «մաքուր» աշխատանքն է, իսկ <code>sy</code>-ը՝ kernel-ի աշխատանքը<code>ձեր ծրագրի խնդրանքով։ CPU-ի ring/privilege levels-ը (Ring 0-3) ապարատային պաշտպանության մեխանիզմ է. Ring 0-ում աշխատ է kernel-ը (</code>sy<code>), Ring 3-ում</code> ձեր process-ները (<code>us</code>), Ring 1-2-ը ժամանակակից Linux-ում գրեթե չեն օգտագործվում։ Երբ process-ին անհրաժեշտ է ֆայլի մուտք, system call-ի միջոցով CPU-ն Ring 3-ից անցնում է Ring 0։ «Space»-ը վերաբերում է հիշողությանը<code>User Space-ը</code> ձեր process-ները, Kernel Space-ը` միջուկի կառուցվածքը.</p>
+<p><strong>us vs sy, ring-եր և space-ներ.</strong> <code>us</code>-ը ձեր ծրագրի «մաքուր» աշխատանքն է, իսկ <code>sy</code>-ը՝ kernel-ի աշխատանքը՝ ձեր ծրագրի խնդրանքով։ CPU-ի ring/privilege levels-ը (Ring 0-3) ապարատային պաշտպանության մեխանիզմ է. Ring 0-ում աշխատ է kernel-ը (<code>sy</code>), Ring 3-ում՝ ձեր process-ները (<code>us</code>), Ring 1-2-ը ժամանակակից Linux-ում գրեթե չեն օգտագործվում։ Երբ process-ին անհրաժեշտ է ֆայլի մուտք, system call-ի միջոցով CPU-ն Ring 3-ից անցնում է Ring 0։ «Space»-ը վերաբերում է հիշողությանը՝ User Space-ը՝ ձեր process-ները, Kernel Space-ը՝ միջուկի կառուցվածքը.</p>
 <p><strong>Ախտորոշիչ գործիքներ.</strong></p>
 <ul>
 <li><code>top</code> / <code>htop</code> — ամենահեշտ քայլ, Load Average-ն ու <code>%Cpu</code>-ն և process list-ը.</li>
-<li><code>vmstat 1</code> — Virtual Memory Statistics. համակարգի ընդհանուր պատկեր (processes, CPU, memory, I/O, swap)` ամեն վայրկյան</li>
+<li><code>vmstat 1</code> — Virtual Memory Statistics. համակարգի ընդհանուր պատկեր (processes, CPU, memory, I/O, swap)՝ ամեն վայրկյան</li>
 <li><code>mpstat -P ALL 1</code> — Multi-Processor Statistics. CPU-ի յուրաքանչյուր core-ի ծանրաբեռնվածությունը.</li>
 <li><code>iostat -x 1</code> — Input/Output Statistics. device-ի %util-ը և await-ը.</li>
 <li><code>iotop</code> — I/O Top. որի process-ները ծանրաբեռնում են սկավառակը.</li>
 <li><code>ps -eo pid,stat,wchan:30,comm</code> — D-վիճակի (I/O-ին սպասող) process-ների ցուցակ.</li>
 </ul>
-<p><code>iostat</code>-ի <code>%util</code>-ը 100%-ին մոտ լինելը խոսում է սկավառակի գերբեռնվածության մասին, իսկ բարձր <code>await</code>-ը<code>դանդաղ I/O-ի նշան է. D-վիճակի process-ներն են Load Average-ի մեջ</code> ահա ցածր CPU-ի դեպքում բարձր Load-ի պատճառը։</p>
+<p><code>iostat</code>-ի <code>%util</code>-ը 100%-ին մոտ լինելը խոսում է սկավառակի գերբեռնվածության մասին, իսկ բարձր <code>await</code>-ը՝ դանդաղ I/O-ի նշան է. D-վիճակի process-ներն են Load Average-ի մեջ՝ ահա ցածր CPU-ի դեպքում բարձր Load-ի պատճառը։</p>
 <h2 id="_2">Հիմնական հրամաններ<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1418,7 +1446,7 @@
 </tr>
 <tr>
 <td><code>vmstat 1</code></td>
-<td>Ընդհանուր պատկեր` processes, memory, CPU, I/O, swap</td>
+<td>Ընդհանուր պատկեր՝ processes, memory, CPU, I/O, swap</td>
 <td>Անվտանգ, միայն կարդում է</td>
 </tr>
 <tr>
@@ -1443,7 +1471,7 @@
 </tr>
 <tr>
 <td><code>ionice -c 3 -p &lt;PID&gt;</code></td>
-<td>Process-ի I/O-ն` idle class</td>
+<td>Process-ի I/O-ն՝ idle class</td>
 <td>Ազդում է I/O priority-ի վրա</td>
 </tr>
 <tr>
@@ -1475,17 +1503,17 @@ ps<span class="w"> </span>-p<span class="w"> </span>&lt;PID&gt;
 <p>Երբեք մի գործարկիր <code>kill</code> հրամանը հին copy-paste արված PID-ով. ավարտված PID-ը կարող է վերօգտագործվել մեկ այլ process-ի համար։ Նախ նորից ստուգիր command-ը <code>ps</code>-ով։</p>
 </div>
 <h3 id="lab-2-io-">Lab 2. I/O-ի բեռի ախտորոշում<a class="headerlink" href="#lab-2-io-" title="Permanent link">&para;</a></h3>
-<p>Միջավայր<code>սովորական Linux VM կամ container, որտեղ տեղադրել ես</code>sysstat<code>-ը (տալիս է</code>mpstat<code>/</code>iostat<code>) և</code>iotop`-ը։ Մի գործարկիր production server-ում.</p>
+<p>Միջավայր՝ սովորական Linux VM կամ container, որտեղ տեղադրել ես <code>sysstat</code>-ը (տալիս է <code>mpstat</code>/<code>iostat</code>) և <code>iotop</code>-ը։ Մի գործարկիր production server-ում.</p>
 <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>sysstat<span class="w"> </span>iotop<span class="w">    </span><span class="c1"># Debian/Ubuntu</span>
 dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/zero<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/tmp/test.img<span class="w"> </span><span class="nv">oflag</span><span class="o">=</span>direct<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>1M<span class="w"> </span><span class="nv">count</span><span class="o">=</span><span class="m">2048</span><span class="w"> </span><span class="p">&amp;</span>
 </code></pre></div>
-<p><code>dd</code>-ը մեծ ֆայլ է գրում սկավառակ` ստեղծելով I/O-ի բեռ։ Այնուհետև մեկ ուրիշ տերմինալում.</p>
+<p><code>dd</code>-ը մեծ ֆայլ է գրում սկավառակ՝ ստեղծելով I/O-ի բեռ։ Այնուհետև մեկ ուրիշ տերմինալում.</p>
 <div class="highlight"><pre><span></span><code>top
 vmstat<span class="w"> </span><span class="m">1</span>
 ps<span class="w"> </span>-eo<span class="w"> </span>pid,stat,wchan:30,comm<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'$2 ~ /^D/ {print}'</span>
 iostat<span class="w"> </span>-x<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
-<p>Սպասվող արդյունքը<code></code>top<code>-ում</code>wa<code>-ն բարձր է,</code>iostat<code>-ում</code> <code>%util</code>-ը մոտ 100% է, իսկ <code>ps</code>-ում <code>dd</code>-ի process-ը <code>D</code> վիճակում է։ Ավարտելուց հետո կանգնեցրու<code></code>kill %1<code>, ապա ջնջիր ֆայլը</code> <code>rm /tmp/test.img</code>։</p>
+<p>Սպասվող արդյունքը՝ <code>top</code>-ում <code>wa</code>-ն բարձր է, <code>iostat</code>-ում՝ <code>%util</code>-ը մոտ 100% է, իսկ <code>ps</code>-ում <code>dd</code>-ի process-ը <code>D</code> վիճակում է։ Ավարտելուց հետո կանգնեցրու՝ <code>kill %1</code>, ապա ջնջիր ֆայլը՝ <code>rm /tmp/test.img</code>։</p>
 <h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
 <h3 id="_3">Ախտանիշ<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p>Web ծառայությունը դանդաղել է, CPU-ն 100% է, իսկ load balancer-ի health check-երը սկսել են ձախողվել։</p>
@@ -1509,25 +1537,25 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="
 <li>Սահմանել resource limits container-ների կամ systemd unit-երի համար։</li>
 <li>Runbook-ում գրել՝ որ ծառայությունն ինչպես է վերագործարկվում։</li>
 </ul>
-<h3 id="2-load-average-cpu-io-bound">Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU` I/O-bound<a class="headerlink" href="#2-load-average-cpu-io-bound" title="Permanent link">&para;</a></h3>
+<h3 id="2-load-average-cpu-io-bound">Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU՝ I/O-bound<a class="headerlink" href="#2-load-average-cpu-io-bound" title="Permanent link">&para;</a></h3>
 <h4 id="_7">Ախտանիշ<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
-<p>Տվյալների բազա և վեբ-հավելված ունեցող 8-core սերվերում<code></code>load average: 8.45, 7.90, 6.20<code>։</code>top<code>-ում</code> <code>5.2 us, 3.1 sy, 18.5 id, 72.1 wa</code>։ Ծառայությունը դանդաղ է աշխատում, հարցումների պատասխանները երկարում են։</p>
+<p>Տվյալների բազա և վեբ-հավելված ունեցող 8-core սերվերում՝ <code>load average: 8.45, 7.90, 6.20</code>։ <code>top</code>-ում՝ <code>5.2 us, 3.1 sy, 18.5 id, 72.1 wa</code>։ Ծառայությունը դանդաղ է աշխատում, հարցումների պատասխանները երկարում են։</p>
 <h4 id="_8">Ախտորոշում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
 <ol>
 <li>
-<p><code>top</code>-ի <code>wa</code> = 72.1%, իսկ <code>us + sy</code> = 8.3%<code>ուրեմն դա CPU-ի խնդիր չէ</code> CPU-ն սպասում է I/O-ի ավարտին։</p>
+<p><code>top</code>-ի <code>wa</code> = 72.1%, իսկ <code>us + sy</code> = 8.3%՝ ուրեմն դա CPU-ի խնդիր չէ՝ CPU-ն սպասում է I/O-ի ավարտին։</p>
 </li>
 <li>
-<p><code>vmstat 1</code>-ում <code>b</code> (blocked) = 5, <code>bi</code>/<code>bo</code>-ն բարձր են (2845/1230)` I/O-ի ակտիվությունը մեծ է։</p>
+<p><code>vmstat 1</code>-ում <code>b</code> (blocked) = 5, <code>bi</code>/<code>bo</code>-ն բարձր են (2845/1230)՝ I/O-ի ակտիվությունը մեծ է։</p>
 </li>
-<li><code>mpstat -P ALL 1</code>-ում բոլոր 8 cores-ի <code>iowait</code>-ը 70-73% է` բեռը հավասարաչափ բաշխված է, ոչ թե մեկ core-ում։</li>
-<li><code>iotop -o</code>-ում տեսանելի է<code></code>mysql<code>կարդում է 1842 M/s,</code>php-fpm<code>567 M/s,</code>postgres<code>436 M/s, իսկ</code>dd<code>գրում է 890 M/s</code> պատճառը պարզ է։</li>
+<li><code>mpstat -P ALL 1</code>-ում բոլոր 8 cores-ի <code>iowait</code>-ը 70-73% է՝ բեռը հավասարաչափ բաշխված է, ոչ թե մեկ core-ում։</li>
+<li><code>iotop -o</code>-ում տեսանելի է՝ <code>mysql</code> կարդում է 1842 M/s, <code>php-fpm</code> 567 M/s, <code>postgres</code> 436 M/s, իսկ <code>dd</code> գրում է 890 M/s՝ պատճառը պարզ է։</li>
 </ol>
 <h4 id="_9">Լուծում<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
-<p>Կարճաժամկետ` իջեցնել backup-ի I/O-ն.</p>
+<p>Կարճաժամկետ՝ իջեցնել backup-ի I/O-ն.</p>
 <div class="highlight"><pre><span></span><code>ionice<span class="w"> </span>-c<span class="w"> </span><span class="m">3</span><span class="w"> </span>-p<span class="w"> </span>&lt;dd<span class="w"> </span>PID&gt;<span class="w">          </span><span class="c1"># dd-ի I/O-ն` idle class</span>
 </code></pre></div>
-<p>Երկարաժամկետ` backup-ը տեղափոխել ոչ պիկ ժամի կամ առանձին մեքենա, MySQL-ի ծանր հարցումներին ինդեքս ավելացնել, անհրաժեշտության դեպքում օգտագործել ավելի արագ սկավառակ (NVMe)։</p>
+<p>Երկարաժամկետ՝ backup-ը տեղափոխել ոչ պիկ ժամի կամ առանձին մեքենա, MySQL-ի ծանր հարցումներին ինդեքս ավելացնել, անհրաժեշտության դեպքում օգտագործել ավելի արագ սկավառակ (NVMe)։</p>
 <h4 id="_10">Կանխարգելում<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
 <ul>
 <li>I/O wait-ի և disk <code>%util</code>-ի համար alert դնել։</li>
@@ -1540,7 +1568,7 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="
 <h3 id="zombie-process-">Ի՞նչ է zombie process-ը<a class="headerlink" href="#zombie-process-" title="Permanent link">&para;</a></h3>
 <p>Ավարտված child process է, որի exit status-ը ծնողը դեռ չի կարդացել։ Այն գրեթե CPU/RAM չի օգտագործում, բայց պահում է process table-ի գրառում։ Խնդրի արմատը սովորաբար parent process-ի սխալ վարքն է։</p>
 <h3 id="load-average-io-cpu-">Ինչպե՞ս կհաստատես, որ բարձր Load Average-ը I/O-ի, ոչ թե CPU-ի պատճառով է<a class="headerlink" href="#load-average-io-cpu-" title="Permanent link">&para;</a></h3>
-<p><code>top</code>-ի <code>%Cpu</code> տողում <code>wa</code>-ն բարձր է (օր. 70%), իսկ <code>us + sy</code>-ը<code>ցածր</code> նշանակում է<code>CPU-ն սպասում է I/O-ի ավարտին։ Հաստատելու համար</code> <code>vmstat 1</code>-ի <code>b</code> սյունակը (blocked process-ներ), <code>iostat -x 1</code>-ի <code>%util</code>-ն ու <code>await</code>-ը, և <code>iotop</code>-ը<code>որը ցույց է տալիս կոնկրետ</code>I/O<code>-ծանր process-ը։ Load-ն այստեղ բարձրանում է D-վիճակի process-ների հաշվին</code> CPU-ն պարապ է, բայց system-ը` ոչ։</p>
+<p><code>top</code>-ի <code>%Cpu</code> տողում <code>wa</code>-ն բարձր է (օր. 70%), իսկ <code>us + sy</code>-ը՝ ցածր՝ նշանակում է՝ CPU-ն սպասում է I/O-ի ավարտին։ Հաստատելու համար՝ <code>vmstat 1</code>-ի <code>b</code> սյունակը (blocked process-ներ), <code>iostat -x 1</code>-ի <code>%util</code>-ն ու <code>await</code>-ը, և <code>iotop</code>-ը՝ որը ցույց է տալիս կոնկրետ <code>I/O</code>-ծանր process-ը։ Load-ն այստեղ բարձրանում է D-վիճակի process-ների հաշվին՝ CPU-ն պարապ է, բայց system-ը՝ ոչ։</p>
 <h2 id="_12">Ինքնաստուգում<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Ինչպե՞ս կգտնես process-ի parent-ը։</li>

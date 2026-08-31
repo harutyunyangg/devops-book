@@ -16,7 +16,7 @@ Linux-ում process-ի վիճակներից օգտակարներն են.
 
 ### Ինչպե՞ս տարբերել CPU-ի և I/O-ի բեռը
 
-**Load Average**-ը ցույց է տալիս ակտիվ process-ների միջին քանակը 1, 5 և 15 րոպեների ընթացքում (օրինակ` `load average: 8.45, 7.90, 6.20`)։ Այն միայն CPU-ի զբաղվածությունը չի չափում. հաշվում են և՛ `R` (running/runnable), և՛ `D` (uninterruptible sleep, սովորաբար I/O-ի սպասում) վիճակի process-ները։ Բարձր Load-ի պատճառը գտնելու համար նայիր `top`-ի `%Cpu` տողին.
+**Load Average**-ը ցույց է տալիս ակտիվ process-ների միջին քանակը 1, 5 և 15 րոպեների ընթացքում (օրինակ՝ `load average: 8.45, 7.90, 6.20`)։ Այն միայն CPU-ի զբաղվածությունը չի չափում. հաշվում են և՛ `R` (running/runnable), և՛ `D` (uninterruptible sleep, սովորաբար I/O-ի սպասում) վիճակի process-ները։ Բարձր Load-ի պատճառը գտնելու համար նայիր `top`-ի `%Cpu` տողին.
 
 | Ցուցանիշ | Իմաստ |
 | --- | --- |
@@ -33,18 +33,18 @@ Linux-ում process-ի վիճակներից օգտակարներն են.
 - «`us` + `sy`»-ը բարձր (=80%+) և «`wa`»-ն ցածր → համակարգը **CPU-bound** է. բեռը տալիս են `R` process-ները.
 - «`us` + `sy`»-ը ցածր և «`wa`»-ն բարձր (20%+) → համակարգը **I/O-bound** է. CPU-ն սպասում է I/O-ի, Load Average-ը աճել է `D` process-ների պատճառով.
 
-**us vs sy, ring-եր և space-ներ.** `us`-ը ձեր ծրագրի «մաքուր» աշխատանքն է, իսկ `sy`-ը՝ kernel-ի աշխատանքը` ձեր ծրագրի խնդրանքով։ CPU-ի ring/privilege levels-ը (Ring 0-3) ապարատային պաշտպանության մեխանիզմ է. Ring 0-ում աշխատ է kernel-ը (`sy`), Ring 3-ում` ձեր process-ները (`us`), Ring 1-2-ը ժամանակակից Linux-ում գրեթե չեն օգտագործվում։ Երբ process-ին անհրաժեշտ է ֆայլի մուտք, system call-ի միջոցով CPU-ն Ring 3-ից անցնում է Ring 0։ «Space»-ը վերաբերում է հիշողությանը` User Space-ը` ձեր process-ները, Kernel Space-ը` միջուկի կառուցվածքը.
+**us vs sy, ring-եր և space-ներ.** `us`-ը ձեր ծրագրի «մաքուր» աշխատանքն է, իսկ `sy`-ը՝ kernel-ի աշխատանքը՝ ձեր ծրագրի խնդրանքով։ CPU-ի ring/privilege levels-ը (Ring 0-3) ապարատային պաշտպանության մեխանիզմ է. Ring 0-ում աշխատ է kernel-ը (`sy`), Ring 3-ում՝ ձեր process-ները (`us`), Ring 1-2-ը ժամանակակից Linux-ում գրեթե չեն օգտագործվում։ Երբ process-ին անհրաժեշտ է ֆայլի մուտք, system call-ի միջոցով CPU-ն Ring 3-ից անցնում է Ring 0։ «Space»-ը վերաբերում է հիշողությանը՝ User Space-ը՝ ձեր process-ները, Kernel Space-ը՝ միջուկի կառուցվածքը.
 
 **Ախտորոշիչ գործիքներ.**
 
 - `top` / `htop` — ամենահեշտ քայլ, Load Average-ն ու `%Cpu`-ն և process list-ը.
-- `vmstat 1` — Virtual Memory Statistics. համակարգի ընդհանուր պատկեր (processes, CPU, memory, I/O, swap)` ամեն վայրկյան
+- `vmstat 1` — Virtual Memory Statistics. համակարգի ընդհանուր պատկեր (processes, CPU, memory, I/O, swap)՝ ամեն վայրկյան
 - `mpstat -P ALL 1` — Multi-Processor Statistics. CPU-ի յուրաքանչյուր core-ի ծանրաբեռնվածությունը.
 - `iostat -x 1` — Input/Output Statistics. device-ի %util-ը և await-ը.
 - `iotop` — I/O Top. որի process-ները ծանրաբեռնում են սկավառակը.
 - `ps -eo pid,stat,wchan:30,comm` — D-վիճակի (I/O-ին սպասող) process-ների ցուցակ.
 
-`iostat`-ի `%util`-ը 100%-ին մոտ լինելը խոսում է սկավառակի գերբեռնվածության մասին, իսկ բարձր `await`-ը` դանդաղ I/O-ի նշան է. D-վիճակի process-ներն են Load Average-ի մեջ` ահա ցածր CPU-ի դեպքում բարձր Load-ի պատճառը։
+`iostat`-ի `%util`-ը 100%-ին մոտ լինելը խոսում է սկավառակի գերբեռնվածության մասին, իսկ բարձր `await`-ը՝ դանդաղ I/O-ի նշան է. D-վիճակի process-ներն են Load Average-ի մեջ՝ ահա ցածր CPU-ի դեպքում բարձր Load-ի պատճառը։
 
 ## Հիմնական հրամաններ
 
@@ -54,12 +54,12 @@ Linux-ում process-ի վիճակներից օգտակարներն են.
 | `ps -o pid,ppid,stat,cmd -p <PID>` | Մեկ process-ի մանրամասներ | Անվտանգ, միայն կարդում է |
 | `pgrep -a nginx` | Գտնել process-ը անունով | Անվտանգ, միայն կարդում է |
 | `top` | CPU/RAM-ի live դիտարկում | `q`՝ դուրս գալու համար |
-| `vmstat 1` | Ընդհանուր պատկեր` processes, memory, CPU, I/O, swap | Անվտանգ, միայն կարդում է |
+| `vmstat 1` | Ընդհանուր պատկեր՝ processes, memory, CPU, I/O, swap | Անվտանգ, միայն կարդում է |
 | `mpstat -P ALL 1` | Յուրաքանչյուր core-ի CPU բեռը | sysstat փաթեթից |
 | `iostat -x 1` | Սկավառակի `%util`-ը և `await`-ը | sysstat փաթեթից, կարող է root պահանջել |
 | `iotop -o` | Որ process-ի I/O բեռն է մեծ | Root է պահանջում (`sudo`) |
 | `ps -eo pid,stat,wchan:30,comm` | D-վիճակի process-ների ցուցակ | Անվտանգ, միայն կարդում է |
-| `ionice -c 3 -p <PID>` | Process-ի I/O-ն` idle class | Ազդում է I/O priority-ի վրա |
+| `ionice -c 3 -p <PID>` | Process-ի I/O-ն՝ idle class | Ազդում է I/O priority-ի վրա |
 | `kill -TERM <PID>` | Խնդրել process-ին նորմալ ավարտել | Նախընտրելի առաջին քայլ |
 | `kill -KILL <PID>` | Kernel-ով ակնթարթորեն կանգնեցնել process-ը | Կարող է կորցնել չգրված տվյալներ |
 
@@ -89,14 +89,14 @@ ps -p <PID>
 
 ### Lab 2. I/O-ի բեռի ախտորոշում
 
-Միջավայր` սովորական Linux VM կամ container, որտեղ տեղադրել ես `sysstat`-ը (տալիս է `mpstat`/`iostat`) և `iotop`-ը։ Մի գործարկիր production server-ում.
+Միջավայր՝ սովորական Linux VM կամ container, որտեղ տեղադրել ես `sysstat`-ը (տալիս է `mpstat`/`iostat`) և `iotop`-ը։ Մի գործարկիր production server-ում.
 
 ```bash
 sudo apt install -y sysstat iotop    # Debian/Ubuntu
 dd if=/dev/zero of=/tmp/test.img oflag=direct bs=1M count=2048 &
 ```
 
-`dd`-ը մեծ ֆայլ է գրում սկավառակ` ստեղծելով I/O-ի բեռ։ Այնուհետև մեկ ուրիշ տերմինալում.
+`dd`-ը մեծ ֆայլ է գրում սկավառակ՝ ստեղծելով I/O-ի բեռ։ Այնուհետև մեկ ուրիշ տերմինալում.
 
 ```bash
 top
@@ -105,7 +105,7 @@ ps -eo pid,stat,wchan:30,comm | awk '$2 ~ /^D/ {print}'
 iostat -x 1
 ```
 
-Սպասվող արդյունքը` `top`-ում `wa`-ն բարձր է, `iostat`-ում` `%util`-ը մոտ 100% է, իսկ `ps`-ում `dd`-ի process-ը `D` վիճակում է։ Ավարտելուց հետո կանգնեցրու` `kill %1`, ապա ջնջիր ֆայլը` `rm /tmp/test.img`։
+Սպասվող արդյունքը՝ `top`-ում `wa`-ն բարձր է, `iostat`-ում՝ `%util`-ը մոտ 100% է, իսկ `ps`-ում `dd`-ի process-ը `D` վիճակում է։ Ավարտելուց հետո կանգնեցրու՝ `kill %1`, ապա ջնջիր ֆայլը՝ `rm /tmp/test.img`։
 
 ## Իրական DevOps իրավիճակ
 
@@ -138,29 +138,29 @@ sudo systemctl status <service>
 - Սահմանել resource limits container-ների կամ systemd unit-երի համար։
 - Runbook-ում գրել՝ որ ծառայությունն ինչպես է վերագործարկվում։
 
-### Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU` I/O-bound
+### Իրավիճակ 2. Բարձր Load Average, բայց ցածր CPU՝ I/O-bound
 
 #### Ախտանիշ
 
-Տվյալների բազա և վեբ-հավելված ունեցող 8-core սերվերում` `load average: 8.45, 7.90, 6.20`։ `top`-ում` `5.2 us, 3.1 sy, 18.5 id, 72.1 wa`։ Ծառայությունը դանդաղ է աշխատում, հարցումների պատասխանները երկարում են։
+Տվյալների բազա և վեբ-հավելված ունեցող 8-core սերվերում՝ `load average: 8.45, 7.90, 6.20`։ `top`-ում՝ `5.2 us, 3.1 sy, 18.5 id, 72.1 wa`։ Ծառայությունը դանդաղ է աշխատում, հարցումների պատասխանները երկարում են։
 
 #### Ախտորոշում
 
-1. `top`-ի `wa` = 72.1%, իսկ `us + sy` = 8.3%` ուրեմն դա CPU-ի խնդիր չէ` CPU-ն սպասում է I/O-ի ավարտին։
+1. `top`-ի `wa` = 72.1%, իսկ `us + sy` = 8.3%՝ ուրեմն դա CPU-ի խնդիր չէ՝ CPU-ն սպասում է I/O-ի ավարտին։
 
-2. `vmstat 1`-ում `b` (blocked) = 5, `bi`/`bo`-ն բարձր են (2845/1230)` I/O-ի ակտիվությունը մեծ է։
-3. `mpstat -P ALL 1`-ում բոլոր 8 cores-ի `iowait`-ը 70-73% է` բեռը հավասարաչափ բաշխված է, ոչ թե մեկ core-ում։
-4. `iotop -o`-ում տեսանելի է` `mysql` կարդում է 1842 M/s, `php-fpm` 567 M/s, `postgres` 436 M/s, իսկ `dd` գրում է 890 M/s` պատճառը պարզ է։
+2. `vmstat 1`-ում `b` (blocked) = 5, `bi`/`bo`-ն բարձր են (2845/1230)՝ I/O-ի ակտիվությունը մեծ է։
+3. `mpstat -P ALL 1`-ում բոլոր 8 cores-ի `iowait`-ը 70-73% է՝ բեռը հավասարաչափ բաշխված է, ոչ թե մեկ core-ում։
+4. `iotop -o`-ում տեսանելի է՝ `mysql` կարդում է 1842 M/s, `php-fpm` 567 M/s, `postgres` 436 M/s, իսկ `dd` գրում է 890 M/s՝ պատճառը պարզ է։
 
 #### Լուծում
 
-Կարճաժամկետ` իջեցնել backup-ի I/O-ն.
+Կարճաժամկետ՝ իջեցնել backup-ի I/O-ն.
 
 ```bash
 ionice -c 3 -p <dd PID>          # dd-ի I/O-ն` idle class
 ```
 
-Երկարաժամկետ` backup-ը տեղափոխել ոչ պիկ ժամի կամ առանձին մեքենա, MySQL-ի ծանր հարցումներին ինդեքս ավելացնել, անհրաժեշտության դեպքում օգտագործել ավելի արագ սկավառակ (NVMe)։
+Երկարաժամկետ՝ backup-ը տեղափոխել ոչ պիկ ժամի կամ առանձին մեքենա, MySQL-ի ծանր հարցումներին ինդեքս ավելացնել, անհրաժեշտության դեպքում օգտագործել ավելի արագ սկավառակ (NVMe)։
 
 #### Կանխարգելում
 
@@ -180,7 +180,7 @@ ionice -c 3 -p <dd PID>          # dd-ի I/O-ն` idle class
 
 ### Ինչպե՞ս կհաստատես, որ բարձր Load Average-ը I/O-ի, ոչ թե CPU-ի պատճառով է
 
-`top`-ի `%Cpu` տողում `wa`-ն բարձր է (օր. 70%), իսկ `us + sy`-ը` ցածր` նշանակում է` CPU-ն սպասում է I/O-ի ավարտին։ Հաստատելու համար` `vmstat 1`-ի `b` սյունակը (blocked process-ներ), `iostat -x 1`-ի `%util`-ն ու `await`-ը, և `iotop`-ը` որը ցույց է տալիս կոնկրետ `I/O`-ծանր process-ը։ Load-ն այստեղ բարձրանում է D-վիճակի process-ների հաշվին` CPU-ն պարապ է, բայց system-ը` ոչ։
+`top`-ի `%Cpu` տողում `wa`-ն բարձր է (օր. 70%), իսկ `us + sy`-ը՝ ցածր՝ նշանակում է՝ CPU-ն սպասում է I/O-ի ավարտին։ Հաստատելու համար՝ `vmstat 1`-ի `b` սյունակը (blocked process-ներ), `iostat -x 1`-ի `%util`-ն ու `await`-ը, և `iotop`-ը՝ որը ցույց է տալիս կոնկրետ `I/O`-ծանր process-ը։ Load-ն այստեղ բարձրանում է D-վիճակի process-ների հաշվին՝ CPU-ն պարապ է, բայց system-ը՝ ոչ։
 
 ## Ինքնաստուգում
 
