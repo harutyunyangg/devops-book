@@ -1,0 +1,1683 @@
+
+<!doctype html>
+<html lang="hy" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Հայերեն, գործնական DevOps ուղեցույց">
+      
+      
+      
+        <link rel="canonical" href="https://example.invalid/devops-book/linux/networking/">
+      
+      
+        <link rel="prev" href="../cgroups/">
+      
+      
+        <link rel="next" href="../../networking/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Networking - DevOps ուսումնական ձեռնարկ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#linux-networking" class="md-skip">
+          Անցնել պարունակությանը
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Գլխագիր">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-header__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DevOps ուսումնական ձեռնարկ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Networking
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Որոնում" placeholder="Որոնում" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Որոնում">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Ջնջել" aria-label="Ջնջել" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Որոնում
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Ներդիրներ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Սկիզբ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Linux
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../networking/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Networks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../git-ci-cd/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Git և CI/CD
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../docker-kubernetes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Docker և Kubernetes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../cloud-security-observability/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Cloud, Security, Observability
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Բառարան
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Տեղորոշում" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-nav__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DevOps ուսումնական ձեռնարկ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Սկիզբ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bash-scripting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bash Scripting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cgroups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cgroups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինտերֆեյսի անունների «կանխատեսելի» սկզբունքը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինտերֆեյսի անունները և տվյալները տեսնելը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sysclassnet-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է /sys/class/net/-ը
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հիմնական հրամաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudo-ip-addr-ip-vs-netplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        «sudo ip addr մշտական է՞»՝ ip vs Netplan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինտերֆեյսի անունը փոխելը
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ens33-mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է նշանակում ens33 ինտերֆեյսի անունը, և որտե՞ղ կպարզես քո ինտերֆեյսների անունները (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudo-ip-addr-add-ubuntu-server-ip-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչո՞ւ է sudo ip addr add-ը ժամանակավոր, և ինչ եղանակ կօգտագործես Ubuntu Server-ում մշտական IP-ի համար (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boot-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս կապահովես, որ ինտերֆեյսի անունը կայուն մնա՝ անկախ boot-ի հերթականությունից (senior-level հավելյալ)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git-ci-cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git և CI/CD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker և Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud, Security, Observability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Բառարան
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինտերֆեյսի անունների «կանխատեսելի» սկզբունքը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինտերֆեյսի անունները և տվյալները տեսնելը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sysclassnet-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է /sys/class/net/-ը
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հիմնական հրամաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sudo-ip-addr-ip-vs-netplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        «sudo ip addr մշտական է՞»՝ ip vs Netplan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինտերֆեյսի անունը փոխելը
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ens33-mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է նշանակում ens33 ինտերֆեյսի անունը, և որտե՞ղ կպարզես քո ինտերֆեյսների անունները (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudo-ip-addr-add-ubuntu-server-ip-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչո՞ւ է sudo ip addr add-ը ժամանակավոր, և ինչ եղանակ կօգտագործես Ubuntu Server-ում մշտական IP-ի համար (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boot-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս կապահովես, որ ինտերֆեյսի անունը կայուն մնա՝ անկախ boot-ի հերթականությունից (senior-level հավելյալ)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="linux-networking">Linux Networking<a class="headerlink" href="#linux-networking" title="Permanent link">&para;</a></h1>
+<h2 id="_1">Տեսություն<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>Ցանցային ինտերֆեյսը (<strong>network interface</strong>) այն «կետն» է, որով օպերացիոն համակարգը կապվում է ցանցի հետ. այն կարող է լինել ֆիզիկական սարք (լարային Ethernet քարտ, Wi-Fi ադապտեր) կամ վիրտուալ (loopback, VPN, բրիջ)։ Linux-ում սարքերի մասին տվյալներ ստանալու ու կառավարելու հիմնական միջոցներն են <code>iproute2</code>-ի <code>ip</code> հրամանը և <code>/sys/class/net/</code> վիրտուալ ֆայլային համակարգը (sysfs)։</p>
+<h3 id="_2">Ինտերֆեյսի անունների «կանխատեսելի» սկզբունքը<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>Ժամանակակից Ubuntu-ներում (մոտավորապես 16.04-ից, իսկ 18.04-ից Netplan-ի անցումով) ցանցային ինտերֆեյսների անունները փոխվել են. ավանդական <code>eth0</code>, <code>wlan0</code> անունների փոխարեն կիրառվում է <strong>Predictable Network Interface Names</strong> («կանխատեսելի ինտերֆեյսի անվանում») սկզբունքը։ Այս մոտեցումը <code>udev</code>-ի միջոցով անունը կապում է սարքի <strong>ֆիզիկական դիրքի</strong> և (կամ) <strong>MAC հասցեի</strong> հետ, որպեսզի անունը կայուն լինի և չփոխվի բեռնման հայտնաբերման հերթականությունից կախված. հին մոտեցմամբ <code>eth0</code>-ն կարող էր «սայթաքել» մյուս սարքին, երբ սարքերը հայտնվում էին տարբեր կարգով, ինչը վտանգում էր firewall-ի կանոններն ու կարգավորումները։</p>
+<p>Անվանումներն այժմ ունեն որոշակի կառուցվածք, որը թույլ է տալիս հասկանալ, թե ինչ սարքի հետ գործ ունենք.</p>
+<table>
+<thead>
+<tr>
+<th>Նախածանց</th>
+<th>Նշանակություն</th>
+<th>Օրինակ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lo</code></td>
+<td>Loopback. համակարգի «ներքին» ցանցը, միշտ <code>127.0.0.1</code> / <code>::1</code></td>
+<td><code>lo</code></td>
+</tr>
+<tr>
+<td><code>enX...</code></td>
+<td>Ethernet (լարային ցանց)</td>
+<td><code>enp3s0</code>, <code>enp0s3</code></td>
+</tr>
+<tr>
+<td><code>wlX...</code></td>
+<td>Wireless LAN (Wi-Fi)</td>
+<td><code>wlp2s0</code>, <code>wlo1</code></td>
+</tr>
+<tr>
+<td><code>wwX...</code></td>
+<td>Wireless WAN (բջջային մոդեմ)</td>
+<td><code>wwan0</code></td>
+</tr>
+<tr>
+<td><code>ens33</code></td>
+<td>Ethernet, որը միացված է PCI <strong>s</strong>lot <code>33</code>-ին</td>
+<td><code>ens33</code></td>
+</tr>
+</tbody>
+</table>
+<p>Անվան մնացած մասը ցույց է տալիս սարքի ֆիզիկական դիրքը.</p>
+<ul>
+<li><code>p</code> — PCI <strong>bus</strong> համարը, օր. <code>enp3s0</code>-ում <code>3</code>-ը PCI bus-ն է.</li>
+<li><code>s</code> — PCI <strong>slot</strong> համարը, օր. <code>ens33</code>-ում <code>33</code>-րդ սլոտը.</li>
+<li><code>d</code> — PCI <strong>device/function</strong> համարը (օր. <code>enp0s3f1</code> նշանակում է function 1)։</li>
+<li><code>x</code> — անունը ծագում է <strong>MAC</strong> հասցեից, օր. <code>enx00:0c:29:ab:cd:ef</code>-ի կրճատում (հարմար, երբ սարքը չունի հստակ PCI դիրք)։</li>
+<li><code>o</code> — onboard ինտերֆեյս (<code>en0</code>), երբ firmware-ի ACPI-ն տալիս է նշանակված անուն։</li>
+</ul>
+<p>Հենց դա էլ վերծանում է <code>ens33</code>-ը. <code>en</code> = Ethernet, <code>s</code> = PCI-Express սլոտ, <code>33</code> = 33-րդ սլոտ. այսինքն՝ լարային ցանցային քարտ՝ 33-րդ PCI սլոտում։ Ճշգրիտ համարները կախված են մայր տախտակի/VM-ի ապարատային կոնֆիգուրացիայից, ուստի երկու «նույն» մեքենաների անունները կարող են տարբերվել. ձեր մեքենայում ինտերֆեյսը կարող է կոչվել <code>enp0s3</code>, <code>eth0</code> կամ այլ անունով՝ կախված ապարատից.</p>
+<h3 id="_3">Ինտերֆեյսի անունները և տվյալները տեսնելը<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>Ձեր համակարգի ինտերֆեյսների անունները տեսնելու ամենահեշտ ձևը հետևյալ հրամաններից որևէ մեկի օգտագործումն է.</p>
+<div class="highlight"><pre><span></span><code>ip<span class="w"> </span>a
+<span class="c1"># կամ</span>
+ip<span class="w"> </span>addr<span class="w"> </span>show
+</code></pre></div>
+<p>Դրանք ցուցադրում են բոլոր ակտիվ ցանցային ինտերֆեյսները՝ անուններով, IP հասցեներով, MAC հասցեներով և վիճակով։ Մեկ այլ տարբերակ՝ դիտել <code>/sys/class/net/</code> պանակը.</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/sys/class/net
+</code></pre></div>
+<p>Այս տարբերակը ցույց է տալիս միայն ինտերֆեյսների անունները (օր. <code>lo enp0s3 wlo1</code>). դա հարմար է սկրիպտներում՝ թույլ տալով աշխատել ցուցակի հետ՝ առանց հավելյալ tool-ների տեղադրման։</p>
+<h3 id="sysclassnet-">Ի՞նչ է <code>/sys/class/net/</code>-ը<a class="headerlink" href="#sysclassnet-" title="Permanent link">&para;</a></h3>
+<p><code>/sys/class/net/</code>-ը <strong>sysfs</strong>-ի պանակ է՝ Linux-ի վիրտուալ ֆայլային համակարգ, որը kernel-ը «ցույց է տալիս» որպես ֆայլեր ու պանակներ՝ առանց իրական սկավառակի վրա գրելու. դրանք իրական ֆայլեր չեն, այլ kernel-ի կողմից տրամադրվող ինտերֆեյս՝ համակարգի և սարքերի մասին տվյալներ ստանալու համար։ Այստեղ կա առանձին ենթապանակ՝ յուրաքանչյուր ինտերֆեյսի անունով, օրինակ.</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/sys/class/net/enp0s3/
+</code></pre></div>
+<p>Այնտեղ կարող եք գտնել հետևյալ կարևոր ֆայլերը.</p>
+<table>
+<thead>
+<tr>
+<th>Ֆայլ</th>
+<th>Բովանդակություն</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>address</code></td>
+<td>MAC հասցեն (ֆիզիկական հասցե)</td>
+</tr>
+<tr>
+<td><code>mtu</code></td>
+<td>Maximum Transmission Unit (մեկ փաթեթի առավելագույն չափը բայթերով)</td>
+</tr>
+<tr>
+<td><code>operstate</code></td>
+<td>Ինտերֆեյսի գործառնական վիճակը (<code>up</code>/<code>down</code>/<code>unknown</code>)</td>
+</tr>
+<tr>
+<td><code>speed</code></td>
+<td>Միացման արագությունը (Mbit/s-ով)</td>
+</tr>
+<tr>
+<td><code>duplex</code></td>
+<td>Կապի եղանակը (<code>full</code>/<code>half</code>)</td>
+</tr>
+<tr>
+<td><code>flags</code></td>
+<td>Ինտերֆեյսի դրոշները (կարգավիճակը kernel-ի տեսանկյունից)</td>
+</tr>
+<tr>
+<td><code>statistics/</code></td>
+<td>Վիճակագրություն. ստացված/ուղարկված բայթեր, փաթեթներ, սխալներ և այլն</td>
+</tr>
+</tbody>
+</table>
+<p>Օրինակներ.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>/sys/class/net/enp0s3/address<span class="w">            </span><span class="c1"># MAC</span>
+cat<span class="w"> </span>/sys/class/net/enp0s3/operstate<span class="w">          </span><span class="c1"># up</span>
+cat<span class="w"> </span>/sys/class/net/enp0s3/speed<span class="w">              </span><span class="c1"># 1000 (1 Գբիթ/վրկ)</span>
+cat<span class="w"> </span>/sys/class/net/enp0s3/duplex<span class="w">             </span><span class="c1"># full</span>
+cat<span class="w"> </span>/sys/class/net/enp0s3/statistics/rx_bytes
+cat<span class="w"> </span>/sys/class/net/enp0s3/statistics/tx_bytes
+</code></pre></div>
+<p>Բոլոր ինտերֆեյսների MAC հասցեները ցույց տալու սկրիպտային եղանակը.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span>iface<span class="w"> </span><span class="k">in</span><span class="w"> </span>/sys/class/net/*<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">"</span><span class="nv">$iface</span><span class="s2">"</span><span class="k">)</span><span class="s2">: </span><span class="k">$(</span>cat<span class="w"> </span><span class="s2">"</span><span class="nv">$iface</span><span class="s2">/address"</span><span class="k">)</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+</code></pre></div>
+<p><code>/sys/class/net/</code>-ը (ինչպես ընդհանրապես sysfs-ը) տվյալների աղբյուր է, որով ծրագրերն ու administrator-ները ճշգրիտ տվյալներ են ստանում առանց հավելյալ գործիքների. այն հատկապես օգտակար է bash/Python սկրիպտներում և ավտոմատացման մեջ՝ ցանցի կարգավիճակը ստուգելու համար։ Ի տարբերություն <code>ip a</code>-ի՝ sysfs-ը ցույց է տալիս միայն ինտերֆեյսներին վերաբերող ելքը, մինչդեռ <code>nmcli</code>-ն (NetworkManager-ի հրամանը) ցույց է տալիս ցանցի կարգավորումներն ու միացումները այլ մակարդակում։</p>
+<h2 id="_4">Հիմնական հրամաններ<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Հրաման</th>
+<th>Նպատակ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ip a</code> / <code>ip addr show</code></td>
+<td>Ցույց տալ բոլոր ինտերֆեյսները՝ IP, MAC, վիճակով</td>
+</tr>
+<tr>
+<td><code>ip link show</code></td>
+<td>Ցույց տալ ինտերֆեյսների link-ի մակարդակի տվյալները (MAC, MTU, վիճակ)</td>
+</tr>
+<tr>
+<td><code>ls /sys/class/net</code></td>
+<td>Թվարկել ինտերֆեյսների անունները</td>
+</tr>
+<tr>
+<td><code>ip -s link show &lt;iface&gt;</code></td>
+<td>Ցույց տալ RX/TX բայթերը, փաթեթները, սխալներն ու կորցրած փաթեթները</td>
+</tr>
+<tr>
+<td><code>sudo ip link set &lt;iface&gt; up/down</code></td>
+<td>Միացնել/անջատել ինտերֆեյսը</td>
+</tr>
+<tr>
+<td><code>sudo ip addr add &lt;ip&gt;/&lt;prefix&gt; dev &lt;iface&gt;</code></td>
+<td>Ինտերֆեյսին IP հասցե նշանակել</td>
+</tr>
+<tr>
+<td><code>sudo ip addr del &lt;ip&gt;/&lt;prefix&gt; dev &lt;iface&gt;</code></td>
+<td>Ինտերֆեյսից IP հասցե հեռացնել</td>
+</tr>
+<tr>
+<td><code>sudo dhclient &lt;iface&gt;</code></td>
+<td>DHCP-ով այդ ինտերֆեյսի համար հասցե ստանալ</td>
+</tr>
+<tr>
+<td><code>cat /sys/class/net/&lt;iface&gt;/speed</code></td>
+<td>Ցույց տալ միացման արագությունը (Mbit/s)</td>
+</tr>
+<tr>
+<td><code>sudo netplan apply</code></td>
+<td>Կիրառել <code>/etc/netplan/</code>-ի YAML ֆայլերի փոփոխությունները (Ubuntu Server)</td>
+</tr>
+<tr>
+<td><code>lspci \| grep -i ethernet</code></td>
+<td>Ցույց տալ PCI Ethernet սարքերը՝ համոզվելու, որ քարտը հայտնաբերված է</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title"><code>ip</code> հրամանի ազդեցության ժամկետը</p>
+<p><code>ip</code>-ով կատարված փոփոխությունները (օր. <code>ip addr add</code>, <code>ip link set</code>) ազդում են <strong>միայն ընթացիկ աշխատող kernel</strong>-ի վրա և <strong>մշտական չեն</strong>. դրանք կկորչեն վերագործարկումից կամ ցանցային ծառայության վերագործարկումից հետո։ Մշտական կարգավորումների համար Ubuntu Server-ում օգտագործվում է <strong>Netplan</strong>-ը։</p>
+</div>
+<h3 id="sudo-ip-addr-ip-vs-netplan">«<code>sudo ip addr</code> մշտական է՞»՝ ip vs Netplan<a class="headerlink" href="#sudo-ip-addr-ip-vs-netplan" title="Permanent link">&para;</a></h3>
+<p>Ոչ, <code>sudo ip addr</code>-ը մշտական չէ. այն ժամանակավոր փոփոխություն է, որը կվերանա վերագործարկումից հետո։ Ubuntu Server-ում մշտական կարգավորումների համար նախատեսված է <strong>Netplan</strong> գործիքը (Ubuntu 18.04 և ավելի նոր)՝ որն աշխատում է <code>/etc/netplan/</code> պանակում գտնվող YAML ֆայլերով և այն կիրառում systemd-networkd-ի կամ NetworkManager-ի միջոցով՝ կախված renderer-ից.</p>
+<table>
+<thead>
+<tr>
+<th>Հատկանիշ</th>
+<th><code>sudo ip addr add ...</code></th>
+<th><code>netplan apply</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ազդեցության ժամանակը</td>
+<td>Ակնթարթային, անմիջապես կիրառվում է</td>
+<td>Կիրառվում է հրամանի աշխատեցումից հետո</td>
+</tr>
+<tr>
+<td>Մշտականություն</td>
+<td>Ժամանակավոր (վերագործարկումից հետո կորչում է)</td>
+<td>Մշտական (պահպանվում է բոլոր վերագործարկումներից հետո)</td>
+</tr>
+<tr>
+<td>Կիրառման եղանակը</td>
+<td>Փոփոխում է միայն ընթացիկ kernel-ի վիճակը</td>
+<td>Կարդում և կիրառում է <code>/etc/netplan/</code>-ի YAML ֆայլերը</td>
+</tr>
+</tbody>
+</table>
+<p>Ճիշտ աշխատելակարգը. փնտրեք ձեր Netplan ֆայլը <code>/etc/netplan/</code>-ում (օր. <code>00-installer-config.yaml</code> կամ <code>50-cloud-init.yaml</code>), խմբագրեք այն <code>sudo</code>-ով, Հետո կիրառեք.</p>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>/etc/netplan/
+sudo<span class="w"> </span>nano<span class="w"> </span>/etc/netplan/00-installer-config.yaml
+sudo<span class="w"> </span>netplan<span class="w"> </span>apply
+</code></pre></div>
+<p>Ստատիկ IP-ի YAML կառուցվածքը՝ օր. <code>ens33</code>-ի համար.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">network</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">renderer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networkd</span>
+<span class="w">  </span><span class="nt">ethernets</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ens33</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">dhcp4</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">      </span><span class="nt">addresses</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.1.100/24</span><span class="w">   </span><span class="c1"># Ձեր ցանկալի IP-ն</span>
+<span class="w">      </span><span class="nt">routes</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">          </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.1.1</span><span class="w">    </span><span class="c1"># Ձեր ցանցի gateway-ը</span>
+<span class="w">      </span><span class="nt">nameservers</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">addresses</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">8.8.8.8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.1.1.1</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># DNS սերվերներ</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Netplan-ը զգայուն է YAML-ի նահանջների նկատմամբ</p>
+<p>Netplan-ի փոփոխությունից հետո չափազանց զգույշ եղեք, քանի որ YAML-ը շատ զգայուն է indent-ի (նահանջ) և <code>-</code> գծիկների նկատմամբ. սխալ <code>sudo netplan apply</code>-ից հետո ցանցը կարող է «կտրվել», հատկապես SSH-ով աշխատելիս։ Խորհուրդ՝ նախ «չոր» ստուգեք <code>sudo netplan generate</code>-ով, և apply-ից առաջ backup SSH session պահեք՝ վերականգնման համար, եթե ինչ-որ բան սխալ գնա.</p>
+</div>
+<p>Ամփոփելով. <code>ip</code>-ը լավ է արագ թեստավորման ու ժամանակավոր փոփոխության համար, իսկ մշտական կարգավորումների համար Ubuntu Server-ում միշտ օգտագործեք Netplan-ը։</p>
+<h3 id="_5">Ինտերֆեյսի անունը փոխելը<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Զգույշ. անվան փոփոխությունը կարող է խաթարել ծառայությունները</p>
+<p>Ինտերֆեյսի անունը փոխելը կարող է ազդել firewall-ի կանոնների, DHCP/DNS կարգավորումների և այն ամենի վրա, ինչը հղվում է հին անունով։ Արեք դա միայն անհրաժեշտության դեպքում և վերագործարկումից առաջ ստուգեք կարգավորումները՝ ներառյալ firewall-ի կանոններն ու այլ ծառայությունների աշխատանքը։</p>
+</div>
+<p><strong>1. Վերադարձ ավանդական <code>eth0</code>/<code>eth1</code> անուններին (ամենատարածված եղանակը)</strong></p>
+<p>Սա ժամանակավորապես անջատում է նոր «կանխատեսելի» անվանման կանոնը.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/default/grub
+</code></pre></div>
+<p><code>GRUB_CMDLINE_LINUX</code> տողում ավելացրեք պարամետրերը (փոխարինեք <code>...</code>-ը, եթե կան այլ պարամետրեր).</p>
+<div class="highlight"><pre><span></span><code>GRUB_CMDLINE_LINUX="... net.ifnames=0 biosdevname=0"
+</code></pre></div>
+<p>Թարմացրեք GRUB-ը, Հետո վերագործարկեք.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>grub-mkconfig<span class="w"> </span>-o<span class="w"> </span>/boot/grub/grub.cfg
+sudo<span class="w"> </span>reboot
+</code></pre></div>
+<p>UEFI համակարգերի դեպքում կոնֆիգուսի այրումը կարող է պահանջել այլ ուղի (օր. <code>/boot/efi/EFI/ubuntu/grub.cfg</code>)։ Արդյունքում ինտերֆեյսները կրկին կկոչվեն <code>eth0</code>, <code>eth1</code> և այլն։ Մի մոռացեք, որ «կանխատեսելի» անունները վերադարձնելու համար հետագայում պետք է հեռացնել այդ պարամետրերը և նորից թարմացնել GRUB-ը:</p>
+<p><strong>2. Մշտական անվան փոփոխություն udev-ի կանոնով</strong></p>
+<p>Այս մեթոդը թույլ է տալիս ինտերֆեյսին տալ ցանկացած անուն՝ կապելով այն MAC հասցեին, և ստեղծում է մշտական կանոն.</p>
+<div class="highlight"><pre><span></span><code>ip<span class="w"> </span>link<span class="w"> </span>show<span class="w">              </span><span class="c1"># պարզեք MAC հասցեն</span>
+sudo<span class="w"> </span>nano<span class="w"> </span>/etc/udev/rules.d/70-persistent-net.rules
+</code></pre></div>
+<p>Ֆայլում ավելացրեք տողը (փոխարինեք MAC-հասցեն և ցանկալի անունը).</p>
+<div class="highlight"><pre><span></span><code>SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="xx:xx:xx:xx:xx:xx", NAME="my_interface"
+</code></pre></div>
+<p>Վերաբեռնեք udev-ի կանոնները և կիրառեք դրանք.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules
+sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
+sudo<span class="w"> </span>reboot
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title"><code>net.ifnames=0</code> vs udev կանոն</p>
+<p>GRUB-ի <code>net.ifnames=0 biosdevname=0</code>-ը անջատում է ամբողջ «կանխատեսելի» համակարգը՝ բոլոր ինտերֆեյսներին վերադարձնելով <code>eth0</code>-ի ոճ, մինչդեռ udev-ի կանոնը թիրախավորում է մեկ կոնկրետ սարք MAC հասցեով։ Եթե մեքենայում կա մեկից ավելի ցանցային քարտ, udev-ով ավելի նպատակային եք աշխատում՝ չփոխելով մյուսների անունները։</p>
+</div>
+<h2 id="lab">Փորձարկում (Lab)<a class="headerlink" href="#lab" title="Permanent link">&para;</a></h2>
+<p>Միջավայր. սովորական Ubuntu Linux VM (օր. VirtualBox/VMware, որտեղ ժամանակակից ադապտերները հաճախ ստանում են <code>ens33</code> կամ <code>enp0s3</code>) կամ ձեր test server-ը՝ առանց production credentials-ի։ Lab-ը բաղկացած է դիտման, ախտորոշման և ժամանակավոր փոփոխության քայլերից.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Թվարկել ինտերֆեյսների անունները</span>
+ls<span class="w"> </span>/sys/class/net
+
+<span class="c1"># 2. Մանրամասն տվյալներ՝ IP-ով</span>
+ip<span class="w"> </span>a
+
+<span class="c1"># 3. Ընտրեք ձեր Ethernet-ի անունը (օր. eth0/enp0s3/ens33) և դիտեք</span>
+ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>&lt;iface&gt;
+ip<span class="w"> </span>-s<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>&lt;iface&gt;
+
+<span class="c1"># 4. Տվյալներ sysfs-ից</span>
+cat<span class="w"> </span>/sys/class/net/&lt;iface&gt;/address
+cat<span class="w"> </span>/sys/class/net/&lt;iface&gt;/operstate
+cat<span class="w"> </span>/sys/class/net/&lt;iface&gt;/speed
+cat<span class="w"> </span>/sys/class/net/&lt;iface&gt;/duplex
+
+<span class="c1"># 5. Բոլոր ինտերֆեյսների MAC հասցեները</span>
+<span class="k">for</span><span class="w"> </span>iface<span class="w"> </span><span class="k">in</span><span class="w"> </span>/sys/class/net/*<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">"</span><span class="nv">$iface</span><span class="s2">"</span><span class="k">)</span><span class="s2">: </span><span class="k">$(</span>cat<span class="w"> </span><span class="s2">"</span><span class="nv">$iface</span><span class="s2">/address"</span><span class="k">)</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+</code></pre></div>
+<p>Սպասվող արդյունքը. կտեսնեք ձեր ինտերֆեյսների անունները (<code>lo</code>, <code>enp0s3</code>/<code>ens33</code> և այլն), MAC հասցեները, ընթացիկ վիճակը (<code>up</code>/<code>down</code>) և արագությունը (100, 1000 և այլն)՝ ըստ hardware-ի, առանց որևէ permanent փոփոխության։ Այս քայլերից ոչ մեկը համակարգը չի փոխում. դրանք զուտ դիտողական են և անվտանգ.</p>
+<p>Ժամանակավոր փորձ. ինտերֆեյսն անջատեք ու միացրեք, որպեսզի տեսնեք, թե ինչ է կատարվում (զգույշ. այս պահին IP-ն կկորի, ուստի արեք տեղական console-ից, ոչ SSH-ից).</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>&lt;iface&gt;<span class="w"> </span>down
+ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>&lt;iface&gt;<span class="w">     </span><span class="c1"># state DOWN</span>
+sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>&lt;iface&gt;<span class="w"> </span>up
+ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>&lt;iface&gt;<span class="w">     </span><span class="c1"># state UP</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Best Practices</p>
+<ul>
+<li>Միշտ օգտագործեք <code>ip</code>-ը, ոչ թե հնացած <code>ifconfig</code>-ը. ժամանակակից Ubuntu-ում <code>net-tools</code> փաթեթն առանձին է տեղադրվում, և լռելյայն <code>ifconfig</code>-ը բացակայում է.</li>
+<li>Permanent փոփոխությունների համար մշտապես օգտագործեք <code>/etc/netplan/</code>-ի YAML-ը, ոչ թե <code>ip addr</code>-ի ակնթարթային արդյունքը.</li>
+<li>SSH-ով աշխատելիս, ցանցի ցանկացած փոփոխությունից (netplan apply, ip link down) առաջ backup SSH session պահեք, և apply-ից առաջ ստուգեք, թե արդյոք նոր IP-ն/անունը ճիշտ է. հեշտ է «կտրել» ձեր միակ կապը.</li>
+<li>Firewall-ի կանոն գրելիս մի ունեցեք չափազանց կոշտ կախվածություն մեկ ինտերֆեյսի անվան վրա. անվան ցանկացած փոփոխություն կդադարեցնի կանոնը.</li>
+<li>Սկրիպտներում նախընտրեք sysfs-ը (<code>/sys/class/net</code>), քան <code>ip</code>-ի output-ի parser-ը. sysfs-ի ֆայլերը կայուն են և կանխատեսելի.</li>
+</ul>
+</div>
+<h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
+<h3 id="_6">Ախտանիշ<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>Ubuntu Server-ի վրա, վերագործարկումից հետո, վեբ հավելվածը դառնում է անհասանելի. բրաուզերը չի միանում, իսկ SSH-ը (հնարավորության դեպքում) աշխատում է։ Administrator-ը նախորդ գիշեր ավելացրել է firewall-ի կանոն, որը հղվում էր <code>ens33</code>-ին. բայց այս boot-ի ժամանակ ցանցային քարտը հայտնաբերվել է այլ PCI slot-ում, անվան փոխվելով, և մշտական IP-ն, որին հղվում էր firewall-ը, հատկացվել է մյուս ինտերֆեյսին կամ ամբողջությամբ կորել է.</p>
+<h3 id="_7">Ախտորոշում<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Թվարկել ինտերֆեյսները՝ որոշելու, թե ինչ է հասանելի.
+   <div class="highlight"><pre><span></span><code>ip<span class="w"> </span>a
+ls<span class="w"> </span>/sys/class/net
+</code></pre></div></li>
+<li>Գտնել, թե որ ինտերֆեյսն ունի ցանկալի IP-ն, և որ անունով է այն «քշվում» boot-ից հետո.
+   <div class="highlight"><pre><span></span><code>ip<span class="w"> </span>addr<span class="w"> </span>show<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"^[0-9]+:|inet "</span>
+cat<span class="w"> </span>/sys/class/net/*/operstate
+</code></pre></div></li>
+<li>Համոզվել, որ <code>/etc/netplan/</code>-ի YAML-ում ճիշտ անուն է օգտագործված, ինչը համապատասխանում է իրականին.
+   <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>/etc/netplan/*.yaml
+sudo<span class="w"> </span>netplan<span class="w"> </span>get
+</code></pre></div></li>
+<li>Ստուգել firewall-ի, DNS-ի և DHCP-ի կարգավորումների հղումները հին անունով/IP-ով.
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>ufw<span class="w"> </span>status<span class="w"> </span>verbose
+journalctl<span class="w"> </span>-u<span class="w"> </span>systemd-networkd<span class="w"> </span>--no-pager<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-n<span class="w"> </span><span class="m">40</span>
+</code></pre></div></li>
+</ol>
+<h3 id="_8">Լուծում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>Կախված պատճառից.</p>
+<ul>
+<li>Եթե խնդիրը մշտական IP-ի կորստից է. տվեք կայուն անուն udev-ի կանոնով՝ կապված MAC-ին (տե՛ս վերևում), համոզվեք, որ Netplan-ի YAML-ում ճիշտ անունն եք օգտագործում, Հետո՝ <code>sudo netplan apply</code>.</li>
+<li>Եթե իսկապես անհրաժեշտ է հին, կայուն ոճի անուն. անջատեք «կանխատեսելի» անունները GRUB-ով (<code>net.ifnames=0 biosdevname=0</code>), թարմացրեք GRUB-ը և վերագործարկեք.</li>
+<li>Համոզվեք, որ firewall-ի կանոնն այժմ հղվում է նոր անվանը/հասցեին, և թեստավորեք կանոնը մինչև «կտրել» եք SSH-ը.</li>
+<li>Վերականգնելուց հետո ծառայությունը նորից հասանելի է դառնում, իսկ ինտերֆեյսի անունը կայուն է բոլոր հետագա boot-երի ընթացքում.</li>
+</ul>
+<h3 id="_9">Կանխարգելում<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ցանցի permanent կոնֆիգուրացիան միշտ պահեք <code>/etc/netplan/</code>-ում, ոչ թե <code>ip</code>-ի ակնթարթային փոփոխությունների վրա.</li>
+<li>Կայունություն երաշխավորելու համար օգտագործեք MAC-ի վրա հենված udev կանոն, երբ անվան կայունությունը կարևոր է (օր. NIC teaming, firewall policy).</li>
+<li>Firewall-ի կանոններում նախապատվությունը տվեք interface-ի մակարդակին (<code>ufw allow in on &lt;iface&gt;</code>) և պարբերաբար sync արեք կարգավորման ֆայլերը boot-ի փաստացի վիճակի հետ.</li>
+<li>Փոփոխություններից առաջ միշտ ունենաք out-of-band կամ backup SSH access, և ցանցային փոփոխություններից հետո գրանցեք ակնկալվող և փաստացի վիճակը runbook-ում.</li>
+</ul>
+<h2 id="_10">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h3 id="ens33-mid-level">Ի՞նչ է նշանակում <code>ens33</code> ինտերֆեյսի անունը, և որտե՞ղ կպարզես քո ինտերֆեյսների անունները (mid-level)<a class="headerlink" href="#ens33-mid-level" title="Permanent link">&para;</a></h3>
+<p><code>ens33</code>-ը «կանխատեսելի» անվանման սկզբունքով (Predictable Network Interface Names) ստեղծված Ethernet-ի անուն է. <code>en</code> = Ethernet, <code>s</code> = PCI slot, <code>33</code> = 33-րդ սլոտ. այսինքն՝ լարային ցանցային քարտ՝ 33-րդ PCI սլոտում։ Տեսնելու համար, թե ինչ ինտերֆեյսներ կան, օգտագործում եմ <code>ip a</code> (կամ <code>ip link show</code>), ինչպես նաև <code>ls /sys/class/net</code>, որը հարմար է սկրիպտից ցուցակը վերցնելու համար. sysfs-ի <code>/sys/class/net/&lt;iface&gt;/</code>-ում կա MAC (<code>address</code>), վիճակ (<code>operstate</code>), արագություն (<code>speed</code>), MTU և <code>statistics/</code>, ինչը թույլ է տալիս ճշգրիտ տվյալներ ստանալ առանց հավելյալ գործիքների.</p>
+<h3 id="sudo-ip-addr-add-ubuntu-server-ip-senior-level">Ինչո՞ւ է <code>sudo ip addr add</code>-ը ժամանակավոր, և ինչ եղանակ կօգտագործես Ubuntu Server-ում մշտական IP-ի համար (senior-level)<a class="headerlink" href="#sudo-ip-addr-add-ubuntu-server-ip-senior-level" title="Permanent link">&para;</a></h3>
+<p><code>ip</code> հրամանը փոփոխում է միայն ընթացիկ աշխատող kernel-ի ցանցային կոնֆիգուրացիան. այն ոչ մի ֆայլում չի պահպանվում, ուստի վերագործարկումից հետո, երբ kernel-ը բեռնվում է զրոյից, այն անհետանում է։ Ubuntu Server-ում (18.04+) մշտական կարգավորումների համար օգտագործում եմ <strong>Netplan</strong>-ը. կարգավորում եմ <code>/etc/netplan/</code>-ի YAML ֆայլերը (օր. <code>00-installer-config.yaml</code>) IP-ն, gateway-ի և DNS-ի հետ, այնուհետև «չոր» ստուգում <code>netplan generate</code>-ով և կիրառում <code>sudo netplan apply</code>-ով։ Այս եղանակով կոնֆիգուրացիան պահպանվում է բոլոր boot-երի ընթացքում, իսկ <code>ip</code>-ը օգտագործում եմ միայն ակնթարթային թեստավորման ու ախտորոշման համար. այս երկուսը լրացնում են միմյանց՝ տարբեր նպատակներով.</p>
+<h3 id="boot-senior-level">Ինչպե՞ս կապահովես, որ ինտերֆեյսի անունը կայուն մնա՝ անկախ boot-ի հերթականությունից (senior-level հավելյալ)<a class="headerlink" href="#boot-senior-level" title="Permanent link">&para;</a></h3>
+<p>Կայունության հիմքը «կանխատեսելի» անվանումն է կամ udev-ի MAC-ի վրա հենված կանոնը. ամենահուսալին PCI slot-ի վրա հիմնված անունն է, որը տալիս է «կանխատեսելի» սկզբունքը, իսկ անհրաժեշտության դեպքում՝ <code>/etc/udev/rules.d/70-persistent-net.rules</code> կանոնը, որում <code>ATTR{address}</code> (MAC) կապվում է ցանկալի <code>NAME</code>-ի հետ։ Երբ ցանցային քարտը զբաղեցնում է ֆիքսված PCI slot (VM-ում հաճախ այդպես է), անունը կայուն է. իսկ ֆիզիկական տեղափոխության դեպքում՝ MAC-ի վրա հենված udev կանոնը տալիս է երաշխիք, որ firewall-ն ու Netplan-ը միշտ կճանաչեն ինտերֆեյսը՝ առանց անվան պատճառով կապի կորստի.</p>
+<h2 id="_11">Ինքնաստուգում<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Ի՞նչ է ցույց տալիս <code>ls /sys/class/net</code>-ը, և ինչո՞վ է այն տարբերվում <code>ip a</code>-ից։</li>
+<li>Վերծանի՛ր <code>enp3s0</code> և <code>ens33</code> անունները. որո՞նք են <code>en</code>-ի, <code>p</code>-ի, <code>s</code>-ի և համարների նշանակությունները։</li>
+<li>Ի՞նչ տվյալներ կարելի է կարդալ <code>/sys/class/net/&lt;iface&gt;/</code>-ի <code>address</code>, <code>operstate</code>, <code>speed</code>, <code>duplex</code> ֆայլերից։</li>
+<li>Ինչո՞ւ է <code>sudo ip addr add</code>-ը ժամանակավոր, և ի՞նչ tool-ով ես Ubuntu Server-ում մշտական IP կարգավորում։</li>
+<li>Ի՞նչ է անում <code>sudo netplan apply</code>-ը, և ինչո՞ւ է YAML-ի նահանջների մասին զգուշացումը կարևոր SSH-ով աշխատելիս։</li>
+<li>Ի՞նչ տարբերություն կա GRUB-ի <code>net.ifnames=0 biosdevname=0</code>-ի և udev-ի MAC-ի վրա հենված կանոնի միջև՝ ինտերֆեյսի անունը փոխելիս։</li>
+<li>Ինչպե՞ս կգտնես խնդիրը, երբ վերագործարկումից հետո firewall-ը դադարում է «տեսնել» քո ինտերֆեյսը սխալ անվան/հասցեի պատճառով (ախտորոշման քայլերը)։</li>
+</ol>
+<h2 id="_12">Հաջորդ քայլեր<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>Շարունակիր ցանցի «վերևի» շերտերով. <a href="../bash-scripting/">Bash Scripting</a>-ով սովորիր ցանցի դիտարկումն ու ախտորոշումը ավտոմատացնել՝ օգտագործելով այստեղ նկարագրված sysfs-ի կայուն ֆայլերը կամ <code>ip</code>-ը, իսկ systemd-ով ծառայությունների կառավարման համար տես <a href="../processes/">Processes</a>։ Ցանցի խորը թեմաների (TCP/IP, DNS, firewalls, TLS) համար անցիր <a href="../../networking/">Networks</a> բաժինը, որտեղ քննարկվում են ցանցային արձանագրություններն ու անվտանգությունը ամբողջ ցանցային շղթայի երկայնքով.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Վերադառնալ սկիզբ
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u054a\u0561\u057f\u0573\u0565\u0576\u057e\u0561\u056e \u0567", "clipboard.copy": "\u054a\u0561\u057f\u0573\u0565\u0576\u0565\u056c", "search.result.more.one": "\u0587\u057d 1-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.more.other": "\u0587\u057d #-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.none": "\u0531\u0580\u0564\u0575\u0578\u0582\u0576\u0584\u0576\u0565\u0580 \u0579\u056f\u0561\u0576", "search.result.one": "1 \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.other": "# \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.placeholder": "\u0544\u0578\u0582\u057f\u0584\u0561\u0563\u0580\u0565\u0584 \u0578\u0580\u0578\u0576\u0565\u056c\u0578\u0582 \u0570\u0561\u0574\u0561\u0580", "search.result.term.missing": "\u0532\u0561\u0581\u0561\u056f\u0561\u0575\u0578\u0582\u0574 \u0567", "select.version": "\u0538\u0576\u057f\u0580\u0565\u056c \u057f\u0561\u0580\u0562\u0565\u0580\u0561\u056f\u0568"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
