@@ -30,6 +30,9 @@ nav:
       - Firewall: linux/firewall.md
   - Networks: networking/index.md
   - Git և CI/CD: git-ci-cd/index.md
+  - Automation և IaC:
+      - Overview: automation-iac/index.md
+      - Ansible: automation-iac/ansible.md
   - Docker և Kubernetes: docker-kubernetes/index.md
   - Cloud, Security, Observability: cloud-security-observability/index.md
   - Բառարան: glossary.md

@@ -16,7 +16,7 @@
 | --- | --- | --- |
 | 1 | Linux, shell, processes, filesystem, systemd | Կարողանաս ախտորոշել Linux հոսթ |
 | 2 | TCP/IP, DNS, HTTP, TLS, firewalls | Կարողանաս հետևել խնդրի ցանցային շղթային |
-| 3 | Git, CI/CD, artifacts, deployments | Կարողանաս կառուցել անվտանգ pipeline |
+| 3 | Git, CI/CD, IaC (Ansible), deployments | Կարողանաս կառուցել անվտանգ pipeline և ավտոմատացնել սերվերային կարգավորումները |
 | 4 | Containers, Kubernetes | Կարողանաս փաթեթավորել և գործարկել ծառայություն |
 | 5 | Cloud, security, monitoring, incident response | Կարողանաս շահագործել ծառայությունը production-ում |
 
