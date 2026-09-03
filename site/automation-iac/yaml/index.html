@@ -1,0 +1,2152 @@
+
+<!doctype html>
+<html lang="hy" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Հայերեն, գործնական DevOps ուղեցույց">
+      
+      
+      
+        <link rel="canonical" href="https://example.invalid/devops-book/automation-iac/yaml/">
+      
+      
+        <link rel="prev" href="../ansible/">
+      
+      
+        <link rel="next" href="../../docker-kubernetes/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>YAML - DevOps ուսումնական ձեռնարկ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#yaml-devops-ansible-docker-kubernetes-cicd" class="md-skip">
+          Անցնել պարունակությանը
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Գլխագիր">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-header__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DevOps ուսումնական ձեռնարկ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              YAML
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Որոնում" placeholder="Որոնում" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Որոնում">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Ջնջել" aria-label="Ջնջել" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Որոնում
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Ներդիրներ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Սկիզբ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../linux/" class="md-tabs__link">
+          
+  
+  
+  Linux
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../networking/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Networks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../git-ci-cd/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Git և CI/CD
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Automation և IaC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../docker-kubernetes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Docker և Kubernetes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../cloud-security-observability/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Cloud, Security, Observability
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Բառարան
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Տեղորոշում" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-nav__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DevOps ուսումնական ձեռնարկ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Սկիզբ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/bash-scripting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bash Scripting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/cgroups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cgroups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/firewall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firewall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git-ci-cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git և CI/CD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automation և IaC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Automation և IaC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ansible/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ansible
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    YAML
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    YAML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ խնդիր է լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս է աշխատում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հայեցակարգեր
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ընդհանուր ամփոփ աղյուսակ (հեշտ հիշելու համար)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Գործնական խորհուրդներ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական կյանքի օրինակ (բոլորը միասին)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ / գործիքներ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Փորձարկում (Lab)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 1. Միջավայրի պատրաստում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 2. Բազային կառուցվածքի ստուգում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-anchor-alias-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 3. Anchor, alias և merge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 4. Սխալի ցուցադրում. Tab նիշ և անհամաչափ նահանջ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 5. Բոլորը միասին. «իրական կյանքի» փաստաթուղթ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչու «:, #» պարունակող տեքստն անհրաժեշտ է չակերտել` և ի՞նչ ռիսկ կա այն չակերտելու դեպքում (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base-merge-alias-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչո՞ւ է «&lt;&lt;: *base» merge-ը (և ոչ *alias-ը) նախընտրելի «պատճենել և পরিবর্তել» սցենարում (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker և Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud, Security, Observability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Բառարան
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ խնդիր է լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս է աշխատում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հայեցակարգեր
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ընդհանուր ամփոփ աղյուսակ (հեշտ հիշելու համար)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Գործնական խորհուրդներ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական կյանքի օրինակ (բոլորը միասին)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ / գործիքներ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Փորձարկում (Lab)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 1. Միջավայրի պատրաստում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 2. Բազային կառուցվածքի ստուգում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-anchor-alias-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 3. Anchor, alias և merge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 4. Սխալի ցուցադրում. Tab նիշ և անհամաչափ նահանջ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 5. Բոլորը միասին. «իրական կյանքի» փաստաթուղթ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչու «:, #» պարունակող տեքստն անհրաժեշտ է չակերտել` և ի՞նչ ռիսկ կա այն չակերտելու դեպքում (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base-merge-alias-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչո՞ւ է «&lt;&lt;: *base» merge-ը (և ոչ *alias-ը) նախընտրելի «պատճենել և পরিবর্তել» սցենարում (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="yaml-devops-ansible-docker-kubernetes-cicd">YAML. Տվյալների ձևաչափ DevOps-ում (Ansible, Docker, Kubernetes, CI/CD)<a class="headerlink" href="#yaml-devops-ansible-docker-kubernetes-cicd" title="Permanent link">&para;</a></h1>
+<h2 id="_1">Տեսություն<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>YAML</strong> (նախկինում՝ <em>YAML Ain't Markup Language</em>, «YAML-ը նշագրման լեզու չէ») մարդու համար ընթեռնելի <strong>տվյալների սերիալիզացման</strong> ձևաչափ է՝ կոնֆիգուրացիան նկարագրելու համար։ Ի տարբերություն JSON-ի՝ YAML-ը թույլ է տալիս մեկնաբանություններ և «չկրկնվող» գրառում՝ ընդհանուր կարգավորումները reusable դարձնելով anchor-ներով ու alias-ներով։ DevOps-ում YAML-ը <em>դե ֆակտո</em> ստանդարտ է. Ansible playbook-ները, Docker Compose-ը, Kubernetes-ի մանիֆեստները և GitHub Actions-ի/GitLab CI-ի pipeline-ները գրվում են YAML-ով։ Դրա հզորությունն այն է, որ կոդը կարդացվում է արագ, հեշտ է պահվում Git-ում (ամեն změնավորությունը՝ տեսանելի), իսկ սխալը հնարավոր է հայտնաբերել մինչև գործարկումը։ Git-ի և պիփլայնների մասին՝ <a href="../../git-ci-cd/">Git և CI/CD</a> բաժնում, իսկ YAML-ի գործնական կիրառման՝ <a href="../ansible/">Ansible</a> էջում։</p>
+<h3 id="_2">Ի՞նչ խնդիր է լուծում<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>Միջավայրի կոնֆիգուրացիան (որ փոփոխականը՝ ինչ արժեքով) նկարագրվում է կոդով, որպեսզի այն դառնա կրկնվող, վերանայելի և վարկածավորված։ Առանց կառուցվածքային ձևաչափի կարգավորումները մնում են ձեռքի, մարդու հիշողության վրա, և առաջանում է <strong>config drift</strong> (կոնֆիգուրացիիայի շեղում)՝ յուրաքանչյուր սերվեր ժամանակի atravesti դառնում է տարբեր։ YAML-ը տալիս է միասնական «լեզու», որով և մարդը, և ծրագիրը նույնպես են հասկանում, թե ինչ պետք է լինի համակարգում։ Չthose播出шь readability-ն, YAML-ը մեքենայական ձևաչափ է, ուստի նրա «կտրուկ» կանոնները (նահանջի ճշտություն, արժեքի տիպեր) պետք է խստորեն պահպանել:</p>
+<h3 id="_3">Ինչպե՞ս է աշխատում<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Key–value</strong>՝ ամենատարրական միավորը, <code>key: value</code>։ Բանալին և արժեքը բաժանվում են երկու կետից ու բացատից հետո.</li>
+<li><strong>Nested</strong> (տեղադրված) կառուցվածք՝ ավելի խոր մակարդակի բանալիները սկսվում են ավելի մեծ նահանջով (indentation), սովորաբար 2 կամ 4 բացատ։ YAML-ը <strong>Tab նիշն արգելում է</strong> որպես նահանջ:</li>
+<li><strong>Նահանջի միատեսակություն</strong>՝ միևնույն մակարդակի (level) բանալիները պետք է ունենան ճիշտ նույն քանակի բացատներ, հակառակ դեպքում փաստաթուղթն անվավեր է (invalid):</li>
+<li><strong>Collections</strong>՝ YAML-ում կա երկու հիմնական կառուցվածք. <strong>map</strong> (բանալի-արժեք զույգերի բազմություն) և <strong>list</strong> (հերթական ցուցակ, որի տարրերը սկսվում են «-» գծիկով):</li>
+<li><strong>Scalars</strong> (պարզ արժեքներ)՝ տեքստ (string), թիվ (number), ճշմարիտ/կեղծ (boolean), դատարկ (<code>null</code>), ինչպես նաև ժամանակ/ամսաթebab տիպեր, որոնք YAML-ը ճանաչում է ըստ արժեքի տեսքի:</li>
+<li><strong>Parsing-ի «կանխատեսելիություն»</strong>՝ YAML-ը փորձում է գուշակել արժեքի տիպը. օրինակ, <code>yes</code>/<code>no</code>-ն, <code>on</code>/<code>off</code>-ը և <code>true</code>/<code>false</code>-ը դառնում են boolean: Ուստի տեքստային արժեքները, որոնք նման են այդ բանալի-բառերին կամ հատուկ նշաններ են պարունակում (<code>:</code>), ավելի անվտանգ է չակերտել:</li>
+<li><strong>Document markers</strong>՝ «---»-ը նշում է նոր փաստաթղթի սկիզբը (երբ մեկ ֆայլում մի քանի փաստաթուղթ կա), իսկ «...»-ը՝ վերջը (հազվադեպ է օգտագործվում):</li>
+</ul>
+<h3 id="_4">Հիմնական հայեցակարգեր<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><strong>[1] Դատարկ արժեք (<code>null</code>)</strong> — ասում է՝ «այս բանալին չունի արժեք»*. Գրելիս ե՛րեք համարժեք եղանակ՝ <code>key: null</code> (կամ <code>~</code>, կամ բանալուց հետո դատարկ lämնելը):</p>
+<div class="highlight"><pre><span></span><code><span class="nt">անուն</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Արծան</span>
+<span class="nt">հեռախոս</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">     </span><span class="c1"># առաջին տարբերակ</span>
+<span class="nt">էլփոստ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~</span><span class="w">        </span><span class="c1"># երկրորդ տարբերակ (ավելի կարճ)</span>
+<span class="nt">հասցե</span><span class="p">:</span><span class="w">            </span><span class="c1"># երրորդ տարբերակ (դատարկ lämնել)</span>
+</code></pre></div>
+<p><strong>Իրական օրինակ (Docker Compose).</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">DATABASE_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class="w">   </span><span class="c1"># նշանակում է՝ չսահմանել այս փոփոխականը</span>
+</code></pre></div></p>
+<p>Այս հատկությունը հաճախ օգտագործվում է «չսահմանված» փոփոխական ցույց տալու համար։ Օրինակ, Docker Compose-ում <code>environment</code>-ի արժեքը <code>null</code> դնելը նշանակում է «այս միջավայրի փոփոխականը չսահմանել» (այն ժառանգվում է host-ի միջավայրից).</p>
+<p><strong>[2] Տրամաբանական արժեքներ (boolean)</strong> — YAML-ն ընդունում է <code>true</code>/<code>false</code>, ինչպես նաև <code>yes</code>/<code>no</code> և <code>on</code>/<code>off</code> համարժեքները (YAML 1.1).</p>
+<div class="highlight"><pre><span></span><code><span class="nt">միացված</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">անջատված</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">այո</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+<span class="nt">ոչ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no</span>
+<span class="nt">ակտիվ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">on</span>
+<span class="nt">պասիվ</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">off</span>
+</code></pre></div>
+<p><strong>Կարևոր.</strong> «yes»-ը և «no»-ն կարող են խնդիր առաջացնել, եթե դրանք տեքստ են (օրինակ՝ քաղաքի անուն «Norway»-ն «no» չի համարվի, քանի որ մեծատառով է)։ Բայց զգույշ եղեք, որ «on»-ը կամ «off»-ը պատահաբար չօգտագործեք տեքստ որպես։</p>
+<p><strong>Իրական օրինակ (Ansible).</strong>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Տեղադրել nginx</span>
+<span class="w">  </span><span class="nt">apt</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w">    </span><span class="c1"># աշխատել admin իրավունքներով</span>
+</code></pre></div></p>
+<p><strong>[3] Բազմակի տող<code>folded (</code>&gt;`)</strong> — բոլոր նոր տողերը վերածվում են բացատների (մեկ երկար տող)։</p>
+<div class="highlight"><pre><span></span><code><span class="nt">նկարագրություն</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<span class="w">  </span><span class="no">Սա շատ երկար տեքստ է,</span>
+<span class="w">  </span><span class="no">որը գրված է մի քանի տողերում,</span>
+<span class="w">  </span><span class="no">բայց YAML-ը այն կմիացնի մեկ տողի մեջ։</span>
+<span class="w">  </span><span class="no">Այս տողը նույնպես կմիանա։</span>
+</code></pre></div>
+<p><strong>Արդյունք.</strong>
+<div class="highlight"><pre><span></span><code>Սա շատ երկար տեքստ է, որը գրված է մի քանի տողերում, բայց YAML-ը այն կմիացնի մեկ տողի մեջ։ Այս տողը նույնպես կմիանա։
+</code></pre></div></p>
+<p><strong>Իրական օրինակ (GitLab CI).</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">deploy</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">script</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo "Տեղադրում եմ..."</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<span class="w">      </span><span class="no">ssh user@server</span>
+<span class="w">      </span><span class="no">"cd /app &amp;&amp; git pull &amp;&amp; npm install &amp;&amp; pm2 restart app"</span>
+</code></pre></div>
+Այստեղ ամբողջ ssh հրամանը միանում է մեկ տողի, բայց մարդու համար հեշտ է կարդալ։</p>
+<p><strong>[4] Բազմակի տող<code>literal (</code>|`)</strong> — Պահպանում է բոլոր նոր տողերը։</p>
+<div class="highlight"><pre><span></span><code><span class="nt">բանաստեղծություն</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no">Ձյուն է գալիս,</span>
+<span class="w">  </span><span class="no">Սպիտակ փաթիլներ,</span>
+<span class="w">  </span><span class="no">Ծածկում են քաղաքը։</span>
+<span class="w">  </span><span class="no">Ամեն ինչ լռում է։</span>
+</code></pre></div>
+<p><strong>Արդյունք (պահպանում է ճիշտ այդպես).</strong>
+<div class="highlight"><pre><span></span><code>Ձյուն է գալիս,
+Սպիտակ փաթիլներ,
+Ծածկում են քաղաքը։
+Ամեն ինչ լռում է։
+</code></pre></div></p>
+<p><strong>Իրական օրինակ (Kubernetes ConfigMap).</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app-config</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">app.properties</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">server.port=8080</span>
+<span class="w">    </span><span class="no">database.host=postgres</span>
+<span class="w">    </span><span class="no">database.port=5432</span>
+</code></pre></div>
+Այստեղ ամբողջ կոնֆիգուրացիան պահվում է իր սկզբնական ձևով (տող առ տող)։</p>
+<p><strong>[5] Anchor — <code>&amp;անուն</code></strong> — Ստեղծում է «կպչուկ» (bookmark) որևէ արժեքի համար, որպեսզի հետո կարողանաք օգտագործել այն։</p>
+<div class="highlight"><pre><span></span><code><span class="nt">defaults</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;defaults</span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
+</code></pre></div>
+<p>Այստեղ <code>&amp;defaults</code>-ը «կպցնում» է ամբողջ <code>defaults</code> բլոկը։</p>
+<p><strong>[6] Alias — <code>*անուն</code></strong> — Օգտագործում է նախկինում ստեղծված anchor-ը։</p>
+<div class="highlight"><pre><span></span><code><span class="nt">service1</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*defaults</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+</code></pre></div>
+<p><strong>Բացատրություն.</strong> <code>*defaults</code>-ը ասում է. «բեր այն ամենը, ինչ կա defaults-ի մեջ»։</p>
+<p><strong>[7] Merge — <code>&lt;&lt;: *անուն</code></strong> — Միավորում է (merge) anchor-ի բոլոր արժեքները ընթացիկ բլոկի հետ։</p>
+<p><strong>Ամբողջական օրինակ.</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">defaults</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;defaults</span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
+
+<span class="nt">service1</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*defaults</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+
+<span class="nt">service2</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*defaults</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test.com</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+<span class="w">  </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https</span><span class="w">   </span><span class="c1"># վերաիմաստավորում է defaults-ի protocol-ը</span>
+</code></pre></div></p>
+<p><strong>Merge երկու anchor-ից (multi-source merge).</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">base</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;base</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span>
+
+<span class="nt">logging</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;logging</span>
+<span class="w">  </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json-file</span>
+<span class="w">  </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">max-size</span><span class="p">:</span><span class="w"> </span><span class="s">"10m"</span>
+<span class="w">    </span><span class="nt">max-file</span><span class="p">:</span><span class="w"> </span><span class="s">"3"</span>
+
+<span class="nt">app</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*base</span>
+<span class="w">  </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*logging</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp:latest</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+</code></pre></div></p>
+<p><strong>Ցուցակի սինտաքսով ( sequência).</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">app</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">*base</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">*logging</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp:latest</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+</code></pre></div>
+Երկու տարբերակները էլ մի��umatoid են և տալիս են նույն արդյունքը։ Ցուցակի სինտաքսը (<code>[*]</code>) ավելի छोտ է, բայց दोaryngeal <code>&lt;&lt;:</code> տողերը ավելի ընթեռնելի են՝ տարբեր merging-ների համար տարբեր annotation-ի հետ։</p>
+<p><strong>Ստացվում է.</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">app</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp:latest</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span>
+<span class="w">  </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json-file</span>
+<span class="w">  </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">max-size</span><span class="p">:</span><span class="w"> </span><span class="s">"10m"</span>
+<span class="w">    </span><span class="nt">max-file</span><span class="p">:</span><span class="w"> </span><span class="s">"3"</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp</span>
+</code></pre></div>
+Երկու <code>&lt;&lt;:</code> Միաձուլում են և <code>base</code>-ի, և <code>logging</code>-ի բոլոր բանալիները՝ իսկ <code>replicas</code>-ն ու <code>image</code>-ը վերաիմաստացնում են <code>base</code>-ի արժեքը։</p>
+<p><strong>Ստացվում է.</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">service1</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+
+<span class="nt">service2</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test.com</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+</code></pre></div></p>
+<p><strong>Իրական օրինակ (Kubernetes Helm).</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">base</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;base</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span>
+
+<span class="nt">app1</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*base</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app1</span>
+<span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp:latest</span><span class="w">   </span><span class="c1"># վերաիմաստավորում է image-ը</span>
+
+<span class="nt">app2</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*base</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app2</span>
+<span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">           </span><span class="c1"># վերաիմաստավորում է replicas-ը</span>
+</code></pre></div></p>
+<p><strong>[8] Մեկնաբանություն — <code>#</code></strong> — Ամեն ինչ <code>#</code>-ից հետո մինչև տողի վերջը անտեսվում է։</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Սա մեկնաբանություն է ամբողջ տողի համար</span>
+<span class="nt">անուն</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Արծան</span><span class="w">   </span><span class="c1"># սա նույնպես մեկնաբանություն է</span>
+<span class="nt">տարիք</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span><span class="w">      </span><span class="c1"># կարող եք բացատրել, թե ինչու է այս արժեքը</span>
+</code></pre></div>
+<p><strong>Իրական օրինակ (Docker Compose).</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">'3'</span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"80:80"</span>
+<span class="w">    </span><span class="c1"># Այս կոմենտը բացատրում է, որ օգտագործում ենք alpine տարբերակը չափը փոքրացնելու համար</span>
+</code></pre></div></p>
+<p><strong>[9] Փաստաթղթի սկիզբ — <code>---</code></strong> — Նշում է, որ սկսվում է նոր YAML փաստաթուղթ։ Օգտագործվում է, երբ մեկ ֆայլում մի քանի առանձին YAML փաստաթղթեր կան (օրինակ՝ Kubernetes-ում)։</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx-service</span>
+</code></pre></div>
+<p><strong>Իրական օրինակ (Kubernetes).</strong> Շատ հաճախ մեկ YAML ֆայլում նկարագրվում են մի քանի ռեսուրսներ (Pod, Service, ConfigMap), և դրանք բաժանվում են <code>---</code>-ով։</p>
+<p><strong>[10] Փաստաթղթի վերջ — <code>...</code></strong> — Նշում է, որ փաստաթուղթն ավարտվել է։ Գրեթե չի օգտագործվում, բայց կա ստանդարտում։</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">անուն</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Արծան</span>
+<span class="nn">...</span>
+<span class="nn">---</span>
+<span class="nt">անուն</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Աննա</span>
+<span class="nn">...</span>
+</code></pre></div>
+<h3 id="_5">Ընդհանուր ամփոփ աղյուսակ (հեշտ հիշելու համար)<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Ի՞նչ եք ուզում</th>
+<th>Օգտագործեք</th>
+<th>Օրինակ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Դատարկ արժեք</td>
+<td><code>null</code> կամ <code>~</code></td>
+<td><code>key: null</code></td>
+</tr>
+<tr>
+<td>Ճշմարիտ / կեղծ</td>
+<td><code>true</code>/<code>false</code>, <code>yes</code>/<code>no</code>, <code>on</code>/<code>off</code></td>
+<td><code>enabled: yes</code></td>
+</tr>
+<tr>
+<td>Տեքստ (միացված տողեր)</td>
+<td><code>&gt;</code></td>
+<td><code>text: &gt;</code> <br> <code>սա միանում է</code></td>
+</tr>
+<tr>
+<td>Տեքստ (պահպանված տողեր)</td>
+<td><code>\|</code></td>
+<td><code>text: \|</code> <br> <code>սա մնում է</code></td>
+</tr>
+<tr>
+<td>Ստեղծել հղում</td>
+<td><code>&amp;անուն</code></td>
+<td><code>base: &amp;base</code></td>
+</tr>
+<tr>
+<td>Օգտագործել հղում</td>
+<td><code>*անուն</code></td>
+<td><code>service: *base</code></td>
+</tr>
+<tr>
+<td>Միավորել հղումը</td>
+<td><code>&lt;&lt;: *անուն</code></td>
+<td><code>&lt;&lt;: *base</code></td>
+</tr>
+<tr>
+<td>Մեկնաբանություն</td>
+<td><code>#</code></td>
+<td><code># բացատրություն</code></td>
+</tr>
+<tr>
+<td>Փաստաթղթի սկիզբ</td>
+<td><code>---</code></td>
+<td><code>---</code></td>
+</tr>
+<tr>
+<td>Փաստաթղթի վերջ</td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_6">Գործնական խորհուրդներ<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Միշտ օգտագործեք բացատներ, ոչ թե Tab:</strong> YAML-ը Tab-ը չի սիրում։</li>
+<li><strong>Նահանջները պետք է հավասար լինեն:</strong> եթե մեկ տեղում 2 բացատ եք դնում, ամենուր 2 բացատ դրեք (կամ 4, բայց մի խառնեք)։</li>
+<li><strong>Օգտագործեք online validator:</strong> կարող եք YAML-ը ստուգել <a href="https://www.yamllint.com/">yamlvalidator.com</a> կամ IDE-ի plugin-ով (օրինակ՝ VSCode-ում <code>YAML</code> ընդլայնումը)։</li>
+<li><strong>Տեքստերում չակերտները անհրաժեշտ չեն,</strong> բայց եթե ունեք հատուկ նշաններ (<code>:</code>, <code>#</code>, <code>@</code>), ավելի լավ է չակերտների մեջ վերցնել։</li>
+</ol>
+<h3 id="_7">Իրական կյանքի օրինակ (բոլորը միասին)<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Docker Compose ֆայլ</span>
+<span class="nn">---</span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">'3.8'</span>
+
+<span class="c1"># Ընդհանուր կարգավորումներ</span>
+<span class="nt">defaults</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;defaults</span>
+<span class="w">  </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+<span class="w">  </span><span class="nt">logging</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json-file</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">max-size</span><span class="p">:</span><span class="w"> </span><span class="s">"10m"</span>
+
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Web ծառայություն</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*defaults</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"80:80"</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">NODE_ENV</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production</span><span class="w">   </span><span class="c1"># սա տեքստ է</span>
+<span class="w">      </span><span class="nt">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="s">"false"</span><span class="w">         </span><span class="c1"># boolean, բայց չակերտներով անվտանգ է</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./html:/usr/share/nginx/html:ro</span><span class="w">   </span><span class="c1"># ro = read-only</span>
+
+<span class="w">  </span><span class="c1"># Database ծառայություն</span>
+<span class="w">  </span><span class="nt">db</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*defaults</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres:15</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin</span>
+<span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~</span><span class="w">   </span><span class="c1"># դատարկ արժեք (նշանակում է՝ չսահմանել)</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db-data:/var/lib/postgresql/data</span>
+
+<span class="nt">volumes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">db-data</span><span class="p">:</span><span class="w">   </span><span class="c1"># դատարկ volume</span>
+</code></pre></div>
+<h3 id="_8">Հիմնական հրամաններ / գործիքներ<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>«Հրամաններ» այս թեմայում YAML-ի <strong>ստուգման (validation)</strong> և <strong>parsing-ի</strong> գործիքներն են, որոնք DevOps-ում անհրաժեշտ են` նախքան կոնֆիգուրացիան deploy անելը.</p>
+<table>
+<thead>
+<tr>
+<th>Հրաման</th>
+<th>Նպատակ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>python -c "import yaml,sys; yaml.safe_load(sys.stdin)"</code> (ֆայլն ուղղելով)</td>
+<td>Ստուգում է YAML-ի վավերականությունը (syntax)` ոչինչ չկատարելով</td>
+</tr>
+<tr>
+<td><code>python -c "import yaml; print(yaml.safe_load(open('x.yml')))"</code></td>
+<td>Բեռնում է և ցույց է տալիս parsed-տվյալների կառուցվածքը (Python dict/list)</td>
+</tr>
+<tr>
+<td><code>yq eval . file.yml</code></td>
+<td>YAML-ի «jq»-ն. արագ արժեք հանելու և ստուգելու համար</td>
+</tr>
+<tr>
+<td>IDE plugin (օր. VSCode «YAML» ընդլայնում)</td>
+<td>Իրական ժամանակում ցույց է տալիս սխալներն ու schema-ով ավտոլրացումը</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lab">Փորձարկում (Lab)<a class="headerlink" href="#lab" title="Permanent link">&para;</a></h2>
+<p>Միջավայրը<code>սովորական Linux VM կամ Python-ով Docker կոնտեյներ (</code>python:alpine<code>)։ Ստորև աշխատում ենք Python-ի PyYAML գրադարանով</code> YAML-ի parsing-ի ամենատարածված իրականացումը.</p>
+<h3 id="1">Քայլ 1. Միջավայրի պատրաստում<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pyyaml
+</code></pre></div>
+<p>Ստուգենք, որ PyYAML-ը հասանելի է.</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import yaml; print(yaml.__version__)"</span>
+</code></pre></div>
+<p>Սպասվող արդյունք<code>տարբերակի համար (օր.</code> 6.0.1) որը հաստատում է, որ գրադարանը պատրաստ է.</p>
+<h3 id="2">Քայլ 2. Բազային կառուցվածքի ստուգում<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>Ստեղծեք <code>demo.yml</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Դատարկ արժեք</span>
+<span class="nt">անուն</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~</span>
+<span class="c1"># boolean</span>
+<span class="nt">միացված</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">on</span>
+<span class="c1"># folded / literal</span>
+<span class="nt">նկարագրություն_a</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<span class="w">  </span><span class="no">Սա միանում է</span>
+<span class="w">  </span><span class="no">մեկ տողի մեջ</span>
+<span class="nt">նկարագրություն_b</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no">Սա մնում է</span>
+<span class="w">  </span><span class="no">տող առ տող</span>
+</code></pre></div>
+<p>Ստուգեք parsing-ը.</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import yaml; print(yaml.safe_load(open('demo.yml')))"</span>
+</code></pre></div>
+<p>Սպասվող արդյունք<code>Python dict</code> <code>{'անուն': None, 'միացված': True, ...}</code>։ Նկատեք<code>«</code>on<code>»-ը boolean դարձավ, «</code>~<code>»-ը</code> None-ի, <code>նկարագրություն_a</code>-ի արժեքը<code>մեկ տող, իսկ</code>_b<code>-ինը</code> տող առ տող:</p>
+<h3 id="3-anchor-alias-merge">Քայլ 3. Anchor, alias և merge<a class="headerlink" href="#3-anchor-alias-merge" title="Permanent link">&para;</a></h3>
+<p>Ստեղծեք <code>anchors.yml</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">defaults</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;defaults</span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+
+<span class="nt">service1</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*defaults</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example.com</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+
+<span class="nt">service2</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*defaults</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test.com</span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+<span class="w">  </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">          </span><span class="c1"># վերաիմաստավորում</span>
+</code></pre></div>
+<p>Ստուգեք.</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import yaml; print(yaml.safe_load(open('anchors.yml')))"</span>
+</code></pre></div>
+<p>Սպասվող արդյունք<code></code>service1<code>-ին և</code>service2<code>-ին ավելացված են</code>timeout<code>-ն ու base-ի</code>retries<code>-ը, իսկ</code>service2.retries<code>-ը</code> 5 է. merge-ը թույլ է տալիս մասնակի վերաիմաստավորում` առանց base-ի փոփոխության.</p>
+<h3 id="4-tab">Քայլ 4. Սխալի ցուցադրում. Tab նիշ և անհամաչափ նահանջ<a class="headerlink" href="#4-tab" title="Permanent link">&para;</a></h3>
+<p>Ստեղծեք <code>bad.yml</code>, որի երկրորդ տողի նահանջը դրված է <strong>Tab</strong> նիշով (կամ խառնեք 2 և 4 բացատ միևնույն մակարդակում).</p>
+<div class="highlight"><pre><span></span><code><span class="nt">անուն</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Փորձ</span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">հասցե</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Սխալ</span><span class="w">    </span><span class="c1"># Tab-ով նահանջ</span>
+</code></pre></div>
+<p>(Տեղադրեք նշված տեքստը, փոխարինելով նահանջը Tab-ով) ապա ստուգեք.</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import yaml; yaml.safe_load(open('bad.yml'))"</span>
+</code></pre></div>
+<p>Սպասվող արդյունք<code></code>yaml.scanner.ScannerError<code>-ը դադարեցնում է parsing-ը</code> «found character '\t' that cannot start any token» (կամ <code>mapping values are not allowed here</code>) հաղորդագրությամբ։ Սա ապացուցում է, որ YAML-ը պահանջում է միատեսակ<code>բացատանման նահանջ</code> Tab-ը` արգելված.</p>
+<h3 id="5">Քայլ 5. Բոլորը միասին. «իրական կյանքի» փաստաթուղթ<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<p>Ստեղծեք <code>compose-like.yml</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">'3.8'</span>
+
+<span class="c1"># Ընդհանուր կարգավորումներ</span>
+<span class="nt">defaults</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;defaults</span>
+<span class="w">  </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+<span class="w">  </span><span class="nt">logging</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json-file</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">max-size</span><span class="p">:</span><span class="w"> </span><span class="s">"10m"</span>
+
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Web ծառայություն</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*defaults</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"80:80"</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">NODE_ENV</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production</span><span class="w">   </span><span class="c1"># սա տեքստ է</span>
+<span class="w">      </span><span class="nt">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="s">"false"</span><span class="w">         </span><span class="c1"># boolean, բայց չակերտներով անվտանգ է</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./html:/usr/share/nginx/html:ro</span><span class="w">   </span><span class="c1"># ro = read-only</span>
+
+<span class="w">  </span><span class="c1"># Database ծառայություն</span>
+<span class="w">  </span><span class="nt">db</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*defaults</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres:15</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin</span>
+<span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~</span><span class="w">   </span><span class="c1"># դատարկ արժեք (նշանակում է՝ չսահմանել)</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db-data:/var/lib/postgresql/data</span>
+
+<span class="nt">volumes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">db-data</span><span class="p">:</span><span class="w">   </span><span class="c1"># դատարկ volume</span>
+</code></pre></div>
+<p>Ստուգեք ամբողջը.</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import yaml; d=yaml.safe_load(open('compose-like.yml')); print(d['services']['web']['image'], d['services']['db']['environment'])"</span>
+</code></pre></div>
+<p>Սպասվող արդյունք<code></code>nginx:alpine<code>և</code>{'POSTGRES_USER': 'admin', 'POSTGRES_PASSWORD': None}<code>. Այստեղ մեկ հայացքից տեսանելի է</code> <code>&lt;&lt;:</code> merge-ը<code></code>~<code>null-ը</code> և «<code>"false"</code>» չակերտումը.</p>
+<p>! Best Practices
+    - Միշտ բացատներով նահանջ<code>երբեք Tab. և միևնույն մակարդակում</code> նույն քանակի բացատ (2 կամ 4<code>բայց չխառնել)։
+    - Տեքստային արժեքները</code> որոնք նման են <code>yes</code>/<code>no</code>/<code>on</code>/<code>off</code>/<code>null</code>/<code>true</code>/<code>false</code>-ի կամ պարունակում են <code>:</code> կամ <code>#</code>-ի<code>չակերտեք</code> որպեսզի parsing-ը դրանց տիպը չփոխի:
+    - Ճշգրտով տարբերակեք «<code>key: null</code>»-ը<code>«բանալին բացակայում է»-ից. առաջինում բանալին կա</code> արժեքը<code>դատարկ. երկրորդում</code> բանալին չկա:
+    - Օգտագործեք «<code>---</code>»<code>երբ մեկ ֆայլում մի քանի փաստաթուղթ կա (օր.</code> Kubernetes-ի մանիֆեստները)։
+    - Բարդ արժեքների դեպքում գրեք մեկնաբանություն (<code>#</code>)<code>որ թիմը հասկանա</code> ինչու է այդ արժեքը:
+    - Deploy-ից առաջ ստուգեք syntax-ը (օր.<code>Python+PyYAML կամ</code>yq<code>)</code> նախքան Kubernetes/Ansible/CI-ում գործարկելը:</p>
+<h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
+<h3 id="_9">Ախտանիշ<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>Kubernetes-ում deploy-ի ժամանակ գործարկվում է <code>kubectl apply -f config.yaml</code>, բայց ստացվում է մոտավոր սխալ.</p>
+<div class="highlight"><pre><span></span><code>error: error validating "config.yaml": error validating data:
+[ValidationError(...): unknown field ...]
+</code></pre></div>
+<p>Մանրամասն վերլուծությամբ պարզվում է, որ ռեսուրսի մի մաս्स (օր.<code>ConfigMap-ի</code>data`-ն) դատարկ է կամ սխալ տիպով է, կամ ռեսուրսն ընդհանրապես չի ստեղծվում.</p>
+<h3 id="_10">Ախտորոշում<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Ստուգեք, թե որ տողում է սխալը<code></code>kubectl apply --dry-run=client -f config.yaml -o json`.</li>
+<li>Բացեք ռեսուրսի YAML-ը և ուսումնասիրեք նահանջը. հաճախ մեղավորը <strong>Tab նիշն</strong> է կամ 2/4 բացատի «խառն» օգտագործումը, որի պատճառով բանալին «կորցնում» է իր արժեքը:</li>
+<li>Ստուգեք արժեքի տիպը. օրինակ<code></code>enabled: yes`-ը boolean է դառնում, և եթե կոդում ակնկալվում է տեքստ, արժեքը սխալ է մեկնաբանվում:</li>
+<li>Փորձեք parsing-ը Python-ով. <code>python3 -c "import yaml; print(yaml.safe_load(open('config.yaml')))"</code> և նայեք, արդյոք <code>data</code>-ն <code>None</code> կամ list է դառն católica map-ի փոխարեն.</li>
+</ol>
+<h3 id="_11">Լուծում<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ուղղեք նահանջը` բոլոր դաշտերը մեկ մակարդակում դնելով միևնույն քանակի բացատով (առանց Tab).
+  <div class="highlight"><pre><span></span><code><span class="c1"># Tab-ը տեսնելու համար</span>
+cat<span class="w"> </span>-A<span class="w"> </span>config.yaml<span class="w">   </span><span class="c1"># ^I-ը Tab նիշն է</span>
+</code></pre></div></li>
+<li>Եթե արժեքը պետք է տեքստ լինի, չակերտեք այն<code>«</code>"no"<code>», «</code>"false"`» և այլն:</li>
+<li>Դատարկ դաշտի դեպքում<code>կամ հանեք այն, կամ ստեղծեք ակնհայտ</code>null` (եթե դա թույլատրելի է), կամ տվեք ակնկալվող արժեք:</li>
+<li>Օգտագործեք schema-ով ավտոլրացում տվող IDE plugin-ը (օր.<code>VSCode «YAML» + Kubernetes schema)</code> որը սխալը ցույց է տալիս մինչև <code>kubectl</code> գործարկելը:</li>
+</ul>
+<h3 id="_12">Կանխարգելում<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Deploy-ից առաջ syntax/validation</strong><code></code>kubectl apply --dry-run=client<code>+ Python+PyYAML կամ</code>yq`:</li>
+<li><strong>CI-ում YAML lint</strong> (օր.<code></code>yamllint<code>)</code> որը indentation/type-սխալը բռնի pipeline-ում:</li>
+<li><strong>Նահանջի ստանդարտ</strong><code>նախագծում բոլոր YAML-ում</code> 2 բացատ` ոչ Tab:</li>
+<li><strong>Schema validation</strong><code>Kubernetes-ի/Ansible-ի համար</code> որպեսզի type/schema-սխալը բռնվի մինչև deploy:</li>
+</ul>
+<h2 id="_13">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<h3 id="mid-level">Ի՞նչու «<code>:</code>, <code>#</code>» պարունակող տեքստն անհրաժեշտ է չակերտել` և ի՞նչ ռիսկ կա այն չակերտելու դեպքում (mid-level)<a class="headerlink" href="#mid-level" title="Permanent link">&para;</a></h3>
+<p>«<code>:</code>»-ը YAML-ի map-բաժանարարն է. եթե արժեքը պարունակում է «<code>key: value</code>», YAML-ը դա կհամարի կեղծ map-ենթակառուցվածք կամ կսխալվի. իսկ «<code>#</code>»-ը մեկնաբանության սկիզբ է, հետևաբար դրանից հետո ամեն ինչ կկորչի։ Բացի այդ<code>տիպը կարող է անսպասելի փոխվել</code> օրինակ<code></code>yes<code>/</code>no<code>/</code>on<code>/</code>off<code>/</code>null<code>-ը boolean/null են դառն bắc՝ ոչ թե տեքստ։ Անվտանգ և «նույն ինքը» արժեք պահելու համար</code> պարզապես չակերտեք («<code>"yes"</code>», «<code>"#"</code>», «<code>"host:80"</code>»).</p>
+<h3 id="base-merge-alias-senior-level">Ի՞նչո՞ւ է «<code>&lt;&lt;: *base</code>» merge-ը (և ոչ <code>*alias</code>-ը) նախընտրելի «պատճենել և পরিবর্তել» սցենարում (senior-level)<a class="headerlink" href="#base-merge-alias-senior-level" title="Permanent link">&para;</a></h3>
+<p>«<code>*alias</code>»-ը բերում է <strong>այնmateix օբյեկտը</strong>, որին anchor-ն է հղում. այն <em>reference</em> է, ոչ թե <em>copy</em>։ Ուստի alias-ի միջոցով արժեքը փոփոխելիս կարող եք «վնասել» բնօրինակ anchor-ը (և բոլոր մյուս alias-ները)։ Փոխարենը<code>«</code>&lt;&lt;:<code>»-ը **map-ի merge** է, որը anchor-ի բանալի-արժեք զույգերը միավորում է ընթացիկ block-ում, որտեղ ընթացիկ block-ի առկա բանալիները **գերակշռում** (override) են, և արդյունքում ստեղծվում է **նոր** data-կառուցվածք</code> բնօրինակ anchor-ն անփոփոխ մնալով։ Սա «inherit + override»-ի թեթև համարժեքն է<code>որը օգտագործվում է</code> նույն base-ը (օր.<code>logging, security context) տարբեր սերվիսներին</code> տարբեր մասնակի փոփոխություններով կիրառելու համար:</p>
+<h2 id="_14">Ինքնաստուգում<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Ի՞նչ տարբերություն կա «<code>&gt;</code>» (folded)-ի և «<code>|</code>» (literal)-ի միջև, և ե՞րբ կօգտագործեք յուրաքանչյուրը:</li>
+<li>Ի՞նչ ռիսկ կա <code>yes</code>/<code>no</code>/<code>on</code>/<code>off</code> արժեքներ օգտագործելիս, և ինչպե՞ս վերածել դրանք պարզ տեքստի:</li>
+<li>Ինչու՞ «Tab» նիշը արգելված է YAML-ում, և ինչպե՞ս հայտնաբերել այն ֆայլում:</li>
+<li>Ի՞նչ է anchor-ը, alias-ը և merge-ը («<code>&amp;</code>», «<code>*</code>», «<code>&lt;&lt;:</code>»), և ինչո՞վ է alias-ը տարբերվում merge-ից:</li>
+<li>Ե՞րբ է պարտադիր արժեքը չակերտել («<code>"..."</code>»)` օրինակ բերեք:</li>
+<li>Ի՞նչ է նշանակում <code>key: null</code> ընդդեմ «բանալին պարզապես բացակայում է»-ի, և ինչու կարող է դա կարևոր լինել:</li>
+<li>Ի՞նչու՞ և ե՞րբ է անհրաժեշտ «<code>---</code>»-ը, և որտե՞ղ է դրա ամենատարածված կիրառությունը (Kubernetes):</li>
+</ol>
+<h2 id="_15">Հաջորդ քայլեր<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<p>Այժմ, երբ YAML-ի սինտաքսը ձերն է, ամրապնդեք այն գործնականում<code>[Ansible](ansible.md), որտեղ playbook-ները հենց YAML-ով են գրվում (inventory, tasks, handlers,</code>.j2<code>templates), կամ [Git և CI/CD](../git-ci-cd/index.md), որտեղ pipeline-ի նկարագրությունը նույն YAML-ով է։ Խորացման հաջորդ քայլը</code> Jinja2-ի ձևանմուշները Ansible-ում, ապա` Terraform-ը cloud-ի IaC-ի համար:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Վերադառնալ սկիզբ
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u054a\u0561\u057f\u0573\u0565\u0576\u057e\u0561\u056e \u0567", "clipboard.copy": "\u054a\u0561\u057f\u0573\u0565\u0576\u0565\u056c", "search.result.more.one": "\u0587\u057d 1-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.more.other": "\u0587\u057d #-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.none": "\u0531\u0580\u0564\u0575\u0578\u0582\u0576\u0584\u0576\u0565\u0580 \u0579\u056f\u0561\u0576", "search.result.one": "1 \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.other": "# \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.placeholder": "\u0544\u0578\u0582\u057f\u0584\u0561\u0563\u0580\u0565\u0584 \u0578\u0580\u0578\u0576\u0565\u056c\u0578\u0582 \u0570\u0561\u0574\u0561\u0580", "search.result.term.missing": "\u0532\u0561\u0581\u0561\u056f\u0561\u0575\u0578\u0582\u0574 \u0567", "select.version": "\u0538\u0576\u057f\u0580\u0565\u056c \u057f\u0561\u0580\u0562\u0565\u0580\u0561\u056f\u0568"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

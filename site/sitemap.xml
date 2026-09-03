@@ -2,54 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://example.invalid/devops-book/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/_template/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/glossary/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
+    </url>
+    <url>
+         <loc>https://example.invalid/devops-book/automation-iac/</loc>
+         <lastmod>2026-09-03</lastmod>
+    </url>
+    <url>
+         <loc>https://example.invalid/devops-book/automation-iac/ansible/</loc>
+         <lastmod>2026-09-03</lastmod>
+    </url>
+    <url>
+         <loc>https://example.invalid/devops-book/automation-iac/yaml/</loc>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/cloud-security-observability/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/docker-kubernetes/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/git-ci-cd/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/linux/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/linux/bash-scripting/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/linux/cgroups/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/linux/firewall/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/linux/networking/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/linux/processes/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
     <url>
          <loc>https://example.invalid/devops-book/networking/</loc>
-         <lastmod>2026-08-31</lastmod>
+         <lastmod>2026-09-03</lastmod>
     </url>
 </urlset>

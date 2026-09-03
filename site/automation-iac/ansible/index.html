@@ -1,0 +1,1928 @@
+
+<!doctype html>
+<html lang="hy" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Հայերեն, գործնական DevOps ուղեցույց">
+      
+      
+      
+        <link rel="canonical" href="https://example.invalid/devops-book/automation-iac/ansible/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../yaml/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Ansible - DevOps ուսումնական ձեռնարկ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ansible-iac" class="md-skip">
+          Անցնել պարունակությանը
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Գլխագիր">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-header__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DevOps ուսումնական ձեռնարկ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Ansible
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Որոնում" placeholder="Որոնում" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Որոնում">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Ջնջել" aria-label="Ջնջել" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Որոնում
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Ներդիրներ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Սկիզբ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../linux/" class="md-tabs__link">
+          
+  
+  
+  Linux
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../networking/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Networks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../git-ci-cd/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Git և CI/CD
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Automation և IaC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../docker-kubernetes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Docker և Kubernetes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../cloud-security-observability/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Cloud, Security, Observability
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Բառարան
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Տեղորոշում" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-nav__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DevOps ուսումնական ձեռնարկ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Սկիզբ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/bash-scripting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bash Scripting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/cgroups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cgroups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/firewall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firewall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git-ci-cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git և CI/CD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automation և IaC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Automation և IaC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ansible
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ansible
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ խնդիր է լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս է աշխատում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական բաղադրիչներ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հիմնական հրամաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ansible-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 1. Տեղադրել Ansible-ը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-inventory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 2. Նախագծի կառուցվածք և inventory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 3. Փոփոխական և ձևանմուշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-playbook-handler-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 4. Playbook՝ handler-ով
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 5. Առաջին գործարկում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-idempotency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 6. Երկրորդ գործարկում՝ idempotency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 7. Փոփոխականների առաջնահերթություն
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-failure-handler-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 8. Failure-ի վարքագիծ handler-ի հետ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#handler-ansible-mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է handler-ը Ansible-ում, և ե՞րբ է այն գործարկվում (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nft-c-f-nft-f-firewall-deploy-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչու՞ է «nft -c -f ... &amp;&amp; nft -f ...» ձևանմուշը կենսական firewall-ի deploy-ի ժամանակ (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../yaml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    YAML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker և Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud, Security, Observability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Բառարան
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ խնդիր է լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս է աշխատում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական բաղադրիչներ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հիմնական հրամաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ansible-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 1. Տեղադրել Ansible-ը
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-inventory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 2. Նախագծի կառուցվածք և inventory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 3. Փոփոխական և ձևանմուշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-playbook-handler-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 4. Playbook՝ handler-ով
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 5. Առաջին գործարկում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-idempotency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 6. Երկրորդ գործարկում՝ idempotency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 7. Փոփոխականների առաջնահերթություն
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-failure-handler-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Քայլ 8. Failure-ի վարքագիծ handler-ի հետ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#handler-ansible-mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է handler-ը Ansible-ում, և ե՞րբ է այն գործարկվում (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nft-c-f-nft-f-firewall-deploy-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչու՞ է «nft -c -f ... &amp;&amp; nft -f ...» ձևանմուշը կենսական firewall-ի deploy-ի ժամանակ (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ansible-iac">Ansible. Սերվերային կարգավորումների ավտոմատացում (IaC)<a class="headerlink" href="#ansible-iac" title="Permanent link">&para;</a></h1>
+<h2 id="_1">Տեսություն<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>Ansible</strong>-ը <strong>IaC</strong> (<strong>I</strong>nfrastructure <strong>a</strong>s <strong>C</strong>ode, «ենթակառուցվածքը՝ որպես կոդ») գործիք է, որը կոդով նկարագրում է սերվերների ցանկալի վիճակը և ավտոմատ կիրառում այն բոլոր նշված մեքենաների վրա։ Դրա շնորհիվ կոնֆիգուրացիան, փաթեթների տեղադրումն ու ծառայությունների կառավարումը դառնում են կրկնվող (reproducible) և idempotent՝ միևնույն playbook-ը կարելի է անվտանգ գործարկել բազմիցս։ Idempotency հասկացությունը ավելի մանրամասն քննարկել ենք <a href="../../linux/bash-scripting/">Bash Scripting</a> էջում։</p>
+<h3 id="_2">Ի՞նչ խնդիր է լուծում<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>Առանց ավտոմատացման յուրաքանչյուր սերվեր կարգավորվում է ձեռքով, և հաճախ սխալներ են առաջանում։ ինչ-որ քայլ մոռացվում է, ինչ-որ փոփոխություն արվում է միայն մեկ մեքենայի վրա։ Այսպես ստեղծվում է <strong>config drift</strong> (կոնֆիգուրացիաների շեղում)՝ նույնանման սերվերները ժամանակի ընթացքում դառնում են տարբեր։ Ansible-ն դա լուծում է «ցանկալի վիճակ» (desired state) մոտեցմամբ՝ նկարագրում ենք, թե ինչպիսին պետք է լինի համակարգը, իսկ Ansible-ը host-ը հասցնում է այդ վիճակին։</p>
+<h3 id="_3">Ինչպե՞ս է աշխատում<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Control node (կառավարման հանգույց)</strong>՝ այն մեքենան, որտեղ տեղադրված է Ansible-ը, և որտեղից գործարկվում են playbook-ները։ Սա ձեր աշխատանքային մեքենան է կամ CI runner-ը։</li>
+<li><strong>Managed nodes (կառավարվող հանգույցներ)</strong>՝ այն սերվերները, որոնց վրա կիրառվում է ավտոմատացումը։ Դրանց մասին տե՛ս <a href="../../linux/">Linux</a> բաժինը։</li>
+<li><strong>Agentless («առանց գործակալի»)</strong>՝ կառավարվող սերվերների վրա ոչինչ նախապես տեղադրել պետք չէ՝ Ansible-ը միանում է SSH-ով, սերվերում գործարկում է կարճ Python ծրագիր (մոդուլը) և հավաքում արդյունքը։ Հետևաբար managed node-ում պետք է լինի Python։</li>
+<li><strong>YAML</strong>՝ playbook-ները գրվում են <a href="../yaml/">YAML</a> ձևաչափով, որը մարդու համար ընթեռնելի է, հեշտ է ստուգել (syntax check) և պահել Git-ում՝ ամեն փոփոխություն դառնում է տեսանելի։ Git-ի մասին՝ <a href="../../git-ci-cd/">Git և CI/CD</a> բաժնում։</li>
+</ul>
+<h3 id="_4">Հիմնական բաղադրիչներ<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><strong>1. Inventory (ինվենտորիա)</strong>՝ ֆայլ, որտեղ թվարկվում են host-ները և նրանց խմբերը՝ խմբերի շնորհիվ մեկ playbook-ը կարելի է կիրառել մի ամբողջ խմբի վրա։ Ընդունում է և՛ INI, և՛ YAML ձևաչափ՝ միացման մանրամասները նշվում են <code>ansible_</code> նախածանցով փոփոխականներով, օրինակ՝ <code>ansible_user</code>, <code>ansible_port</code>, <code>ansible_host</code>, <code>ansible_ssh_private_key_file</code>։ Օրինակ՝</p>
+<div class="highlight"><pre><span></span><code><span class="k">[webservers]</span>
+<span class="na">web1.example.com</span>
+<span class="na">web2.example.com</span>
+
+<span class="k">[databases]</span>
+<span class="na">db1.example.com ansible_user</span><span class="o">=</span><span class="s">deploy ansible_ssh_private_key_file=~/.ssh/deploy.key</span>
+</code></pre></div>
+<p><strong>2. Modules (մոդուլներ)</strong>՝ Ansible-ի «գործիքները», որոնք կատարում են կոնկրետ գործողություն՝ փաթեթի տեղադրում (<code>ansible.builtin.apt</code> կամ <code>yum</code>), ֆայլի պատճենում (<code>copy</code>), ձևանմուշից ֆայլի ստեղծում (<code>template</code>), ծառայության կառավարում (<code>service</code>, <code>systemd</code>), օգտատիրոջ ստեղծում (<code>user</code>) և այլն։ Մոդուլները idempotent են՝ եթե ցանկալի վիճակն արդեն կա, ելքում տեսնում ենք <code>ok</code>՝ ոչ թե <code>changed</code>։</p>
+<p><strong>3. Playbook (փլեյբուք)</strong>՝ YAML ֆայլ, որը նկարագրում է, թե <em>ինչ</em> պետք է արվի և <em>որտեղ</em> (որ host-ի կամ խմբի վրա)։ Օրինակ՝ Apache սերվերի տեղադրումն ու գործարկումը <code>webservers</code> խմբի host-ների վրա՝</p>
+<p><div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Կարգավորել վեբ սերվերները</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webservers</span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span><span class="w">                  </span><span class="c1"># բոլոր task-երը կատարվում են sudo-ով</span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Տեղադրել Apache-ն</span>
+<span class="w">      </span><span class="nt">ansible.builtin.apt</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apache2</span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Գործարկել և միացնել Apache-ն</span>
+<span class="w">      </span><span class="nt">ansible.builtin.service</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apache2</span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">started</span>
+<span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+</code></pre></div>
+<strong>4. Tasks (քայլեր)</strong>՝ playbook-ի ներսի քայլերը, որոնք կատարվում են վերևից ներքև՝ հերթականությամբ։ Եթե task-ը ձախողվի մի host-ի վրա, Ansible-ը լռելյայն դադարեցնում է այդ host-ի հետագա task-երը (մյուս host-երը շարունակում են) և չի «հետ գլորում» արդեն կատարված փոփոխությունները՝ արդեն կատարված քայլերի արդյունքները մնում են տեղում։ Այս պահվածքը կարելի է փոխել՝ ավելացնելով <code>force_handlers</code> play-ում կամ <code>--force-handlers</code> դրոշակը գործարկելիս՝ handler-ները այդ դեպքում աշխատում են նաև ձախողված task-երի դեպքում։</p>
+<p><strong>5. Handlers (հենդլերներ)</strong>՝ հատուկ task-եր, որոնք աշխատում են միայն այն ժամանակ, երբ մեկ այլ task նրանց «ծանուցում» է (<code>notify</code>)։ Դրանց նպատակը՝ գործողություն կատարել միայն այն ժամանակ, երբ իսկապես փոփոխություն է եղել։ օրինակ՝ կոնֆիգը փոխվել է, ուրեմն՝ ծառայությունը վերագործարկիր։ Handlers-ի կանոնները՝</p>
+<ul>
+<li>Գործարկվում են play-ի վերջում՝ բոլոր task-երից հետո (կամ <code>meta: flush_handlers</code>-ով ստիպելու դեպքում)։</li>
+<li>Աշխատում են միայն այն ժամանակ, երբ notify-արած task-ը հաղորդել է «changed» (իրական փոփոխություն)։ Եթե task-ը ոչինչ չի փոխել, handler-ը չի աշխատում։</li>
+<li>Եթե նույն handler-ին notify անեն մի քանի task-եր, այն աշխատում է մեկ անգամ՝ ավելորդ վերագործարկումներից խուսափելու համար։</li>
+<li>Կատարման հերթականությունն ըստ <code>handlers</code> բաժնում սահմանված կարգի է, ոչ թե notify-ի կարգի։</li>
+<li>Խորհուրդ՝ handler-ի անունում փոփոխական մի դրեք, իսկ <code>listen</code>-ով կարելի է մի քանի handler «կապել» նույն notify-ի հետ։ Handler-ը չի կարող կանչել <code>import_role</code> կամ <code>include_role</code>։</li>
+</ul>
+<p>Օրինակ՝ firewall-ի կանոնների անվտանգ կիրառման handler՝</p>
+<div class="highlight"><pre><span></span><code><span class="nt">handlers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apply_nftables</span>
+<span class="w">    </span><span class="nt">ansible.builtin.shell</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">nft -c -f /etc/nftables.conf &amp;&amp; nft -f /etc/nftables.conf</span>
+</code></pre></div>
+<p>Այս օրինակում կարևոր է երկու բան՝</p>
+<ul>
+<li><code>|</code> — YAML-ի «literal block» նշանը, որը հաջորդող բոլոր տողերը դարձնում է մեկ ամբողջական տեքստ՝ նոր տողերը պահպանվում են։</li>
+<li><code>&amp;&amp;</code> — bash-ի «և» օպերատորը, որը երկրորդ հրամանը կատարում է միայն այն դեպքում, երբ առաջինը հաջող է ավարտվել (վերադարձրել է 0)։ Սա «fail-safe» (անվտանգ ձախողում) սկզբունքն է՝ նախ ստուգում, հետո կիրառում։</li>
+</ul>
+<p>Առանձին հրամանների իմաստը՝</p>
+<ul>
+<li><code>nft -c -f ֆայլ</code> — «check» ռեժիմ, որը ստուգում է կանոնների ճշտությունը, բայց չի կիրառում։</li>
+<li><code>nft -f ֆայլ</code> — կանոնների կիրառում ֆայլից (այստեղ՝ <code>&amp;&amp;</code>-ից հետո)։</li>
+</ul>
+<p>Արդյունքը՝ եթե կոնֆիգում սինտաքսի սխալ կա, ապա <code>nft -c</code>-ն ձախողվում է, և <code>&amp;&amp;</code>-ը ընդհատում է կատարումը։ Սխալ կոնֆիգը երբեք չի կիրառվում, kernel-ում արդեն եղած հին կանոնները մնում են, SSH-ը՝ հասանելի։ Այսպիսի «նախ ստուգիր, հետո կիրառիր» ձևանմուշը պաշտպանում է ամենավատ իրավիճակից՝ սերվերի կապը կորցնելուց։ nftables-ի մասին՝ <a href="../../linux/firewall/">Firewall</a> էջում։
+<strong>6. Փոփոխականներ (Variables)</strong>՝ playbook-ը ճկուն դարձնելու գործիք նույն playbook-ը կարող է տարբեր արժեքներ ստանալ՝ կախված խմբից կամ host-ից։ Փոփոխականների տեղադրման գլխավոր վայրերը՝</p>
+<ul>
+<li><code>group_vars/&lt;group&gt;.yml</code> — կիրառվում է խմբի բոլոր host-ների համար։</li>
+<li><code>host_vars/&lt;host&gt;.yml</code> — կիրառվում է կոնկրետ host-ի համար և գերակշռում է group-ի արժեքին (host_vars &gt; group_vars)։</li>
+<li>Play-ի ներսում՝ <code>vars:</code> բաժինը, որը հասանելի է play-ի բոլոր task-երին։</li>
+<li>Command line-ից՝ <code>-e</code> կամ <code>--extra-vars</code>, որը «override all» է՝ գերակշռում է մնացած բոլորին։ հարմար է CI/CD-ից հատուկ արժեք փոխանցելու համար։</li>
+</ul>
+<p>Օրինակ՝ <code>group_vars/webservers.yml</code> ֆայլում՝</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apache_max_clients</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">900</span>
+</code></pre></div>
+<p>Փոփոխականն օգտագործվում է ձևանմուշներում՝ <code>{{ apache_max_clients }}</code>։ Jinja2-ն ապահովում է նաև պայմաններ (<code>{% if %}</code>), ցիկլեր (<code>{% for %}</code>) և ֆիլտրեր, օրինակ՝ <code>{{ apache_max_clients | default(800) }}</code>։</p>
+<p><strong>7. Templates (<code>*.j2</code>)</strong>՝ <code>.j2</code>-ը Jinja2 ձևանմուշի (template) ֆայլի ընդլայնումն է՝ ստատիկ տեքստ + դինամիկ մասեր։ <code>template</code> մոդուլը կարդում է <code>.j2</code> ֆայլը, փոխարինում <code>{{ }}</code>-ի փոփոխականները, կատարում <code>{% %}</code> կառուցվածքները և ստեղծում վերջնական ֆայլը՝ նշված տեղում՝ առանց <code>.j2</code> ընդլայնման։ Ի տարբերություն <code>copy</code>-ի, որը ֆայլը պատճենում է «ինչպես կա», template-ը դինամիկ է և կարող է տարբերվել՝ կախված host-ի տվյալներից (օր.՝ ՕՀ-ի տարբերակից)։ Օրինակ՝
+<div class="highlight"><pre><span></span><code><span class="cp">{%</span> <span class="k">for</span> <span class="nv">ip</span> <span class="k">in</span> <span class="nv">firewall_allow_ips</span> <span class="cp">%}</span>
+<span class="x">    ip saddr </span><span class="cp">{{</span> <span class="nv">ip</span> <span class="cp">}}</span><span class="x"> accept</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+</code></pre></div></p>
+<p><strong>8. Roles (դերեր)</strong>՝ playbook-ի վերօգտագործելի բլոկներ, որոնք խմբավորում են tasks-ը, handlers-ը, templates-ը և փոփոխականները։ Ստանդարտ կառուցվածքը՝</p>
+<div class="highlight"><pre><span></span><code>roles/webserver/
+├── tasks/       # հիմնական քայլերը (main.yml)
+├── handlers/    # handler-ները
+├── templates/   # .j2 ձևանմուշները
+├── files/       # ստատիկ ֆայլերը (copy-ի համար)
+├── vars/        # role-ի փոփոխականները
+├── defaults/    # լռելյայն արժեքները (հեշտ override)
+└── meta/        # role-ի կախվածությունները
+</code></pre></div>
+<p>Playbook-ում role-ը կանչվում է <code>roles:</code> բաժնով, և role-ի <code>tasks/main.yml</code>-ը ավտոմատ կատարվում է play-ի մեջ՝ tasks-երի ու handlers-երի հետ միասին։ Այդպես նույն role-ը կարելի է օգտագործել տարբեր playbook-ներում և նույնիսկ տարբեր նախագծերում (օր.՝ Ansible Galaxy-ի միջոցով)։</p>
+<h2 id="_5">Հիմնական հրամաններ<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Հրաման</th>
+<th>Նպատակ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ansible --version</code></td>
+<td>Ցույց է տալիս Ansible-ի տարբերակը</td>
+</tr>
+<tr>
+<td><code>ansible-inventory --list</code></td>
+<td>Ցույց է տալիս inventory-ի ամբողջ կառուցվածքը (JSON)</td>
+</tr>
+<tr>
+<td><code>ansible &lt;host&gt; -m ping</code></td>
+<td>Ստուգում է կապը host-ի հետ (SSH և Python)</td>
+</tr>
+<tr>
+<td><code>ansible &lt;host&gt; -m setup</code></td>
+<td>Հավաքում է host-ի տվյալները (<code>ansible_facts</code>)</td>
+</tr>
+<tr>
+<td><code>ansible-playbook playbook.yml</code></td>
+<td>Գործարկում է playbook-ը</td>
+</tr>
+<tr>
+<td><code>ansible-playbook playbook.yml --syntax-check</code></td>
+<td>Ստուգում է YAML սինտաքսը՝ առանց կիրառելու</td>
+</tr>
+<tr>
+<td><code>ansible-playbook playbook.yml --check</code></td>
+<td>Չոր գործարկում (dry-run)՝ ցույց է տալիս, թե ինչ կփոխվի</td>
+</tr>
+<tr>
+<td><code>ansible-playbook playbook.yml --force-handlers</code></td>
+<td>Handler-ները գործարկում է նույնիսկ ձախողված task-երի դեպքում</td>
+</tr>
+<tr>
+<td><code>ansible-playbook playbook.yml -e var=val</code></td>
+<td>Փոխանցում է փոփոխական՝ գերակշռելով մնացածին</td>
+</tr>
+<tr>
+<td>## Փորձարկում (Lab)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Միջավայրը՝ Ubuntu 22.04 կամ 24.04 VM՝ root արտոնություններով (կամ Docker container)։ Քայլերը վերարտադրելի են մեկ host-ով՝ <code>localhost</code>։</p>
+<h3 id="1-ansible-">Քայլ 1. Տեղադրել Ansible-ը<a class="headerlink" href="#1-ansible-" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ansible
+ansible<span class="w"> </span>--version
+</code></pre></div>
+<p>Սպասվող արդյունք՝ Ansible-ի տարբերակի մասին հաղորդագրություն։ Զգուշացում՝ Ubuntu-ի պահոցի տարբերակը կարող է հին լինել, բայց այս lab-ի համար այն բավարար է։</p>
+<h3 id="2-inventory">Քայլ 2. Նախագծի կառուցվածք և inventory<a class="headerlink" href="#2-inventory" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>~/ansible-lab/templates<span class="w"> </span>~/ansible-lab/group_vars
+<span class="nb">cd</span><span class="w"> </span>~/ansible-lab
+</code></pre></div>
+<p>Ստեղծեք <code>ansible.cfg</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">[defaults]</span>
+<span class="na">inventory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">hosts.ini</span>
+<span class="na">host_key_checking</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">False</span>
+<span class="na">interpreter_python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">auto_silent</span>
+</code></pre></div>
+<p><code>interpreter_python = auto_silent</code>-ը թույլ է տալիս Ansible-ին ինքնուրույն գտնել Python-ը՝ առանց նախազգուշացումների, իսկ <code>host_key_checking = False</code>-ը՝ բաց թողնել SSH-ի առաջին միացման հարցումը (ընդունելի է միայն վստահելի ներքին միջավայրում)։ Ստեղծեք <code>hosts.ini</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">[lab]</span>
+<span class="na">localhost ansible_connection</span><span class="o">=</span><span class="s">local ansible_python_interpreter=/usr/bin/python3</span>
+</code></pre></div>
+<p>Ստուգեք inventory-ն և կապը՝</p>
+<div class="highlight"><pre><span></span><code>ansible-inventory<span class="w"> </span>--list
+ansible<span class="w"> </span>lab<span class="w"> </span>-m<span class="w"> </span>ping
+</code></pre></div>
+<p>Սպասվող արդյունք՝ <code>pong</code> պատասխան, որը ապացուցում է, որ Ansible-ը կարող է աշխատել host-ի հետ։</p>
+<h3 id="3">Քայլ 3. Փոփոխական և ձևանմուշ<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>Ստեղծեք <code>group_vars/lab.yml</code></p>
+<div class="highlight"><pre><span></span><code><span class="nt">site_title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Իմ Ansible լաբը</span>
+</code></pre></div>
+<p>Ստեղծեք <code>templates/index.html.j2</code></p>
+<div class="highlight"><pre><span></span><code><span class="x">&lt;html&gt;</span>
+<span class="x">  &lt;head&gt;&lt;title&gt;</span><span class="cp">{{</span> <span class="nv">site_title</span> <span class="cp">}}</span><span class="x">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="x">  &lt;body&gt;</span>
+<span class="x">    &lt;h1&gt;</span><span class="cp">{{</span> <span class="nv">site_title</span> <span class="cp">}}</span><span class="x">&lt;/h1&gt;</span>
+<span class="x">    &lt;p&gt;</span><span class="cp">{{</span> <span class="nv">ansible_facts</span><span class="o">[</span><span class="s1">'distribution'</span><span class="o">]</span> <span class="cp">}}</span><span class="x"> </span><span class="cp">{{</span> <span class="nv">ansible_facts</span><span class="o">[</span><span class="s1">'distribution_version'</span><span class="o">]</span> <span class="cp">}}</span><span class="x">&lt;/p&gt;</span>
+<span class="x">  &lt;/body&gt;</span>
+<span class="x">&lt;/html&gt;</span>
+</code></pre></div>
+<p><code>{{ site_title }}</code>-ը՝ group_vars-ից վերցված փոփոխական, իսկ <code>ansible_facts['distribution']</code>-ը՝ host-ի մասին <code>gather_facts</code>-ով հավաքված տվյալ (ՕՀ-ի անունը)։</p>
+<h3 id="4-playbook-handler-">Քայլ 4. Playbook՝ handler-ով<a class="headerlink" href="#4-playbook-handler-" title="Permanent link">&para;</a></h3>
+<p>Ստեղծեք <code>playbook.yml</code></p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Կարգավորել նմուշային վեբ էջ</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lab</span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+<span class="w">  </span><span class="nt">gather_facts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Տեղադրել nginx</span>
+<span class="w">      </span><span class="nt">ansible.builtin.apt</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Գրել index.html-ը ձևանմուշից</span>
+<span class="w">      </span><span class="nt">ansible.builtin.template</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">src</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">templates/index.html.j2</span>
+<span class="w">        </span><span class="nt">dest</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/www/html/index.html</span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">'0644'</span>
+<span class="w">      </span><span class="nt">notify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reload_nginx</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Համոզվել, որ nginx-ը աշխատում է</span>
+<span class="w">      </span><span class="nt">ansible.builtin.service</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">started</span>
+<span class="w">        </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+
+<span class="w">  </span><span class="nt">handlers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reload_nginx</span>
+<span class="w">      </span><span class="nt">ansible.builtin.shell</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">nginx -t &amp;&amp; systemctl reload nginx</span>
+</code></pre></div>
+<h3 id="5">Քայլ 5. Առաջին գործարկում<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>playbook.yml
+</code></pre></div>
+<p>Սպասվող արդյունք՝ ելքում կա «RUNNING HANDLER [reload_nginx]» տողը, քանի որ ձևանմուշի task-ը «changed» է հաղորդել, handler-ի ներսում սկզբում <code>nginx -t</code>-ն է ստուգում կոնֆիգը, ապա՝ reload-ը։</p>
+<h3 id="6-idempotency">Քայլ 6. Երկրորդ գործարկում՝ idempotency<a class="headerlink" href="#6-idempotency" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>playbook.yml
+</code></pre></div>
+<p>Սպասվող արդյունք՝ բոլոր task-երը «ok» են (ոչ «changed»), և «RUNNING HANDLER» տողը չկա, որովհետև ոչինչ չի փոխվել։ Սա idempotency-ի և «handler-ն աշխատում է միայն փոփոխության դեպքում» կանոնի ցուցադրումն է։</p>
+<h3 id="7">Քայլ 7. Փոփոխականների առաջնահերթություն<a class="headerlink" href="#7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="nv">site_title</span><span class="o">=</span><span class="s2">"Վերագրված տիտղոս"</span>
+</code></pre></div>
+<p>Սպասվող արդյունք՝ ձևանմուշը նորից «changed» է (տիտղոսը փոխվել է), և handler-ը նորից աշխատում է՝ <code>-e</code>-ն գերակշռեց <code>group_vars</code>-ի արժեքին։ Սա հաստատում է, որ CLI-ի փոփոխականն ամենաբարձր առաջնահերթությունն ունի։</p>
+<h3 id="8-failure-handler-">Քայլ 8. Failure-ի վարքագիծ handler-ի հետ<a class="headerlink" href="#8-failure-handler-" title="Permanent link">&para;</a></h3>
+<p>Ստեղծեք <code>fail-demo.yml</code></p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Handler-ի և failure-ի վարքագիծ</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lab</span>
+<span class="w">  </span><span class="nt">gather_facts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no</span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">notify անող task</span>
+<span class="w">      </span><span class="nt">ansible.builtin.command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/bin/true</span>
+<span class="w">      </span><span class="nt">changed_when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">notify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo_hook</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Կանխամտածված ձախողվող task</span>
+<span class="w">      </span><span class="nt">ansible.builtin.command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/bin/false</span>
+
+<span class="w">  </span><span class="nt">handlers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo_hook</span>
+<span class="w">      </span><span class="nt">ansible.builtin.debug</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">msg</span><span class="p">:</span><span class="w"> </span><span class="s">"Ես</span><span class="nv"> </span><span class="s">handler</span><span class="nv"> </span><span class="s">եմ"</span>
+</code></pre></div>
+<p>Գործարկեք առանց դրոշակի՝</p>
+<div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>fail-demo.yml
+</code></pre></div>
+<p>Սպասվող արդյունք՝ երկրորդ task-ը FAILED է, playbook-ը դադարում է, և «RUNNING HANDLER» տողը չկա։ handler-ը չի աշխատում, քանի որ host-ը ձախողված է համարվում։ Հիմա գործարկեք դրոշակով՝</p>
+<div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>fail-demo.yml<span class="w"> </span>--force-handlers
+</code></pre></div>
+<p>Սպասվող արդյունք՝ չնայած ձախողմանը՝ «RUNNING HANDLER [demo_hook]» տողը հայտնվում է՝ այդպես <code>force_handlers</code>-ը փոխում է լռելյայն պահվածքը։ Երկու դեպքում էլ արդեն կատարված փոփոխությունները մնում են՝ Ansible-ը դրանք չի «հետ գլորում»։</p>
+<div class="admonition tip">
+<p class="admonition-title">Best Practices</p>
+<ul>
+<li>Production-ից առաջ playbook-ը միշտ ստուգեք <code>--syntax-check</code> և <code>--check</code>։</li>
+<li>Firewall-ի/SSH-ի կարգավորումներ պարունակող handler-ներում օգտագործեք «նախ ստուգիր, հետո կիրառիր» ձևանմուշը՝ «<code>nft -c ... &amp;&amp; nft -f ...</code>»։</li>
+<li>Գաղտնիքները (SSH keys, tokens) երբեք պարզ տեքստով մի պահեք, դրանք պահեք <code>ansible-vault</code>-ով։</li>
+<li>Սկզբում՝ staging, ապա՝ production, իսկ playbook-ի յուրաքանչյուր փոփոխություն՝ պահեք Git-ում։</li>
+</ul>
+</div>
+<h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
+<h3 id="_6">Ախտանիշ<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>Թիմը production սերվերում firewall-ի (nftables) կանոնները տեղակայում է Ansible playbook-ով, որը կանոնները ստանում է <code>.j2</code> ձևանմուշից։ Deploy-ի ժամանակ ելքում երևում է՝</p>
+<div class="highlight"><pre><span></span><code>RUNNING HANDLER [apply_nftables]
+fatal: [web1]: FAILED! =&gt; nft: syntax error ...
+</code></pre></div>
+<p>Playbook-ն ավարտվում է <code>failed=1</code>-ով, բայց սերվերը շարունակում է աշխատել, SSH-ը չի կտրվում։ Հարցը՝ ինչո՞ւ է playbook-ը ձախողվում, բայց կապը չի կորչում։</p>
+<h3 id="_7">Ախտորոշում<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Գործարկեք playbook-ը <code>-v</code> դրոշակով՝ տեսնելու, թե կոնկրետ որ handler-ն է ձախողվել՝
+   <div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>deploy-firewall.yml<span class="w"> </span>-v
+</code></pre></div></li>
+<li>Սերվերի վրա ստուգեք, թե արդյոք սկավառակի վրա եղած կոնֆիգը ճիշտ է՝
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nft<span class="w"> </span>-c<span class="w"> </span>-f<span class="w"> </span>/etc/nftables.conf
+</code></pre></div>
+   Սխալի հաղորդագրությունը ցույց է տալիս տողն ու պատճառը։</li>
+<li>Ստուգեք, թե որ կանոններն են այդ պահին ակտիվ՝
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nft<span class="w"> </span>list<span class="w"> </span>ruleset
+</code></pre></div>
+   Երևում է, որ ակտիվ են հին՝ վերջին հաջող կիրառման կանոնները, քանի որ վատ կոնֆիգը երբեք չի կիրառվել «<code>&amp;&amp;</code>»-ի շնորհիվ։</li>
+</ol>
+<h3 id="_8">Լուծում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Ուղղեք <code>.j2</code> ձևանմուշի սխալը (օր՝ բաց թողած փակագիծ)։</li>
+<li>Գործարկեք ստուգումն ու չոր գործարկումը՝
+   <div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>deploy-firewall.yml<span class="w"> </span>--syntax-check
+ansible-playbook<span class="w"> </span>deploy-firewall.yml<span class="w"> </span>--check
+</code></pre></div></li>
+<li>Գործարկեք playbook-ը՝ այժմ <code>nft -c</code>-ն անցնում է, և <code>nft -f</code>-ը կիրառում է նոր կանոնները՝
+   <div class="highlight"><pre><span></span><code>ansible-playbook<span class="w"> </span>deploy-firewall.yml
+</code></pre></div></li>
+<li>Ստուգեք արդյունքը՝
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nft<span class="w"> </span>list<span class="w"> </span>ruleset
+</code></pre></div></li>
+<li>Կարևոր նրբություն՝ <code>/etc/nftables.conf</code>-ը սկավառակի վրա «սխալ» է հասցվել, իսկ boot-ի ժամանակ <code>nftables.service</code>-ը հենց այդ ֆայլն է բեռնում՝ ուստի սխալը պետք է շատ արագ ուղղել կամ վերականգնել աշխատող կոնֆիգը, հակառակ դեպքում reboot-ից հետո firewall-ը կարող է ձախողվել։ Ահա թե ինչու «ստուգիր՝ հետո կիրառիր» ձևը փրկում է փակվելուց, բայց ձևանմուշը միայն փոփոխելիս պետք է զգույշ լինել՝ մինչև reboot-ը։</li>
+</ol>
+<h3 id="_9">Կանխարգելում<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Handler-ներում միշտ պահպանեք fail-safe «<code>nft -c ... &amp;&amp; nft -f ...</code>» ձևը՝ վատ կոնֆիգը երբեք «չի կիրառվի»։</li>
+<li>Deploy-ից առաջ՝ <code>--syntax-check</code>, <code>--check</code> և staging-ում փորձարկում։</li>
+<li><code>force_handlers</code>-ը օգտագործեք զգուշությամբ՝ միայն այն դեպքում, երբ handler-ը անվտանգ է՝ աշխատելու ձախողված task-երից հետո։</li>
+<li>Ունեցեք հայտնի-աշխատող կոնֆիգի backup (կամ պահեք այն Git-ում)՝ reboot-ից հետո արագ վերականգնման համար։</li>
+<li>Ախտորոշման հրամաններով runbook-ը պահեք թիմի համար մատչելի տեղում։</li>
+</ul>
+<h2 id="_10">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h3 id="handler-ansible-mid-level">Ի՞նչ է handler-ը Ansible-ում, և ե՞րբ է այն գործարկվում (mid-level)<a class="headerlink" href="#handler-ansible-mid-level" title="Permanent link">&para;</a></h3>
+<p>Handler-ը հատուկ task է, որը գործարկվում է միայն այն ժամանակ, երբ մեկ այլ task նրան «ծանուցում» է (<code>notify</code>), և միայն այն ժամանակ, երբ այդ task-ը «changed» է հաղորդել։ Handler-ները գործարկվում են play-ի վերջում՝ բոլոր task-երից հետո, իրենց հայտարարման հերթականությամբ, և յուրաքանչյուրը՝ մեկ անգամ, նույնիսկ եթե մի քանի task է նրան «ծանուցել»։ Եթե play-ի ընթացքում task-ը ձախողվի, այդ host-ի handler-ները լռելյայն չեն աշխատում՝ վարքագիծը փոխվում է <code>force_handlers</code>-ով կամ <code>--force-handlers</code>-ով։</p>
+<h3 id="nft-c-f-nft-f-firewall-deploy-senior-level">Ինչու՞ է «nft -c -f ... &amp;&amp; nft -f ...» ձևանմուշը կենսական firewall-ի deploy-ի ժամանակ (senior-level)<a class="headerlink" href="#nft-c-f-nft-f-firewall-deploy-senior-level" title="Permanent link">&para;</a></h3>
+<p><code>nft -c</code>-ն «check» ռեժիմն է՝ ստուգում է կոնֆիգի վավերականությունը, բայց չի կիրառում, իսկ <code>&amp;&amp;</code>-ը bash-ի օպերատոր է, որը հաջորդ հրամանը կատարում է միայն նախորդի հաջող ավարտից հետո։ Եթե կոնֆիգում սինտաքսի սխալ կա, <code>nft -c</code>-ն ձախողվում է, և <code>nft -f</code>-ը (կիրառումը) երբեք չի կատարվում՝ արդյունքում kernel-ում մնում են հին, աշխատող կանոնները, և SSH-ը հասանելի է մնում։ Սա «fail-safe» մոտեցում է՝ playbook-ը ձախողվում է, արդեն կատարված փոփոխությունները մնում են, բայց firewall-ը չի «կոտրվում»։ Ավագ ինժեները նաև կնշի, որ <code>/etc/nftables.conf</code>-ը սկավառակի վրա սխալ է հասցվել, ուստի այն պետք է արագ ուղղել՝ մինչև reboot-ը, և որ <code>--check</code>-ը չի կիրառում և չի կատարում handler-ները, ուստի idempotent state-ը հաստատում է միայն լրիվ գործարկումը։</p>
+<h2 id="_11">Ինքնաստուգում<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Ի՞նչ է նշանակում «agentless»-ը, և ինչպե՞ս է Ansible-ը միանում կառավարվող host-երին։</li>
+<li>Ի՞նչ է inventory-ը, և ինչ դեր ունեն խմբերն ու <code>ansible_user</code>, <code>ansible_ssh_private_key_file</code> փոփոխականները։</li>
+<li>Ե՞րբ է գործարկվում handler-ը, և ինչո՞ւ կարող է այն աշխատել միայն մեկ անգամ՝ չնայած մի քանի task-ի notify-ին։</li>
+<li>Ի՞նչ է idempotency-ն, և ինչպե՞ս է այն երևում երկրորդ գործարկման ելքում (<code>ok</code> ընդդեմ <code>changed</code>)։</li>
+<li>Ի՞նչ է <code>.j2</code> ֆայլը, և ինչո՞վ է <code>template</code> մոդուլը տարբերվում <code>copy</code>-ից։</li>
+<li>Ինչպե՞ս ապահովել handler-ի աշխատանքը, երբ play-ի ինչ-որ task ձախողվել է (<code>--force-handlers</code> / <code>force_handlers</code>)։</li>
+<li>Ինչո՞ւ է «<code>nft -c ... &amp;&amp; nft -f ...</code>»-ը fail-safe պաշտպանություն, և ի՞նչ է մնում ուժի մեջ՝ սխալ կոնֆիգի դեպքում։</li>
+</ol>
+<h2 id="_12">Հաջորդ քայլեր<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>Շարունակեք <a href="../../git-ci-cd/">Git և CI/CD</a> բաժնով՝ playbook-ները CI pipeline-ում գործարկելու համար, իսկ firewall-ի ավտոմատացման պրակտիկան ամրապնդելու համար՝ <a href="../../linux/firewall/">Firewall</a> և <a href="../../linux/">Linux</a> էջերով։ Թեմաներն ավելի խոր ուսումնասիրելուց առաջ լավ գաղափար է ամրապնդել <a href="../yaml/">YAML</a> էջը, քանի որ playbook-ների և ձևանմուշների ամբողջ սինտաքսը YAML-ի վրա է հիմնված։ Հաջորդ խորացումը՝ roles-ի, <code>ansible-vault</code>-ի և Jinja2-ի՝ ավելի բարդ ձևանմուշների ուսումնասիրությունը, ապա՝ Terraform-ը cloud-ի IaC-ի համար։</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Վերադառնալ սկիզբ
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u054a\u0561\u057f\u0573\u0565\u0576\u057e\u0561\u056e \u0567", "clipboard.copy": "\u054a\u0561\u057f\u0573\u0565\u0576\u0565\u056c", "search.result.more.one": "\u0587\u057d 1-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.more.other": "\u0587\u057d #-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.none": "\u0531\u0580\u0564\u0575\u0578\u0582\u0576\u0584\u0576\u0565\u0580 \u0579\u056f\u0561\u0576", "search.result.one": "1 \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.other": "# \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.placeholder": "\u0544\u0578\u0582\u057f\u0584\u0561\u0563\u0580\u0565\u0584 \u0578\u0580\u0578\u0576\u0565\u056c\u0578\u0582 \u0570\u0561\u0574\u0561\u0580", "search.result.term.missing": "\u0532\u0561\u0581\u0561\u056f\u0561\u0575\u0578\u0582\u0574 \u0567", "select.version": "\u0538\u0576\u057f\u0580\u0565\u056c \u057f\u0561\u0580\u0562\u0565\u0580\u0561\u056f\u0568"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

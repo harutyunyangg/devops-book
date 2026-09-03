@@ -5,4 +5,5 @@
 ## Թեմաներ
 
 - [Ansible](ansible.md) — սերվերային կոնֆիգուրացիայի ավտոմատացում playbook-ներով ու roles-երով. inventory, modules, handlers, փոփոխականներ և `.j2` (Jinja2) templates։
+- [YAML](yaml.md) — DevOps-ի կոնֆիգուրացիաների ձևաչափը. null/boolean, folded/literal տեքստեր (`>`/`|`), anchor/alias/merge (`&`/`*`/`<<:`), մեկնաբանություններ և փաստաթղթի բաժանարարներ (`---`/`...`)։
 - Terraform — շուտով (cloud-ի IaC)։
