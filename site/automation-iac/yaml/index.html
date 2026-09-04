@@ -1090,7 +1090,7 @@
   <a href="#mid-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ի՞նչու «:, #» պարունակող տեքստն անհրաժեշտ է չակերտել` և ի՞նչ ռիսկ կա այն չակերտելու դեպքում (mid-level)
+        Ի՞նչու «:, #» պարունակող տեքստն անհրաժեշտ է չակերտել՝ և ի՞նչ ռիսկ կա այն չակերտելու դեպքում (mid-level)
       
     </span>
   </a>
@@ -1501,7 +1501,7 @@
   <a href="#mid-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ի՞նչու «:, #» պարունակող տեքստն անհրաժեշտ է չակերտել` և ի՞նչ ռիսկ կա այն չակերտելու դեպքում (mid-level)
+        Ի՞նչու «:, #» պարունակող տեքստն անհրաժեշտ է չակերտել՝ և ի՞նչ ռիսկ կա այն չակերտելու դեպքում (mid-level)
       
     </span>
   </a>
@@ -1713,8 +1713,7 @@
 <span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp:latest</span>
 <span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 </code></pre></div>
-Երկու տարբերակները էլ մի��umatoid են և տալիս են նույն արդյունքը։ Ցուցակի სինտաքսը (<code>[*]</code>) ավելի छोտ է, բայց दोaryngeal <code>&lt;&lt;:</code> տողերը ավելի ընթեռնելի են՝ տարբեր merging-ների համար տարբեր annotation-ի հետ։</p>
-<p><strong>Ստացվում է.</strong>
+Երկու տարբերակները էլ հավասար են և տալիս են նույն արդյունքը։ Ցուցակի սինտաքսը ([<em>]) ավելի փոքր է, սակայն մի քանի &lt;&lt;: տողեր ավելի ընթեռնելի են՝ տարբեր merging-ների համար տարբեր annotation-ներ նախագծված դեպքում։</em>*
 <div class="highlight"><pre><span></span><code><span class="nt">app</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myapp:latest</span>
@@ -2031,26 +2030,26 @@
 <p>Ստուգեք ամբողջը.</p>
 <div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import yaml; d=yaml.safe_load(open('compose-like.yml')); print(d['services']['web']['image'], d['services']['db']['environment'])"</span>
 </code></pre></div>
-<p>Սպասվող արդյունք<code></code>nginx:alpine<code>և</code>{'POSTGRES_USER': 'admin', 'POSTGRES_PASSWORD': None}<code>. Այստեղ մեկ հայացքից տեսանելի է</code> <code>&lt;&lt;:</code> merge-ը<code></code>~<code>null-ը</code> և «<code>"false"</code>» չակերտումը.</p>
+<p>Սպասվող արդյունք՝ <code>nginx:alpine</code> և <code>{'POSTGRES_USER': 'admin', 'POSTGRES_PASSWORD': None}</code>. Այստեղ մեկ հայացքից տեսանելի է՝ <code>&lt;&lt;:</code> merge-ը՝ <code>~</code> null-ը՝ և «<code>"false"</code>» չակերտումը.</p>
 <p>! Best Practices
-    - Միշտ բացատներով նահանջ<code>երբեք Tab. և միևնույն մակարդակում</code> նույն քանակի բացատ (2 կամ 4<code>բայց չխառնել)։
-    - Տեքստային արժեքները</code> որոնք նման են <code>yes</code>/<code>no</code>/<code>on</code>/<code>off</code>/<code>null</code>/<code>true</code>/<code>false</code>-ի կամ պարունակում են <code>:</code> կամ <code>#</code>-ի<code>չակերտեք</code> որպեսզի parsing-ը դրանց տիպը չփոխի:
-    - Ճշգրտով տարբերակեք «<code>key: null</code>»-ը<code>«բանալին բացակայում է»-ից. առաջինում բանալին կա</code> արժեքը<code>դատարկ. երկրորդում</code> բանալին չկա:
-    - Օգտագործեք «<code>---</code>»<code>երբ մեկ ֆայլում մի քանի փաստաթուղթ կա (օր.</code> Kubernetes-ի մանիֆեստները)։
-    - Բարդ արժեքների դեպքում գրեք մեկնաբանություն (<code>#</code>)<code>որ թիմը հասկանա</code> ինչու է այդ արժեքը:
-    - Deploy-ից առաջ ստուգեք syntax-ը (օր.<code>Python+PyYAML կամ</code>yq<code>)</code> նախքան Kubernetes/Ansible/CI-ում գործարկելը:</p>
+    - Միշտ բացատներով նահանջ՝ երբեք Tab. և միևնույն մակարդակում՝ նույն քանակի բացատ (2 կամ 4՝ բայց չխառնել)։
+    - Տեքստային արժեքները՝ որոնք նման են <code>yes</code>/<code>no</code>/<code>on</code>/<code>off</code>/<code>null</code>/<code>true</code>/<code>false</code>-ի կամ պարունակում են <code>:</code> կամ <code>#</code>-ի՝ չակերտեք՝ որպեսզի parsing-ը դրանց տիպը չփոխի:
+    - Ճշգրտով տարբերակեք «<code>key: null</code>»-ը՝ «բանալին բացակայում է»-ից. առաջինում բանալին կա՝ արժեքը<code>դատարկ. երկրորդում</code> բանալին չկա:
+    - Օգտագործեք «<code>---</code>»՝ երբ մեկ ֆայլում մի քանի փաստաթուղթ կա (օր. Kubernetes-ի մանիֆեստները)։
+    - Բարդ արժեքների դեպքում գրեք մեկնաբանություն (<code>#</code>)՝ որ թիմը հասկանա՝ ինչու է այդ արժեքը:
+    - Deploy-ից առաջ ստուգեք syntax-ը (օր. Python+PyYAML կամ <code>yq</code>)՝ նախքան Kubernetes/Ansible/CI-ում գործարկելը:</p>
 <h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
 <h3 id="_9">Ախտանիշ<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <p>Kubernetes-ում deploy-ի ժամանակ գործարկվում է <code>kubectl apply -f config.yaml</code>, բայց ստացվում է մոտավոր սխալ.</p>
 <div class="highlight"><pre><span></span><code>error: error validating "config.yaml": error validating data:
 [ValidationError(...): unknown field ...]
 </code></pre></div>
-<p>Մանրամասն վերլուծությամբ պարզվում է, որ ռեսուրսի մի մաս्स (օր.<code>ConfigMap-ի</code>data`-ն) դատարկ է կամ սխալ տիպով է, կամ ռեսուրսն ընդհանրապես չի ստեղծվում.</p>
+<p>Մանրամասն վերլուծությամբ պարզվում է, որ ռեսուրսի մի մաս्स (օր. ConfigMap-ի <code>data</code>-ն) դատարկ է կամ սխալ տիպով է, կամ ռեսուրսն ընդհանրապես չի ստեղծվում.</p>
 <h3 id="_10">Ախտորոշում<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Ստուգեք, թե որ տողում է սխալը<code></code>kubectl apply --dry-run=client -f config.yaml -o json`.</li>
+<li>Ստուգեք, թե որ տողում է սխալը՝ <code>kubectl apply --dry-run=client -f config.yaml -o json</code>.</li>
 <li>Բացեք ռեսուրսի YAML-ը և ուսումնասիրեք նահանջը. հաճախ մեղավորը <strong>Tab նիշն</strong> է կամ 2/4 բացատի «խառն» օգտագործումը, որի պատճառով բանալին «կորցնում» է իր արժեքը:</li>
-<li>Ստուգեք արժեքի տիպը. օրինակ<code></code>enabled: yes`-ը boolean է դառնում, և եթե կոդում ակնկալվում է տեքստ, արժեքը սխալ է մեկնաբանվում:</li>
+<li>Ստուգեք արժեքի տիպը. օրինակ՝ <code>enabled: yes</code>-ը boolean է դառնում, և եթե կոդում ակնկալվում է տեքստ, արժեքը սխալ է մեկնաբանվում:</li>
 <li>Փորձեք parsing-ը Python-ով. <code>python3 -c "import yaml; print(yaml.safe_load(open('config.yaml')))"</code> և նայեք, արդյոք <code>data</code>-ն <code>None</code> կամ list է դառն católica map-ի փոխարեն.</li>
 </ol>
 <h3 id="_11">Լուծում<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
@@ -2059,22 +2058,22 @@
   <div class="highlight"><pre><span></span><code><span class="c1"># Tab-ը տեսնելու համար</span>
 cat<span class="w"> </span>-A<span class="w"> </span>config.yaml<span class="w">   </span><span class="c1"># ^I-ը Tab նիշն է</span>
 </code></pre></div></li>
-<li>Եթե արժեքը պետք է տեքստ լինի, չակերտեք այն<code>«</code>"no"<code>», «</code>"false"`» և այլն:</li>
-<li>Դատարկ դաշտի դեպքում<code>կամ հանեք այն, կամ ստեղծեք ակնհայտ</code>null` (եթե դա թույլատրելի է), կամ տվեք ակնկալվող արժեք:</li>
-<li>Օգտագործեք schema-ով ավտոլրացում տվող IDE plugin-ը (օր.<code>VSCode «YAML» + Kubernetes schema)</code> որը սխալը ցույց է տալիս մինչև <code>kubectl</code> գործարկելը:</li>
+<li>Եթե արժեքը պետք է տեքստ լինի, չակերտեք այն՝ «<code>"no"</code>», «<code>"false"</code>» և այլն:</li>
+<li>Դատարկ դաշտի դեպքում՝ կամ հանեք այն, կամ ստեղծեք ակնհայտ <code>null</code> (եթե դա թույլատրելի է), կամ տվեք ակնկալվող արժեք:</li>
+<li>Օգտագործեք schema-ով ավտոլրացում տվող IDE plugin-ը (օր. VSCode «YAML» + Kubernetes schema)՝ որը սխալը ցույց է տալիս մինչև <code>kubectl</code> գործարկելը:</li>
 </ul>
 <h3 id="_12">Կանխարգելում<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Deploy-ից առաջ syntax/validation</strong><code></code>kubectl apply --dry-run=client<code>+ Python+PyYAML կամ</code>yq`:</li>
-<li><strong>CI-ում YAML lint</strong> (օր.<code></code>yamllint<code>)</code> որը indentation/type-սխալը բռնի pipeline-ում:</li>
-<li><strong>Նահանջի ստանդարտ</strong><code>նախագծում բոլոր YAML-ում</code> 2 բացատ` ոչ Tab:</li>
-<li><strong>Schema validation</strong><code>Kubernetes-ի/Ansible-ի համար</code> որպեսզի type/schema-սխալը բռնվի մինչև deploy:</li>
+<li><strong>Deploy-ից առաջ syntax/validation</strong> <code>kubectl apply --dry-run=client</code> + Python+PyYAML կամ <code>yq</code>:</li>
+<li><strong>CI-ում YAML lint</strong>՝ (օր. <code>yamllint</code>)` որը indentation/type-սխալը բռնի pipeline-ում:</li>
+<li><strong>Նահանջի ստանդարտ</strong>՝ նախագծում բոլոր YAML-ում 2 բացատ` ոչ Tab:</li>
+<li><strong>Schema validation</strong>՝ Kubernetes-ի/Ansible-ի համար` որպեսզի type/schema-սխալը բռնվի մինչև deploy:</li>
 </ul>
 <h2 id="_13">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
-<h3 id="mid-level">Ի՞նչու «<code>:</code>, <code>#</code>» պարունակող տեքստն անհրաժեշտ է չակերտել` և ի՞նչ ռիսկ կա այն չակերտելու դեպքում (mid-level)<a class="headerlink" href="#mid-level" title="Permanent link">&para;</a></h3>
-<p>«<code>:</code>»-ը YAML-ի map-բաժանարարն է. եթե արժեքը պարունակում է «<code>key: value</code>», YAML-ը դա կհամարի կեղծ map-ենթակառուցվածք կամ կսխալվի. իսկ «<code>#</code>»-ը մեկնաբանության սկիզբ է, հետևաբար դրանից հետո ամեն ինչ կկորչի։ Բացի այդ<code>տիպը կարող է անսպասելի փոխվել</code> օրինակ<code></code>yes<code>/</code>no<code>/</code>on<code>/</code>off<code>/</code>null<code>-ը boolean/null են դառն bắc՝ ոչ թե տեքստ։ Անվտանգ և «նույն ինքը» արժեք պահելու համար</code> պարզապես չակերտեք («<code>"yes"</code>», «<code>"#"</code>», «<code>"host:80"</code>»).</p>
+<h3 id="mid-level">Ի՞նչու «<code>:</code>, <code>#</code>» պարունակող տեքստն անհրաժեշտ է չակերտել՝ և ի՞նչ ռիսկ կա այն չակերտելու դեպքում (mid-level)<a class="headerlink" href="#mid-level" title="Permanent link">&para;</a></h3>
+<p>«<code>:</code>»-ը YAML-ի map-բաժանարարն է. եթե արժեքը պարունակում է «<code>key: value</code>», YAML-ը դա կհամարի կեղծ map-ենթակառուցվածք կամ կսխալվի. իսկ «<code>#</code>»-ը մեկնաբանության սկիզբ է, հետևաբար դրանից հետո ամեն ինչ կկորչի։ Բացի այդ՝ տիպը կարող է անսպասելի փոխվել, օրինակ <code>yes</code>/<code>no</code>/<code>on</code>/<code>off</code>/<code>null</code>-ը boolean/null են դառն bắc՝ ոչ թե տեքստ։ Անվտանգ և «նույն ինքը» արժեք պահելու համար պարզապես չակերտեք («<code>"yes"</code>», «<code>"#"</code>», «<code>"host:80"</code>»).</p>
 <h3 id="base-merge-alias-senior-level">Ի՞նչո՞ւ է «<code>&lt;&lt;: *base</code>» merge-ը (և ոչ <code>*alias</code>-ը) նախընտրելի «պատճենել և পরিবর্তել» սցենարում (senior-level)<a class="headerlink" href="#base-merge-alias-senior-level" title="Permanent link">&para;</a></h3>
-<p>«<code>*alias</code>»-ը բերում է <strong>այնmateix օբյեկտը</strong>, որին anchor-ն է հղում. այն <em>reference</em> է, ոչ թե <em>copy</em>։ Ուստի alias-ի միջոցով արժեքը փոփոխելիս կարող եք «վնասել» բնօրինակ anchor-ը (և բոլոր մյուս alias-ները)։ Փոխարենը<code>«</code>&lt;&lt;:<code>»-ը **map-ի merge** է, որը anchor-ի բանալի-արժեք զույգերը միավորում է ընթացիկ block-ում, որտեղ ընթացիկ block-ի առկա բանալիները **գերակշռում** (override) են, և արդյունքում ստեղծվում է **նոր** data-կառուցվածք</code> բնօրինակ anchor-ն անփոփոխ մնալով։ Սա «inherit + override»-ի թեթև համարժեքն է<code>որը օգտագործվում է</code> նույն base-ը (օր.<code>logging, security context) տարբեր սերվիսներին</code> տարբեր մասնակի փոփոխություններով կիրառելու համար:</p>
+<p>«<code>*alias</code>»-ը բերում է <strong>այնmateix օբյեկտը</strong>, որին anchor-ն է հղում. այն <em>reference</em> է, ոչ թե <em>copy</em>։ Ուստի alias-ի միջոցով արժեքը փոփոխելիս կարող եք «վնասել» բնօրինակ anchor-ը (և բոլոր մյուս alias-ները)։ Փոխարենը՝ «<code>&lt;&lt;:</code>»-ը <strong>map-ի merge</strong> է, որը anchor-ի բանալի-արժեք զույգերը միավորում է ընթացիկ block-ում, որտեղ ընթացիկ block-ի առկա բանալիները <strong>գերակշռում</strong> (override) են, և արդյունքում ստեղծվում է <strong>նոր</strong> data-կառուցվածք՝ բնօրինակ anchor-ն անփոփոխ մնալով։ Սա «inherit + override»-ի թեթև համարժեքն է՝ որը օգտագործվում է՝ նույն base-ը (օր. logging, security context) տարբեր սերվիսներին` տարբեր մասնակի փոփոխություններով կիրառելու համար:</p>
 <h2 id="_14">Ինքնաստուգում<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Ի՞նչ տարբերություն կա «<code>&gt;</code>» (folded)-ի և «<code>|</code>» (literal)-ի միջև, և ե՞րբ կօգտագործեք յուրաքանչյուրը:</li>
@@ -2086,7 +2085,7 @@ cat<span class="w"> </span>-A<span class="w"> </span>config.yaml<span class="w">
 <li>Ի՞նչու՞ և ե՞րբ է անհրաժեշտ «<code>---</code>»-ը, և որտե՞ղ է դրա ամենատարածված կիրառությունը (Kubernetes):</li>
 </ol>
 <h2 id="_15">Հաջորդ քայլեր<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
-<p>Այժմ, երբ YAML-ի սինտաքսը ձերն է, ամրապնդեք այն գործնականում<code>[Ansible](ansible.md), որտեղ playbook-ները հենց YAML-ով են գրվում (inventory, tasks, handlers,</code>.j2<code>templates), կամ [Git և CI/CD](../git-ci-cd/index.md), որտեղ pipeline-ի նկարագրությունը նույն YAML-ով է։ Խորացման հաջորդ քայլը</code> Jinja2-ի ձևանմուշները Ansible-ում, ապա` Terraform-ը cloud-ի IaC-ի համար:</p>
+<p>Այժմ, երբ YAML-ի սինտաքսը ձերն է, ամրապնդեք այն գործնականում՝ <a href="../ansible/">Ansible</a>, որտեղ playbook-ները հենց YAML-ով են գրվում (inventory, tasks, handlers, <code>.j2</code> templates), կամ <a href="../../git-ci-cd/">Git և CI/CD</a>, որտեղ pipeline-ի նկարագրությունը նույն YAML-ով է։ Խորացման հաջորդ քայլը՝ Jinja2-ի ձևանմուշները Ansible-ում, ապա` Terraform-ը cloud-ի IaC-ի համար:</p>
 
 
 

@@ -171,7 +171,7 @@ Play-ի task-ի ներսում `vars:`-ով կարող եք override անել `g
 1. **Կենտրոնացված կառավարում**`  ամբողջ միջավայրի կոնֆիգուրացիան մեկ վայրում է և հեշտ է դիտել ու փոփոխել։
 2. **Կրկնության խուսափում**`  DRY սկզբունքը պահվում է. նույն playbook-ը ծառայում է տարբեր միջավայրերի（development, production...）。
 3. **Մասշտաբայնություն**`  ավելի մեծ ենթակառուցվածքներում ընդհանուր արժեքները բաժանվում են խմբերով, և թիմը աշխատում է փոփոխականների հստակ անուններով。
-4. **Անվտանգություն**`  գաղտնիքները（գաղտնաբառեր, tokens） միշտ պահեք [Ansible Vault](https://docs.ansible.com/ansible/latest/vault_guide/index.html)-ով, ոչ թե պարզ տեքստով.
+4. **Անվտանգություն**՝  գաղտնիքները（գաղտնաբառեր, tokens） միշտ պահեք [Ansible Vault](https://docs.ansible.com/ansible/latest/vault_guide/index.html)-ով, ոչ թե պարզ տեքստով.
  `secrets.yml` ֆայլերը կարող եք Vault-ով գաղտնագրել, իսկ մնացածը` հասանելի պահել。
 5. **Փաստաթղթավորում**`  յուրաքանչյուր փոփոխականի համար մեկ մեկնաբանությամբ («comment») նշեք, թե ինչ է այն անում և որտեղ է օգտագործվում։
 
@@ -205,6 +205,88 @@ roles/webserver/
 
 Playbook-ում role-ը կանչվում է `roles:` բաժնով, և role-ի `tasks/main.yml`-ը ավտոմատ կատարվում է play-ի մեջ՝ tasks-երի ու handlers-երի հետ միասին։ Այդպես նույն role-ը կարելի է օգտագործել տարբեր playbook-ներում և նույնիսկ տարբեր նախագծերում (օր.՝ Ansible Galaxy-ի միջոցով)։
 
+**9. Check mode (`--check`) և `check_mode: false`**
+
+**Check mode** (նաև հայտնի որպես `dry run` «չոր գործարկում») Ansible-ի ռեժիմն է, որը ցույց է տալիս, թե ինչ փոփոխություններ կկատարվեն, բայց դրանք իրականում չի կիրառում։ Գործարկվում է `--check` դրոշակով՝
+
+```bash
+ansible-playbook playbook.yml --check
+```
+
+Check mode-ին աջակցող մոդուլները հաղորդում են «ինչ կփոխվեր» (what would change)՝ առանց համակարգին դիպչելու։ Սա օգտակար է playbook-ը գրելիս, փոխելիս և CI-ում թեստելիս։ Բայց կա կարևոր սահմանափակում. check mode-ը չի «ստեղծում» բացակայող ռեսուրսները, և apt-ը չի կարող «տեսնել» նոր repository-ից փաթեթների:
+
+#### Խնդիրը Docker repository-ի դեպքում
+
+Երբ playbook-ը նոր `apt` repository է ավելացնում (օրինակ Docker-ը) և ապա փաթեթ է տեղադրում (օր.՝ `docker-ce`), `--check`-ը ինքնուրույն չի աշխատում։ Պատճառը՝ check mode-ում GPG keyring-ի դիրեկտորիան «չի ստեղծվում», GPG key-ը «չի ներբեռնվում», repo-ի ֆայլը «չի գրվում», apt cache-ը «չի թարմացվում»։ Այդ ռեսուրսներից որևէ մեկը բացակայում է՝ `apt`-ը «չի տեսնում» `docker-ce`-ն, ուստի install task-ը ձախողվում է, նույնիսկ `--check`-ի ժամանակ.
+
+```
+fatal: => "No package matching 'docker-ce' is available"
+```
+
+Լուծումը. նախապատրաստական (prerequisite) task-երը նշվում են `check_mode: false`-ով, որը հրահանգում է Ansible-ին, որ այս task-երը միշտ աշխատեն իրական (normal) ռեժիմում, նույնիսկ `--check`-ի դեպքում։ [Ansible-ի պաշտոնական փաստաթղթերը](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_checkmode.html) հաստատում են, որ `check_mode: false`-ը task-ը «force» է անում՝ ամեն դեպքում փոփոխություններ մտցնելու համակարգում։ Օրինակ՝ Docker-ի repo-ի նախապատրաստական task-երը՝
+
+```yaml
+- name: Create directory for the Docker GPG keyring
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+  check_mode: false
+
+- name: Download Docker GPG key (ASCII-armored)
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+    force: no
+  check_mode: false
+
+- name: Add Docker apt repository
+  ansible.builtin.copy:
+    dest: /etc/apt/sources.list.d/docker.list
+    content: 'deb [arch={{ docker_arch }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} {{ docker_channel }}'
+    mode: '0644'
+  register: docker_repo_file
+  check_mode: false
+
+- name: Update apt cache with Docker repo included
+  ansible.builtin.apt:
+    update_cache: yes
+  when: docker_repo_file.changed
+  check_mode: false
+```
+
+Յուրաքանչյուր task-ի պատճառը՝
+
+- **Create directory**`  keyring-ի դիրեկտորիան պետք է իսկապես գոյություն ունենա, որ key-ն ու repo-ն ավելացվեն`  idempotent`  ցածր ռիսկ (անվտանգ է կրկնել)։
+- **Download Docker GPG key**`  apt-ին անհրաժեշտ public key`  `force: no`-ն ապահովում է idempotency`  ցածր ռիսկ, որովհետև public key է`  ոչ գաղտնիք։
+- **Add Docker apt repository**`  ամենակարևոր prerequisite-ը`  առանց repo-ի apt-ը «չի տեսնի» `docker-ce`-ն`  idempotent`  copy-ը փոխում է միայն տարբեր բովանդակության դեպքում, ցածր ռիսկ։
+- **Update apt cache**`  ակտիվացնում է repo-ն`  կատարվում է միայն repo-ն փոխվելիս (`when`), idempotent`  ցածր ռիսկ (apt update-ը անվտանգ է կրկնել)։
+
+#### Ինչ կպատահի առանց `check_mode: false`
+
+Նույն task-երն առանց `check_mode: false`-ի `--check`-ի ժամանակ «չեն ստեղծի» ոչ դիրեկտորիան, ոչ key-ը, ոչ repo-ն, ոչ cache-ը։ Հետևանքը՝ `docker_repo_file.changed`-ը կմնա `false` (task-ը check mode-ում ոչինչ չի փոխել), apt update task-ը կնշվի `skipped` (`when`-ը չի բավարարվի), իսկ install task-ը կձախողվի. apt-ը չի գտնի `docker-ce`-ն, և `--check`-ը կվերադարձնի «No package matching 'docker-ce' is available» սխալը՝ թեև իրականում ոչինչ չի փոխվել.
+
+#### Համեմատական աղյուսակ
+
+| Task | `check_mode: false` | Պատճառ | Ռիսկ |
+| --- | --- | --- | --- |
+| Create directory | Այո | Prerequisite, idempotent | Ցածր |
+| Download GPG key | Այո | Prerequisite, public key | Ցածր |
+| Add Docker repo | Այո | Կարևորագույն՝ apt-ի համար | Ցածր (idempotent) |
+| Update apt cache | Այո | Ակտիվացնում է repo-ն | Ցածր (idempotent) |
+| Install Docker | Ոչ | Իրական փոփոխություն | Բարձր |
+| Start Docker | Ոչ | Իրական փոփոխություն (service) | Բարձր |
+| Add user to group | Ոչ | Միայն ցուցադրում (`when: not ansible_check_mode`) | Միջին |
+
+Իրական փոփոխություն կատարող task-երը (փաթեթի տեղադրում, ծառայության գործարկում, օգտատիրոջ փոփոխում) պետք է մնան check mode-ում, որ `--check`-ը ցույց տա «ինչ կփոխվի»՝ իրականում չփոխելով։ Դրանց հետ թիմը հաճախ օգտագործում է `ansible_check_mode` մոգական փոփոխականը, օրինակ `when: not ansible_check_mode`՝ task-ը check mode-ում ամբողջությամբ բաց թողնելու համար, քանի որ այն իմաստ չունի առանց իրական փոփոխության.
+
+#### Այլընտրանքային մոտեցումներ
+
+1. **Pre-flight ստուգում `stat`-ով՝  նախ ստուգել ռեսուրսի գոյությունը, ապա պայմանականորեն ավելացնել  բայց check mode-ում պայմանները հիմնվում են ոչ-իրական արժեքների վրա և կարող են սխալ արդյունք տալ` ավելի բարդ։
+2. **Առանձին playbook/role-ներ**  նախապատրաստական և install-ի մասերը բաժանել և `--check`-ը գործարկել միայն install-ի մասի վրա՝  ավելի դժվար կառավարվող, բայց ավելի «մաքուր» dry run`  հարմար է մեծ playbook-ների համար։
+
+Հիմնական կանոնը պարզ է՝  `check_mode: false`-ը գործածեք միայն prerequisite task-երի համար, որոնք idempotent են և ռեսուրսներ են «ստեղծում»՝ առանց որի check mode-ն ի վիճակի չի լինի ստուգելու մնացածը։ Սա տեղեկացված որոշում է, և պետք է մեկնաբանությամբ (comment) փաստաթղթավորվի կոդում, որ թիմի անդամը հասկանա, թե ինչու է այդ task-ը «dry run»-ից դուրս աշխատում.
 ## Հիմնական հրամաններ
 
 | Հրաման | Նպատակ |
@@ -455,6 +537,9 @@ Handler-ը հատուկ task է, որը գործարկվում է միայն ա�
 
 `group_vars`-ը օգտագործում եք, երբ միևնույն արժեքը պետք է կիրառվի խմբի բոլոր host-ների համար. օրինակ՝ նույն `http_port`, `timezone` կամ `docker_registry`-ը development-ի բոլոր սերվերներին。 `host_vars`-ը՝ կոնկրետ մեկ host-ի բացառիկ արժեքի համար և միշտ գերակշռում է `group_vars`-ին（`host_vars > group_vars`）： Օրինակ. եթե `group_vars/webservers.yml`-ում `http_port: 80` եք դրել, իսկ `host_vars/web1.yml`-ում` `8080՝, ապա web1 host-ը կստանա `8080`, մնացած webservers-ները՝ `80`։ Ընդհանրապես՝ `group_vars`-ը՝ խմբի ընդհանուրը, `host_vars`-ը` մասնավորը.,
 
+### Ինչու՞ է պետք `check_mode: false` repository ավելացնող playbook-ում, և ի՞նչ ռիսկ է այն թաքցնում (senior-level)
+
+`apt`-ը check mode-ում չի կարող «resolve» անել նոր repo-ից փաթեթ, քանի որ repo-ի ֆայլը, GPG key-ը և թարմացված cache-ը գոյություն չունեն. դրանցից որևէ մեկի բացակայության դեպքում `docker-ce`-ն չի երևում apt-ին, և install task-ը ձախողվում է «No package matching 'docker-ce' is available» սխալով՝ չնայած `--check`-ը «չոր» է։ Այդ պատճառով նախապատրաստական task-երը (directory, key, repo, cache) դրվում են `check_mode: false`-ով, որը ստիպում է դրանք գործարկվել իրական (normal) ռեժիմում. դրանք idempotent են (անվտանգ է կրկնել), ուստի ռիսկը ցածր է։ Ավագ ինժեները կընդգծի, որ սա «dry run»-ից հրաժարում է 4 task-ի համար. `--check`-ով իրական փոփոխություններ են կատարվում, հետևաբար պետք է մեկնաբանությամբ փաստաթղթավորվի կոդում, և որ `--check`-ը ճշգրիտ ցույց է տալիս «ինչ կփոխվի» միայն կիրառական task-երի վրա (install, service)` որոնք պետք է մնան check mode-ում` օրինակ `when: not ansible_check_mode`-ով։
 ## Ինքնաստուգում
 
 1. Ի՞նչ է նշանակում «agentless»-ը, և ինչպե՞ս է Ansible-ը միանում կառավարվող host-երին։
@@ -466,9 +551,10 @@ Handler-ը հատուկ task է, որը գործարկվում է միայն ա�
 7. Ինչո՞ւ է «`nft -c ... && nft -f ...`»-ը fail-safe պաշտպանություն, և ի՞նչ է մնում ուժի մեջ՝ սխալ կոնֆիգի դեպքում։
 
 8. Ի՞նչ է `group_vars`-ը, ինչ ձևաչափերով կարելի է պահել, և ինչո՞ւ է `host_vars`-ը գերակշռում դրան.
+9. Ի՞նչ է `--check`-ը, և ինչո՞ւ repository ավելացնող playbook-ում նախապատրաստական task-երը «ստեղծվում» են `check_mode: false`-ով՝ չնայած `--check`-ի «չոր» լինելուն։
 
 
 
 ## Հաջորդ քայլեր
 
-Շարունակեք [Git և CI/CD](../git-ci-cd/index.md) բաժնով՝ playbook-ները CI pipeline-ում գործարկելու համար, իսկ firewall-ի ավտոմատացման պրակտիկան ամրապնդելու համար՝ [Firewall](../linux/firewall.md) և [Linux](../linux/index.md) էջերով։ Թեմաներն ավելի խոր ուսումնասիրելուց առաջ լավ գաղափար է ամրապնդել [YAML](yaml.md) էջը, քանի որ playbook-ների և ձևանմուշների ամբողջ սինտաքսը YAML-ի վրա է հիմնված։ Հաջորդ խորացումը՝ roles-ի, `ansible-vault`-ի և Jinja2-ի՝ ավելի բարդ ձևանմուշների ուսումնասիրությունը, ապա՝ Terraform-ը cloud-ի IaC-ի համար։
+Շարունակեք [Git և CI/CD](../git-ci-cd/index.md) բաժնով՝ playbook-ները CI pipeline-ում գործարկելու համար, իսկ firewall-ի ավտոմատացման պրակտիկան ամրապնդելու համար՝ [Firewall](../linux/firewall.md) և [Linux](../linux/index.md) էջերով։ Թեմաներն ավելի խոր ուսումնասիրելուց առաջ լավ գաղափար է ամրապնդել [YAML](yaml.md) էջը, քանի որ playbook-ների և ձևանմուշների ամբողջ սինտաքսը YAML-ի վրա է հիմնված։ Յուրաքանչյուր playbook-ի փոփոխություն `deploy`-ից առաջ ստուգեք `--syntax-check` և `--check` դրոշակներով, իսկ repository ավելացնող role-երում `check_mode: false`-ի օգտագործումը արեք միայն idempotent նախապատրաստական task-երի համար՝ ըստ այս էջի օրինակի։ Հաջորդ խորացումը՝ roles-ի, `ansible-vault`-ի և Jinja2-ի՝ ավելի բարդ ձևանմուշների ուսումնասիրությունը, ապա՝ Terraform-ը cloud-ի IaC-ի համար։
