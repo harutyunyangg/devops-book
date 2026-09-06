@@ -599,6 +599,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Հիմնական սինտաքս">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-a-set-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ավտոմատ արտահանում set -a / set +a
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -689,6 +706,17 @@
     <span class="md-ellipsis">
       
         Lab 3: Idempotent setup script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lab-4-set-a-set-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4: Ավտոմատ արտահանում set -a / set +a
       
     </span>
   </a>
@@ -811,6 +839,17 @@
     <span class="md-ellipsis">
       
         Ի՞նչ է idempotency, և ինչո՞ւ այն կարևոր DevOps-ում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-a-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է անում set -a-ն, և ի՞նչ ռիսկ ունի
       
     </span>
   </a>
@@ -1368,6 +1407,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Հիմնական սինտաքս">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-a-set-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ավտոմատ արտահանում set -a / set +a
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1458,6 +1514,17 @@
     <span class="md-ellipsis">
       
         Lab 3: Idempotent setup script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lab-4-set-a-set-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lab 4: Ավտոմատ արտահանում set -a / set +a
       
     </span>
   </a>
@@ -1586,6 +1653,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#set-a-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է անում set -a-ն, և ի՞նչ ռիսկ ունի
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1668,6 +1746,44 @@ bash<span class="w"> </span>my_first_script.sh
 <li><strong>Ընթերցում օգտատիրոջից</strong>: <code>read -p "անուն" username</code>,</li>
 <li><strong>Հրամանի արդյունք</strong>: <code>current_date=$(date)</code>.</li>
 </ul>
+<h4 id="set-a-set-a">Ավտոմատ արտահանում <code>set -a</code> / <code>set +a</code><a class="headerlink" href="#set-a-set-a" title="Permanent link">&para;</a></h4>
+<p>Սովորաբար փոփոխականը child process-ին փոխանցելու համար գրում ենք հստակ <code>export VAR=value</code>։ <strong><code>set -a</code></strong> (alias<code>set -o allexport</code>) դա դարձնում է ավտոմատ. այդ պահից ստեղծված կամ փոփոխված յուրաքանչյուր փոփոխական (և ֆունկցիա) ստանում է export հատկանիշ և արտահանվում է child process-ների համար։ <strong><code>set +a</code></strong> (կամ <code>set +o allexport</code>) անջատում է այդ ռեժիմը. դրանից հետո փոփոխականներն այլևս չեն արտահանվում, քանի դեռ հստակ չգրենք <code>export</code> (bash-ում <code>+</code>-ի տեսքով օպցիան անջատվում է)։</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail<span class="w">   </span><span class="c1"># անվտանգ ռեժիմ</span>
+<span class="nb">set</span><span class="w"> </span>-a<span class="w">              </span><span class="c1"># միացնում ենք ավտո-արտահանումը</span>
+<span class="nv">MY_ENV_VAR</span><span class="o">=</span><span class="s2">"value"</span><span class="w">  </span><span class="c1"># ինքնաբերաբար export կլինի</span>
+<span class="nb">set</span><span class="w"> </span>+a<span class="w">              </span><span class="c1"># անջատում ենք</span>
+<span class="nv">OTHER</span><span class="o">=</span><span class="s2">"text"</span><span class="w">        </span><span class="c1"># սա արդեն export չի լինի</span>
+
+env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'MY_ENV_VAR|OTHER'</span><span class="w">   </span><span class="c1"># կտպվի միայն MY_ENV_VAR</span>
+</code></pre></div>
+<p><code>set -a</code>-ն օգտակար է, երբ բազմաթիվ փոփոխականներ պետք է փոխանցվեն child process-ին (օրինակ. CI/CD job-ին կամ <code>docker run</code>-ին) առանց յուրաքանչյուրին առանձին <code>export</code> գրելու։ Այն պարունակում և ամփոփում է զրույցի բոլոր երեք set օպցիաները.</p>
+<table>
+<thead>
+<tr>
+<th>Հրաման</th>
+<th>Նշանակություն</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>set -euo pipefail</code></td>
+<td>Խիստ ռեժիմ. կանգնել սխալի դեպքում, զգուշանալ չսահմանված փոփոխականներից, հաշվի առնել pipe-ի բոլոր սխալները</td>
+</tr>
+<tr>
+<td><code>set -a</code></td>
+<td>Միացնել փոփոխականների ավտոմատ արտահանումը</td>
+</tr>
+<tr>
+<td><code>set +a</code></td>
+<td>Անջատել ավտոմատ արտահանումը</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Անվտանգություն</p>
+<p><code>set -a</code>-ի միացված վիճակում գրված բոլոր փոփոխականները, այդ թվում գաղտնիքները (tokens, passwords), արտահանվում են յուրաքանչյուր child process-ի։ Օգտագործումից հետո միշտ անջատիր այն <code>set +a</code>-ով, որպեսզի պատահական փոփոխականների կամ գաղտնիքների արտահանումը չշարունակվի script-ի մնացած մասում։</p>
+</div>
 <p><strong>Պայմանական արտահայտություններ (<code>if/elif/else</code>).</strong> Թվերի օպերատորներն են <code>-eq</code> (հավասար), <code>-ne</code> (ոչ հավասար), <code>-gt</code> (մեծ), <code>-lt</code> (փոքր), <code>-ge</code> (մեծ կամ հավասար), <code>-le</code> (փոքր կամ հավասար)։ Տողերի համար <code>=</code>, <code>!=</code>, <code>-z</code> (դատարկ), <code>-n</code> (ոչ դատարկ)։ Ֆայլերի ստուգումներ <code>-f</code> (ֆայլ), <code>-d</code> (պանակ), <code>-e</code> (գոյություն ունի), <code>-r</code> (կարելի է կարդալ), <code>-w</code> (կարելի է գրել), <code>-x</code> (գործարկելի)։</p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="s2">"file.txt"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Ֆայլը կա"</span>
@@ -1994,6 +2110,16 @@ grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">"127.0.0.
 ./setup.sh<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$?</span><span class="p">;</span><span class="w"> </span>cat<span class="w"> </span>/tmp/demo_env/info.txt
 </code></pre></div>
 <p>Սպասվող արդյունք երկու run-ն էլ ավարտվում է 0-ով, իսկ <code>info.txt</code>-ի պարունակությունը չի կրկնվում script-ը idempotent է.</p>
+<h3 id="lab-4-set-a-set-a">Lab 4: Ավտոմատ արտահանում <code>set -a</code> / <code>set +a</code><a class="headerlink" href="#lab-4-set-a-set-a" title="Permanent link">&para;</a></h3>
+<p>Ստուգիր, թե որ փոփոխականներն է տեսնում child shell-ը <code>env</code>-ի միջոցով.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="w"> </span>-a<span class="w">                </span><span class="c1"># միացնում ենք ավտո-արտահանումը</span>
+<span class="nv">MY_AUTO</span><span class="o">=</span><span class="s2">"hello"</span>
+<span class="nb">set</span><span class="w"> </span>+a<span class="w">                </span><span class="c1"># անջատում ենք</span>
+<span class="nv">MY_PLAIN</span><span class="o">=</span><span class="s2">"bye"</span><span class="w">        </span><span class="c1"># սա չի արտահանվելու</span>
+
+sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'echo "MY_AUTO=$MY_AUTO MY_PLAIN=${MY_PLAIN:-EMPTY}"'</span>
+</code></pre></div>
+<p>Սպասվող արդյունք. <code>MY_AUTO=hello MY_PLAIN=EMPTY</code> (<code>set -a</code>-ի տակ սահմանված փոփոխականը հասանելի է child-ին, իսկ <code>set +a</code>-ից հետոյինը՝ ոչ)։ Ստուգիր նաև, որ <code>set -a</code>-ի միացված վիճակում ընթացիկ օպցիաները ցույց տվող <code>$-</code>-ում հայտնվում է <code>a</code>-ն.</p>
 <h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
 <h3 id="_5">Ախտանիշ<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <p>Production ինժեները գրել է backup/log-rotation script, որը պետք է ամեն գիշեր cron-ից գնա <code>/var/log/application</code>-ը, արխիվացնի log ֆայլերը և փոխանցի <code>/backup/logs</code>-ին։ Փորձարկման ժամանակ նկատվում է արխիվացված ֆայլերը հայտնվում են սխալ directory-ում, և script-ը չի գտնում log ֆայլերը, քանի որ աշխատում է սխալ directory-ում.</p>
@@ -2038,6 +2164,8 @@ journalctl<span class="w"> </span>-t<span class="w"> </span>backup_script<span c
 <p>Ենթադրությունները որ script-ն աշխատում է որոշակի directory-ում կամ environment-ով. cron-ը minimal environment-ով է առանց <code>.bashrc</code>-ի. source-ը կարող է անսպասելիորեն փոխել CI/CD pipeline-ի shell-ի միջավայրը. Լուծում absolute paths, PATH-ի սահմանում script-ի սկզբում, <code>set -euo pipefail</code>, WorkingDirectory unit-ում, logging, և pipeline-ում subshell-ի նախընտրում եթե script-ը չպետք է ազդի shell-ի վրա.</p>
 <h3 id="idempotency-devops-">Ի՞նչ է idempotency, և ինչո՞ւ այն կարևոր DevOps-ում<a class="headerlink" href="#idempotency-devops-" title="Permanent link">&para;</a></h3>
 <p>Գործողությունը idempotent է, եթե կրկնակի կատարումը տալիս է նույն արդյունքը առանց կողմնակի ազդեցության. Այն թույլ է տալիս անվտանգորեն կրկնել cron-ը, CI/CD-ն, recovery-ն առանց միջավայրը փչացնելու. ոչ idempotent-ը վտանգավոր. Օրինակ <code>mkdir -p</code>-ի և <code>mkdir</code>-ի տարբերությունը.</p>
+<h3 id="set-a-">Ի՞նչ է անում <code>set -a</code>-ն, և ի՞նչ ռիսկ ունի<a class="headerlink" href="#set-a-" title="Permanent link">&para;</a></h3>
+<p><code>set -a</code>-ն (այլ <code>set -o allexport</code>) ստեղծված կամ փոփոխված բոլոր փոփոխականներն ու ֆունկցիաները ավտոմատ կերպով արտահանում է child process-ներին, այնպես որ պետք չէ յուրաքանչյուրին առանձին <code>export</code> գրել։ Ռիսկն այն է, որ գաղտնիքները (tokens, passwords) ևս արտահանվում են բոլոր child process-ներին, իսկ պատահական փոփոխականներն արտահոսում են։ Դրա պատճառով օգտագործումից հետո անպայման անջատիր այն <code>set +a</code>-ով, և ցանկալի է` օգտագործել այն միայն փոքր, խմբավորված scope-ում։</p>
 <h2 id="_10">Ինքնաստուգում<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Ի՞նչ է shebang-ը և ինչո՞ւ այն դրվում է սկրիպտի առաջին տողում</li>
@@ -2045,6 +2173,7 @@ journalctl<span class="w"> </span>-t<span class="w"> </span>backup_script<span c
 <li>Ի՞նչ է ցույց տալիս <code>$?</code>-ը, և ե՞րբ է «ոչ զրոյական» exit code-ը համարվում սխալ</li>
 <li>Ի՞նչ է անում <code>set -euo pipefail</code>-ը և ինչո՞ւ է այն կարևոր</li>
 <li>Ինչպե՞ս կդարձնես directory-ի ստեղծումը idempotent</li>
+<li>Ի՞նչ է անում <code>set -a</code>-ն, և ինչո՞ւ պետք է ավարտից հետո <code>set +a</code>-ով անջատել</li>
 </ol>
 <h2 id="_11">Հաջորդ քայլեր<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
 <p>Շարունակիր filesystem permissions (1.4) կամ systemd (1.5) թեմայով. կիրառիր ձեր գրած scripts-ում <code>set -euo pipefail</code>, absolute paths և idempotent մեթոդներ (տես նաև <a href="../processes/">Linux Processes</a>)։</p>
