@@ -1,0 +1,1702 @@
+
+<!doctype html>
+<html lang="hy" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Հայերեն, գործնական DevOps ուղեցույց">
+      
+      
+      
+        <link rel="canonical" href="https://example.invalid/devops-book/cloud-security-observability/least-privilege/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../../glossary/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Least Privilege - DevOps ուսումնական ձեռնարկ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#least-privilege" class="md-skip">
+          Անցնել պարունակությանը
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Գլխագիր">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-header__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DevOps ուսումնական ձեռնարկ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Least Privilege
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Որոնում" placeholder="Որոնում" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Որոնում">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Ջնջել" aria-label="Ջնջել" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Որոնում
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Ներդիրներ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Սկիզբ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../linux/" class="md-tabs__link">
+          
+  
+  
+  Linux
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../networking/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Networks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../git-ci-cd/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Git և CI/CD
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../automation-iac/" class="md-tabs__link">
+          
+  
+  
+  Automation և IaC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../docker-kubernetes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Docker և Kubernetes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Cloud, Security, Observability
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Բառարան
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Տեղորոշում" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-nav__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DevOps ուսումնական ձեռնարկ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Սկիզբ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/bash-scripting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bash Scripting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/cgroups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cgroups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../linux/firewall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firewall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git-ci-cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git և CI/CD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automation և IaC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Automation և IaC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation-iac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation-iac/ansible/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ansible
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation-iac/yaml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    YAML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker և Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud, Security, Observability
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cloud, Security, Observability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Least Privilege
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Least Privilege
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչու է դա կարևոր
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privilege-creep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հակառակ սկզբունքը՝ Privilege Creep
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կիրառման ոլորտներ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#least-privilege-mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է least privilege-ը և ինչո՞ւ է այն կարևոր (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#least-privilege-cloud-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս կգործարկեիք least privilege-ը ամբողջական cloud ենթակառուցվածքում (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Բառարան
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչու է դա կարևոր
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privilege-creep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հակառակ սկզբունքը՝ Privilege Creep
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կիրառման ոլորտներ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#least-privilege-mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է least privilege-ը և ինչո՞ւ է այն կարևոր (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#least-privilege-cloud-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչպե՞ս կգործարկեիք least privilege-ը ամբողջական cloud ենթակառուցվածքում (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="least-privilege">Least Privilege. Նվազագույն արտոնությունների սկզբունք<a class="headerlink" href="#least-privilege" title="Permanent link">&para;</a></h1>
+<h2 id="_1">Տեսություն<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>Least Privilege</strong>-ը (հայերեն՝ «նվազագույն արտոնությունների սկզբունք») տեղեկատվական անվտանգության հիմնարար սկզբունք է։ Այն նշանակում է, որ <strong>ցանկացած օգտատեր, ծրագիր կամ գործընթաց պետք է ունենա միայն այն նվազագույն իրավունքներն ու մուտքերը, որոնք անհրաժեշտ են իր աշխատանքը կատարելու համար, և ոչ ավելին</strong>։ NIST-ը (SP 800-171) այն սահմանում է այսպես. յուրաքանչյուր սուբյեկտին տրվում են միայն այն համակարգային թույլտվություններն ու ռեսուրսները, որոնք անհրաժեշտ են իր գործառույթն իրականացնելու համար։</p>
+<p>Պարզ ասած. յուրաքանչյուրին տվեք միայն այնքան «բանալի», որքան իրականում անհրաժեշտ է, և ոչ մի ավելորդ բանալի մի տվեք։ Սա վերաբերում է ոչ միայն մարդկանց, այլև ծառայություններին ու գործընթացներին՝ նույնիսկ այն դեպքում, երբ դրանց օգտագործումը «իրավաչափ» է բիզնեսի տեսանկյունից։</p>
+<h3 id="_2">Ինչու է դա կարևոր<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Նվազեցնում է հարձակման մակերեսը (attack surface)։</strong> Որքան քիչ իրավունք ունի օգտատերը կամ գործընթացը, այնքան քիչ հնարավորություններ ունի սպառնալիքը։ Եթե հաքերը գողանա օգտատիրոջ գաղտնաբառը, նա կկարողանա կատարել միայն այն գործողությունները, որոնք թույլատրված են այդ օգտատիրոջը, ոչ թե ամբողջ համակարգը կործանել։</li>
+<li><strong>Սահմանափակում է blast radius-ը (վնասի տարածման գոտին)։</strong> Նույնիսկ եթե սուբյեկտը դիտավորությամբ կամ սխալմամբ վնասակար գործողություն կատարի, վնասը սահմանափակվում է հենց նրա թույլտվությունների շրջանակով։</li>
+<li><strong>Նվազեցնում է սխալների ազդեցությունը։</strong> Եթե ծրագիրը «բագ» ունի, այն չի կարող փոխել կամ ջնջել այն, ինչին մուտք չունի։</li>
+<li><strong>Օգնում է համապատասխանությանը (compliance)։</strong> Շատ ստանդարտներ (օրինակ՝ GDPR, ISO 27001) և պետական պահանջներ (օր.՝ NIST SP 800-171) պահանջում են մուտքերի սահմանափակում ըստ սկզբունքի։</li>
+</ul>
+<h3 id="privilege-creep">Հակառակ սկզբունքը՝ Privilege Creep<a class="headerlink" href="#privilege-creep" title="Permanent link">&para;</a></h3>
+<p><strong>Privilege Creep</strong>-ը (արտոնությունների «սողացող» կուտակում) հակառակ երևույթն է. երբ ժամանակի ընթացքում օգտատերերը կուտակում են ավելի ու ավելի շատ իրավունքներ (օրինակ՝ պաշտոն փոխելիս, առանց հին իրավունքները հանելու), և ոչ ոք չի վերանայում դրանք։ Սա հենց այն է, ինչից խուսափում է least privilege-ը։ Հատուկ դեպք է <strong>Privilege Escalation</strong>-ը (արտոնությունների բարձրացում), երբ հարձակվողը օգտվում է չափազանց լայն իրավունքներից՝ ավելի բարձր մակարդակի մուտք ստանալու համար, որը հաճախ հենց privilege creep-ի հետևանք է։</p>
+<h3 id="_3">Կիրառման ոլորտներ<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Օպերացիոն համակարգերում.</strong> Օգտատերերի իրավունքներ, file permissions, processes. Ծառայությունները գործարկվում են non-root օգտատիրոջ տակ, ոչ թե ադմինիստրատորով։</li>
+<li><strong>Տվյալների բազաներում.</strong> Կարդալ (read), գրել (write), ջնջել (delete) առանձին իրավունքներ. application-ը չի օգտագործում <code>db_owner</code>/<code>sa</code> մակարդակի հաշիվ (OWASP-ն ուղղակի խորհուրդ է տալիս այդպես)։</li>
+<li><strong>Cloud միջավայրերում.</strong> IAM (Identity and Access Management)՝ գլոբալ ադմին իրավունքների փոխարեն՝ թե՛ աշխատակիցների, թե՛ ծառայությունների համար նվազագույն scope-ներ, roles և policies (օր.՝ AWS, Kubernetes RBAC)։</li>
+<li><strong>Ծրագրային ապահովման մշակման մեջ.</strong> Microservices-ում յուրաքանչյուր ծառայություն ունի իր սեփական, սահմանափակ մուտքը, ոչ թե բոլորը կիսում են մեկ հզոր հաշիվ։ Ֆայլերը (credentials) տրվում են միայն այն ծառայությանը, որն իրականում պետք է դրանք պահի։</li>
+<li><strong>Նվազագույն արտոնությունների սկզբունքը.</strong> Յուրաքանչյուր սուբյեկտի ամեն գործողությունը կատարվում է նվազագույն իրավունքներով, իսկ հատուկ մուտքերի կարիքի դեպքում տրվում է ժամանակավոր, ըստ scope-ի մուտք (JIT)։</li>
+</ul>
+<h2 id="_4">Հիմնական հրամաններ<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Հրաման</th>
+<th>Նպատակ</th>
+<th>Սպասվող արդյունք</th>
+<th>Անվտանգության ռիսկ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ls -l &lt;path&gt;</code></td>
+<td>Դիտել ֆայլի սեփականատիրոջը, խումբը և իրավունքները (rwx)</td>
+<td>Իրավունքների ցուցակ</td>
+<td>Անվտանգ, միայն կարդում է</td>
+</tr>
+<tr>
+<td><code>chmod 640 &lt;file&gt;</code></td>
+<td>Իրավունքներ հատկացնել owner-ին rw, group-ին r, մյուսներին՝ ոչինչ</td>
+<td>Ֆայլի իրավունքների փոփոխություն</td>
+<td>Կարող է կտրել մուտքը. ստուգեք owner/group-ը</td>
+</tr>
+<tr>
+<td><code>umask 077</code></td>
+<td>Լռելյայն սահմանափակել նոր ֆայլերի իրավունքները (միայն owner-ը)</td>
+<td>Նոր ֆայլերի լռելյայն 0600</td>
+<td>Անվտանգ, բայց կարող է խանգարել shared workflows-ին</td>
+</tr>
+<tr>
+<td><code>useradd -M -s /usr/sbin/nologin &lt;svc&gt;</code></td>
+<td>Ստեղծել ծառայության օգտատեր առանց login shell-ի</td>
+<td>Ոչ ինտերակտիվ օգտատեր</td>
+<td>Անվտանգ, եթե shell-ը հենց <code>/usr/sbin/nologin</code> է</td>
+</tr>
+<tr>
+<td><code>visudo</code></td>
+<td>Խմբագրել sudoers-ը, ապահով syntax-ստուգմամբ</td>
+<td>Խմբի/օգտատիրոջ սահմանափակ հրամանների ցուցակ</td>
+<td>Սխալ շարահյուսությունը կարող է կոտրել sudo-ն</td>
+</tr>
+<tr>
+<td><code>setcap 'cap_net_bind_service=+ep' &lt;binary&gt;</code></td>
+<td>Տալ ծրագրին միայն մեկ հատուկ հնարավորություն (օր.՝ 80-րդ պորտ կապել)՝ ամբողջ root-ի փոխարեն</td>
+<td>Root-ից ցածր, նեղ իրավունք</td>
+<td>Զգույշ. setcap-ը կարող է փոխել ծրագրի վարքը</td>
+</tr>
+<tr>
+<td><code>getcap &lt;binary&gt;</code></td>
+<td>Ցույց տալ ֆայլի setcap-հնարավորությունները</td>
+<td>Ընթացիկ capabilities</td>
+<td>Անվտանգ</td>
+</tr>
+<tr>
+<td><code>setpriv --reuid=&lt;uid&gt; --regid=&lt;gid&gt; --clear-groups &lt;cmd&gt;</code></td>
+<td>Գործարկել գործընթացը կրճատված իրավունքներով</td>
+<td>Ծրագիրը աշխատում է non-root-ով</td>
+<td>Զգույշ. համոզվեք, որ ծրագիրը կարող է աշխատել առանց root-ի</td>
+</tr>
+<tr>
+<td><code>systemctl</code> + <code>User=</code></td>
+<td>systemd-ում ծառայությունը գործարկել որպես սովորական օգտատեր</td>
+<td>Service-ը չի աշխատում root-ով</td>
+<td>Անվտանգ, best practice</td>
+</tr>
+<tr>
+<td><code>usermod -aG &lt;group&gt; &lt;user&gt;</code></td>
+<td>Օգտատիրոջը ավելացնել խումբ (և միայն այդ խումբը)</td>
+<td>Խմբային մուտք</td>
+<td>Հետևեք, որ <code>-a</code>-ն կա, հակառակ դեպքում առկա խմբերը կջնջվեն</td>
+</tr>
+<tr>
+<td><code>last</code>, <code>lastlog</code>, <code>journalctl -u &lt;svc&gt;</code></td>
+<td>Վերանայել, թե ով և երբ է մուտք գործել</td>
+<td>Մուտքի աուդիտ</td>
+<td>Անվտանգ, կարդալու համար</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lab">Փորձարկում (Lab)<a class="headerlink" href="#lab" title="Permanent link">&para;</a></h2>
+<p>Միջավայր. սովորական Ubuntu/Debian Linux VM կամ Docker container (ոչ production)։ Թիրախն է ցույց տալ, որ ծառայությունը 80-րդ պորտ կապելու համար ամբողջ root-ի փոխարեն ստանում է միայն մեկ capability, իսկ sudo-ն սահմանափակվում է մեկ հրամանով։</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Ստեղծենք ծառայության օգտատեր առանց login shell-ի</span>
+sudo<span class="w"> </span>useradd<span class="w"> </span>-M<span class="w"> </span>-s<span class="w"> </span>/usr/sbin/nologin<span class="w"> </span>app-svc
+id<span class="w"> </span>app-svc
+
+<span class="c1"># 2. Փորձ՝ նորմալ օգտատիրոջը 80-րդ պորտ թույլ չի</span>
+<span class="c1">#    (փոքր Python http server, ավարտել Ctrl+C-ով)</span>
+python3<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">80</span>
+<span class="c1">#    սխալ՝ "PermissionError: [Errno 13] Permission denied"</span>
+
+<span class="c1"># 3. setcap-ով թույլ տանք միայն 80-րդ պորտ կապելը</span>
+sudo<span class="w"> </span>setcap<span class="w"> </span><span class="s1">'cap_net_bind_service=+ep'</span><span class="w"> </span>/usr/bin/python3
+getcap<span class="w"> </span>/usr/bin/python3
+python3<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">80</span>
+<span class="c1">#    այժմ աշխատում է — բայց ծրագրի մնացած իրավունքը մնում է սահմանափակ</span>
+
+<span class="c1"># 4. Մաքրենք capability-ն, երբ այլևս չի պետք</span>
+sudo<span class="w"> </span>setcap<span class="w"> </span>-r<span class="w"> </span>/usr/bin/python3
+getcap<span class="w"> </span>/usr/bin/python3<span class="w">   </span><span class="c1"># դատարկ</span>
+
+<span class="c1"># 5. sudoers-ում սահմանափակենք՝ օգտատիրոջը թույլ տալ միայն systemctl</span>
+sudo<span class="w"> </span>visudo<span class="w"> </span>-f<span class="w"> </span>/etc/sudoers.d/lab
+<span class="c1">#    ավելացրեք՝   labuser ALL=(root) /usr/bin/systemctl</span>
+</code></pre></div>
+<p>! Best Practices
+    - Ծառայությունները միշտ գործարկեք non-root օգտատիրոջ տակ (systemd-ի <code>User=</code>)։
+    - DB-ի application-հաշիվը չպահեք <code>db_owner</code>/<code>sa</code>-ով. տվեք միայն անհրաժեշտ read/write-ը։
+    - Cloud-ում ադմին գլոբալ ռոլորների փոխարեն նախապատվեք scope-ով պայմանավորված, ժամանակավոր (JIT) մուտքերին։
+    - setuid/setcap-ը կիրառեք որպես բացառություն, փաստաթղթավորեք դրանց գոյությունը և պարբերաբար աուդիտ արեք (<code>getcap -r /</code> ցուցակով)։
+    - Պարբերաբար վերանայեք sudoers-ը, խմբերը և IAM-ի policies-ը՝ privilege creep-ը կանգնեցնելու համար։</p>
+<p>Սպասվող արդյունք. սովորական օգտատիրոջը 80-րդ պորտ չի հաջողվում, setcap-ից հետո՝ հաջողվում է, իսկ sudo-ն սահմանափակվում է միայն <code>systemctl</code>-ով. բոլոր փորձերը անվտանգ են VM/container-ի սահմաններում և չեն դիպչում production-ին։</p>
+<h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
+<h3 id="_5">Ախտանիշ<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>CI/CD pipeline-ը կամ monitoring-agent-ը «կոտրվում» է, իսկ օպերատորը «լուծելու» համար ամեն ինչի թույլտվություն է ավելացնում. օրինակ<code>JSON ֆայլ կարդալու համար տալիս է ամբողջական</code>sudo<code>մուտք կամ Cloud-ում ավելացնում է</code>admin` ռոլոը խմբին։ Եվս մի քանի շաբաթ անց պարզվում է, որ շատ հաշիվներ ունեն շատ ավելի լայն իրավունքներ, քան բիզնեսին անհրաժեշտ է։ Սա դասական privilege creep-ի նախանշան է. անվտանգության աուդիտը (օր.՝ NIST SP 800-171-ի պահանջով) հայտնաբերում է չափազանց առատ թույլտվություններ, որոնց միջոցով հարձակվողը կարող է հասնել զգայուն տվյալների։</p>
+<h3 id="_6">Ախտորոշում<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Security աուդիտի հաշվետվություն՝ «շատ հաշիվներ արտոնյալ (privileged) ռոլոր ունեն»։</li>
+<li>Գործնական ստուգում. թիմը «խրվում» է այդ հաշվի փակ հրամանում, բայց աուդիտը ցույց է տալիս, որ մոռացված, ավելի հին հաշիվը դեռ ունի հզոր իրավունքներ։</li>
+<li>Բաղադրիչների վերանայում. <code>sudo -l</code>, <code>groups</code>, <code>getcap -r /</code>, Cloud-ի IAM-ի ռոլորների ցուցակ, DB-ի grants. երևում է մեծ տարբերություն «ինչ պետք է» և «ինչ իրականում կա» միջև։</li>
+</ol>
+<h3 id="_7">Լուծում<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Յուրաքանչյուր գործողության համար որոշեք «նվազագույն բավարարությունը» և կիրառեք RBAC. իրավունքներն ու դերերը խմբավորեք ըստ փաստացի աշխատանքային պահանջի։</li>
+<li>Սահմանափակեք sudo-ն ըստ հրամանի<code></code>/etc/sudoers.d/`-ում նշեք միայն անհրաժեշտ հրամանները, ոչ թե ամեն ինչ։</li>
+<li>Ծառայություններին տվեք setcap/<code>User=</code>-ով նեղ իրավունքներ, իսկ Cloud-ում ստեղծեք ժամանակավոր (JIT) մուտքեր՝ ըստ ժամանակի և scope-ի։</li>
+<li>Ջնջեք կամ ապաակտիվացրեք մոռացված հաշիվները, և հանեք «միայն մոռացության պատճառով» մնացած հզոր ռոլորները։</li>
+</ul>
+<h3 id="_8">Կանխարգելում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Պարբերաբար վերանայեք իրավունքները (quarterly access review) և նշեք՝ յուրաքանչյուրը ինչու ունի յուրաքանչյուր մուտքը։</li>
+<li>Կիրառեք <strong>Just-In-Time (JIT)</strong> մուտքեր. իրավունք տվեք միայն անհրաժեշտ ժամանակահատվածի համար՝ ավտոմատ ավարտվող (օր.՝ 30 րոպե)։</li>
+<li>Օգտագործեք <strong>RBAC</strong> և, հաջորդ քայլում, <strong>ABAC</strong>՝ դերերով, ապա ատրիբուտներով (ժամանակ, վայր, սարք) պայմանավորված մուտքեր։</li>
+<li>Կազմեք աուդիտ և alerting. «ինչ կա» vs «ինչ պետք է» անհամապատասխանության դեպքում alert ստացեք՝ նախքան այն դառնա հարձակման ուղի։</li>
+</ul>
+<h2 id="_9">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<h3 id="least-privilege-mid-level">Ի՞նչ է least privilege-ը և ինչո՞ւ է այն կարևոր (mid-level)<a class="headerlink" href="#least-privilege-mid-level" title="Permanent link">&para;</a></h3>
+<p>Least privilege (կամ principle of least privilege) սկզբունքն է, որ յուրաքանչյուր օգտատեր, ծրագիր կամ գործընթաց ստանում է միայն իր աշխատանքը կատարելու համար անհրաժեշտ նվազագույն իրավունքներն ու մուտքերը, ոչ ավելին (NIST SP 800-171)։ Այն կարևոր է, որովհետև սահմանափակում է attack surface-ը և blast radius-ը. եթե ինչ-որ մեկի իրավունքները գողանում են կամ չարաշահվում, վնասը մնում է նվազագույն, բացի այդ պաշտպանում է սխալներից ու օգնում compliance-ին (ISO 27001, GDPR)։ Հակառակ երևույթը privilege creep-ն է՝ ժամանակի ընթացքում կուտակվող, չվերանայվող ավելորդ իրավունքները։</p>
+<h3 id="least-privilege-cloud-senior-level">Ինչպե՞ս կգործարկեիք least privilege-ը ամբողջական cloud ենթակառուցվածքում (senior-level)<a class="headerlink" href="#least-privilege-cloud-senior-level" title="Permanent link">&para;</a></h3>
+<p>Կսկսեի RBAC/ABAC-ով<code>դերեր և policies ըստ աշխատանքային ֆունկցիաների, և յուրաքանչյուր սուբյեկտին (մարդ, service, workload) կտայի միայն անհրաժեշտ scope-ներն ու permissions-ը, ոչ թե ադմին ռոլոր. սա NIST-ի «minimum necessary» սկզբունքն է։ Բոլոր արտոնյալ մուտքերը կդարձնեի Just-In-Time</code> ժամանակավոր, ավտոմատ ավարտվող sessions, ոչ persistent ադմին մուտք. իսկ ծառայությունները կգործարկեի non-root օգտատիրոջ տակ<code>DB-ի application-հաշիվները պահելով առանց</code>db_owner`-ի, իսկ նեղ մուտքերի համար կիրառեի capabilities (setcap) կամ OS-ի MAC (SELinux/AppArmor)։ Ամեն ինչ կուղեկցեի ավտոմատ աուդիտով ու alerting-ով, որպեսզի «ինչ կա» vs «ինչ պետք է» տարբերությունը անհապաղ երևա, և պարբերական access review-ով՝ privilege creep-ը կանգնեցնելու համար. least privilege-ը կիրառվում է ոչ միայն մարդու, այլ ամեն սուբյեկտի և ամեն interface-ի մակարդակում։</p>
+<h2 id="_10">Ինքնաստուգում<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Ի՞նչ է least privilege-ը և որո՞նք են դրա հիմնական առավելությունները (attack surface, blast radius, compliance)։</li>
+<li>Ի՞նչ տարբերություն կա privilege creep-ի և privilege escalation-ի միջև, և ինչպե՞ս է դրանցից յուրաքանչյուրը կապված least privilege-ի հետ։</li>
+<li>Ի՞նչ տարբերություն կա RBAC-ի, ABAC-ի և MAC-ի միջև, և ե՞րբ է յուրաքանչյուրը կիրառվում։</li>
+<li>Ի՞նչ է JIT (Just-In-Time) մուտքը և ինչո՞ւ է այն նվազեցնում ռիսկը։</li>
+<li>Ինչո՞ւ է service-ը root-ով աշխատեցնելը վտանգավոր, և ինչպե՞ս եք դա կանխում systemd-ում (<code>User=</code>)։</li>
+<li>Ի՞նչ է setcap-ը և ինչպե՞ս է այն ավելի նեղ, քան ամբողջ root-ը (օր.՝ <code>cap_net_bind_service</code>)։</li>
+<li>Ինչո՞ւ է application-ի DB-հաշիվը <code>db_owner</code>/<code>sa</code>-ով պահելը հակառակ least privilege-ին (OWASP-ի տեսանկյունից)։</li>
+<li>Ի՞նչ հրամաններով կվերանայեիք օգտատերերի իրավունքները Linux-ում (<code>sudo -l</code>, <code>groups</code>, <code>getcap -r /</code>) և ի՞նչ կփնտրեիք դրանցում։</li>
+</ol>
+<h2 id="_11">Հաջորդ քայլեր<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>Շարունակեք Cloud, Security, Observability բաժնում՝ <a href="../">IAM</a> ներդրմամբ. least privilege-ը դրա հիմքն է։ Կարդացեք <a href="../../linux/firewall/">Linux-ի firewall</a> և <a href="../../linux/processes/">Processes</a> էջերը՝ OS-ի մակարդակում իրավունքների ու գործընթացների սահմանափակման համար, և <a href="../../automation-iac/ansible/">Ansible</a>՝ թե ինչպես playbook-ներով ավտոմատ կիրառել սահմանափակ իրավունքները։ Գործնական հաջորդ քայլ կարող է լինել «Ինչպես կազմել IAM-ի ռոլոր-մոդել» թեման՝ RBAC-ի ու JIT-ի գործնական ներդրմամբ։</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Վերադառնալ սկիզբ
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u054a\u0561\u057f\u0573\u0565\u0576\u057e\u0561\u056e \u0567", "clipboard.copy": "\u054a\u0561\u057f\u0573\u0565\u0576\u0565\u056c", "search.result.more.one": "\u0587\u057d 1-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.more.other": "\u0587\u057d #-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.none": "\u0531\u0580\u0564\u0575\u0578\u0582\u0576\u0584\u0576\u0565\u0580 \u0579\u056f\u0561\u0576", "search.result.one": "1 \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.other": "# \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.placeholder": "\u0544\u0578\u0582\u057f\u0584\u0561\u0563\u0580\u0565\u0584 \u0578\u0580\u0578\u0576\u0565\u056c\u0578\u0582 \u0570\u0561\u0574\u0561\u0580", "search.result.term.missing": "\u0532\u0561\u0581\u0561\u056f\u0561\u0575\u0578\u0582\u0574 \u0567", "select.version": "\u0538\u0576\u057f\u0580\u0565\u056c \u057f\u0561\u0580\u0562\u0565\u0580\u0561\u056f\u0568"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

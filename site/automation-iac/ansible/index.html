@@ -294,17 +294,18 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="../../cloud-security-observability/" class="md-tabs__link">
-        
-  
-  
     
+    
+      <li class="md-tabs__item">
+        <a href="../../cloud-security-observability/" class="md-tabs__link">
+          
+  
   
   Cloud, Security, Observability
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -1328,9 +1329,25 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../cloud-security-observability/" class="md-nav__link">
+    
+    
+    
+    
+      
+      
         
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -1344,7 +1361,79 @@
   
   
 
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cloud, Security, Observability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/least-privilege/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Least Privilege
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -2002,9 +2091,8 @@ Play-ի task-ի ներսում <code>vars:</code>-ով կարող եք override 
 1. <strong>Կենտրոնացված կառավարում</strong><code>ամբողջ միջավայրի կոնֆիգուրացիան մեկ վայրում է և հեշտ է դիտել ու փոփոխել։
 2. **Կրկնության խուսափում**</code>  DRY սկզբունքը պահվում է. նույն playbook-ը ծառայում է տարբեր միջավայրերի（development, production...）。
 3. <strong>Մասշտաբայնություն</strong><code>ավելի մեծ ենթակառուցվածքներում ընդհանուր արժեքները բաժանվում են խմբերով, և թիմը աշխատում է փոփոխականների հստակ անուններով。
-4. **Անվտանգություն**</code>  գաղտնիքները（գաղտնաբառեր, tokens） միշտ պահեք <a href="https://docs.ansible.com/ansible/latest/vault_guide/index.html">Ansible Vault</a>-ով, ոչ թե պարզ տեքստով.
- <code>secrets.yml</code> ֆայլերը կարող եք Vault-ով գաղտնագրել, իսկ մնացածը<code>հասանելի պահել。
-5. **Փաստաթղթավորում**</code>  յուրաքանչյուր փոփոխականի համար մեկ մեկնաբանությամբ («comment») նշեք, թե ինչ է այն անում և որտեղ է օգտագործվում։</p>
+4. **Անվտանգություն**՝  գաղտնիքները（գաղտնաբառեր, tokens） միշտ պահեք [Ansible Vault](https://docs.ansible.com/ansible/latest/vault_guide/index.html)-ով, ոչ թե պարզ տեքստով.</code>secrets.yml<code>ֆայլերը կարող եք Vault-ով գաղտնագրել, իսկ մնացածը</code> հասանելի պահել。
+5. <strong>Փաստաթղթավորում</strong>`  յուրաքանչյուր փոփոխականի համար մեկ մեկնաբանությամբ («comment») նշեք, թե ինչ է այն անում և որտեղ է օգտագործվում։</p>
 <p>Օրինակ՝ <code>group_vars/webservers.yml</code> ֆայլում՝</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apache_max_clients</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">900</span>
 </code></pre></div>
@@ -2131,10 +2219,10 @@ Play-ի task-ի ներսում <code>vars:</code>-ով կարող եք override 
 <p>Իրական փոփոխություն կատարող task-երը (փաթեթի տեղադրում, ծառայության գործարկում, օգտատիրոջ փոփոխում) պետք է մնան check mode-ում, որ <code>--check</code>-ը ցույց տա «ինչ կփոխվի»՝ իրականում չփոխելով։ Դրանց հետ թիմը հաճախ օգտագործում է <code>ansible_check_mode</code> մոգական փոփոխականը, օրինակ <code>when: not ansible_check_mode</code>՝ task-ը check mode-ում ամբողջությամբ բաց թողնելու համար, քանի որ այն իմաստ չունի առանց իրական փոփոխության.</p>
 <h4 id="_11">Այլընտրանքային մոտեցումներ<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
 <ol>
-<li>**Pre-flight ստուգում <code>stat</code>-ով<code>նախ ստուգել ռեսուրսի գոյությունը, ապա պայմանականորեն ավելացնել</code>  բայց check mode-ում պայմանները հիմնվում են ոչ-իրական արժեքների վրա և կարող են սխալ արդյունք տալ`  ավելի բարդ։</li>
-<li><strong>Առանձին playbook/role-ներ</strong>  նախապատրաստական և install-ի մասերը բաժանել և <code>--check</code>-ը գործարկել միայն install-ի մասի վրա<code>ավելի դժվար կառավարվող, բայց ավելի «մաքուր» dry run</code>  հարմար է մեծ playbook-ների համար։</li>
+<li>**Pre-flight ստուգում <code>stat</code>-ով՝  նախ ստուգել ռեսուրսի գոյությունը, ապա պայմանականորեն ավելացնել  բայց check mode-ում պայմանները հիմնվում են ոչ-իրական արժեքների վրա և կարող են սխալ արդյունք տալ` ավելի բարդ։</li>
+<li><strong>Առանձին playbook/role-ներ</strong>  նախապատրաստական և install-ի մասերը բաժանել և <code>--check</code>-ը գործարկել միայն install-ի մասի վրա՝  ավելի դժվար կառավարվող, բայց ավելի «մաքուր» dry run`  հարմար է մեծ playbook-ների համար։</li>
 </ol>
-<p>Հիմնական կանոնը պարզ է<code></code>check_mode: false`-ը գործածեք միայն prerequisite task-երի համար, որոնք idempotent են և ռեսուրսներ են «ստեղծում»՝ առանց որի check mode-ն ի վիճակի չի լինի ստուգելու մնացածը։ Սա տեղեկացված որոշում է, և պետք է մեկնաբանությամբ (comment) փաստաթղթավորվի կոդում, որ թիմի անդամը հասկանա, թե ինչու է այդ task-ը «dry run»-ից դուրս աշխատում.</p>
+<p>Հիմնական կանոնը պարզ է՝  <code>check_mode: false</code>-ը գործածեք միայն prerequisite task-երի համար, որոնք idempotent են և ռեսուրսներ են «ստեղծում»՝ առանց որի check mode-ն ի վիճակի չի լինի ստուգելու մնացածը։ Սա տեղեկացված որոշում է, և պետք է մեկնաբանությամբ (comment) փաստաթղթավորվի կոդում, որ թիմի անդամը հասկանա, թե ինչու է այդ task-ը «dry run»-ից դուրս աշխատում.</p>
 <h2 id="_12">Հիմնական հրամաններ<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2357,7 +2445,7 @@ ansible-playbook<span class="w"> </span>deploy-firewall.yml<span class="w"> </sp
 <h3 id="group_vars-host_vars-mid-level">Ե՞րբ օգտագործել <code>group_vars</code>, և ինչո՞վ է այն տարբերվում <code>host_vars</code>-ից（mid-level）<a class="headerlink" href="#group_vars-host_vars-mid-level" title="Permanent link">&para;</a></h3>
 <p><code>group_vars</code>-ը օգտագործում եք, երբ միևնույն արժեքը պետք է կիրառվի խմբի բոլոր host-ների համար. օրինակ՝ նույն <code>http_port</code>, <code>timezone</code> կամ <code>docker_registry</code>-ը development-ի բոլոր սերվերներին。 <code>host_vars</code>-ը՝ կոնկրետ մեկ host-ի բացառիկ արժեքի համար և միշտ գերակշռում է <code>group_vars</code>-ին（<code>host_vars &gt; group_vars</code>）： Օրինակ. եթե <code>group_vars/webservers.yml</code>-ում <code>http_port: 80</code> եք դրել, իսկ <code>host_vars/web1.yml</code>-ում<code></code>8080՝, ապա web1 host-ը կստանա <code>8080</code>, մնացած webservers-ները՝ <code>80</code>։ Ընդհանրապես՝ <code>group_vars</code>-ը՝ խմբի ընդհանուրը, <code>host_vars</code>-ը` մասնավորը.,</p>
 <h3 id="check_mode-false-repository-playbook-senior-level">Ինչու՞ է պետք <code>check_mode: false</code> repository ավելացնող playbook-ում, և ի՞նչ ռիսկ է այն թաքցնում (senior-level)<a class="headerlink" href="#check_mode-false-repository-playbook-senior-level" title="Permanent link">&para;</a></h3>
-<p><code>apt</code>-ը check mode-ում չի կարող «resolve» անել նոր repo-ից փաթեթ, քանի որ repo-ի ֆայլը, GPG key-ը և թարմացված cache-ը գոյություն չունեն. դրանցից որևէ մեկի բացակայության դեպքում <code>docker-ce</code>-ն չի երևում apt-ին, և install task-ը ձախողվում է «No package matching 'docker-ce' is available» սխալով<code>չնայած</code>--check<code>-ը «չոր» է։ Այդ պատճառով նախապատրաստական task-երը (directory, key, repo, cache) դրվում են</code>check_mode: false<code>-ով, որը ստիպում է դրանք գործարկվել իրական (normal) ռեժիմում. դրանք idempotent են (անվտանգ է կրկնել), ուստի ռիսկը ցածր է։ Ավագ ինժեները կընդգծի, որ սա «dry run»-ից հրաժարում է 4 task-ի համար.</code>--check<code>-ով իրական փոփոխություններ են կատարվում, հետևաբար պետք է մեկնաբանությամբ փաստաթղթավորվի կոդում, և որ</code>--check<code>-ը ճշգրիտ ցույց է տալիս «ինչ կփոխվի» միայն կիրառական task-երի վրա (install, service)</code> որոնք պետք է մնան check mode-ում<code>օրինակ</code>when: not ansible_check_mode`-ով։</p>
+<p><code>apt</code>-ը check mode-ում չի կարող «resolve» անել նոր repo-ից փաթեթ, քանի որ repo-ի ֆայլը, GPG key-ը և թարմացված cache-ը գոյություն չունեն. դրանցից որևէ մեկի բացակայության դեպքում <code>docker-ce</code>-ն չի երևում apt-ին, և install task-ը ձախողվում է «No package matching 'docker-ce' is available» սխալով՝ չնայած <code>--check</code>-ը «չոր» է։ Այդ պատճառով նախապատրաստական task-երը (directory, key, repo, cache) դրվում են <code>check_mode: false</code>-ով, որը ստիպում է դրանք գործարկվել իրական (normal) ռեժիմում. դրանք idempotent են (անվտանգ է կրկնել), ուստի ռիսկը ցածր է։ Ավագ ինժեները կընդգծի, որ սա «dry run»-ից հրաժարում է 4 task-ի համար. <code>--check</code>-ով իրական փոփոխություններ են կատարվում, հետևաբար պետք է մեկնաբանությամբ փաստաթղթավորվի կոդում, և որ <code>--check</code>-ը ճշգրիտ ցույց է տալիս «ինչ կփոխվի» միայն կիրառական task-երի վրա (install, service)<code>որոնք պետք է մնան check mode-ում</code> օրինակ <code>when: not ansible_check_mode</code>-ով։</p>
 <h2 id="_18">Ինքնաստուգում<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Ի՞նչ է նշանակում «agentless»-ը, և ինչպե՞ս է Ansible-ը միանում կառավարվող host-երին։</li>
@@ -2372,10 +2460,10 @@ ansible-playbook<span class="w"> </span>deploy-firewall.yml<span class="w"> </sp
 <li>
 <p>Ի՞նչ է <code>group_vars</code>-ը, ինչ ձևաչափերով կարելի է պահել, և ինչո՞ւ է <code>host_vars</code>-ը գերակշռում դրան.</p>
 </li>
-<li>Ի՞նչ է <code>--check</code>-ը, և ինչո՞ւ repository ավելացնող playbook-ում նախապատրաստական task-երը «ստեղծվում» են <code>check_mode: false</code>-ով<code>չնայած</code>--check`-ի «չոր» լինելուն։</li>
+<li>Ի՞նչ է <code>--check</code>-ը, և ինչո՞ւ repository ավելացնող playbook-ում նախապատրաստական task-երը «ստեղծվում» են <code>check_mode: false</code>-ով՝ չնայած <code>--check</code>-ի «չոր» լինելուն։</li>
 </ol>
 <h2 id="_19">Հաջորդ քայլեր<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h2>
-<p>Շարունակեք <a href="../../git-ci-cd/">Git և CI/CD</a> բաժնով՝ playbook-ները CI pipeline-ում գործարկելու համար, իսկ firewall-ի ավտոմատացման պրակտիկան ամրապնդելու համար՝ <a href="../../linux/firewall/">Firewall</a> և <a href="../../linux/">Linux</a> էջերով։ Թեմաներն ավելի խոր ուսումնասիրելուց առաջ լավ գաղափար է ամրապնդել <a href="../yaml/">YAML</a> էջը, քանի որ playbook-ների և ձևանմուշների ամբողջ սինտաքսը YAML-ի վրա է հիմնված։ Յուրաքանչյուր playbook-ի փոփոխություն <code>deploy</code>-ից առաջ ստուգեք <code>--syntax-check</code> և <code>--check</code> դրոշակներով, իսկ repository ավելացնող role-երում <code>check_mode: false</code>-ի օգտագործումը արեք միայն idempotent նախապատրաստական task-երի համար<code>ըստ այս էջի օրինակի։ Հաջորդ խորացումը՝ roles-ի,</code>ansible-vault`-ի և Jinja2-ի՝ ավելի բարդ ձևանմուշների ուսումնասիրությունը, ապա՝ Terraform-ը cloud-ի IaC-ի համար։</p>
+<p>Շարունակեք <a href="../../git-ci-cd/">Git և CI/CD</a> բաժնով՝ playbook-ները CI pipeline-ում գործարկելու համար, իսկ firewall-ի ավտոմատացման պրակտիկան ամրապնդելու համար՝ <a href="../../linux/firewall/">Firewall</a> և <a href="../../linux/">Linux</a> էջերով։ Թեմաներն ավելի խոր ուսումնասիրելուց առաջ լավ գաղափար է ամրապնդել <a href="../yaml/">YAML</a> էջը, քանի որ playbook-ների և ձևանմուշների ամբողջ սինտաքսը YAML-ի վրա է հիմնված։ Յուրաքանչյուր playbook-ի փոփոխություն <code>deploy</code>-ից առաջ ստուգեք <code>--syntax-check</code> և <code>--check</code> դրոշակներով, իսկ repository ավելացնող role-երում <code>check_mode: false</code>-ի օգտագործումը արեք միայն idempotent նախապատրաստական task-երի համար՝ ըստ այս էջի օրինակի։ Հաջորդ խորացումը՝ roles-ի, <code>ansible-vault</code>-ի և Jinja2-ի՝ ավելի բարդ ձևանմուշների ուսումնասիրությունը, ապա՝ Terraform-ը cloud-ի IaC-ի համար։</p>
 
 
 
