@@ -28,6 +28,7 @@ nav:
       - Cgroups: linux/cgroups.md
       - Networking: linux/networking.md
       - Firewall: linux/firewall.md
+      - Filesystem: linux/filesystem.md
   - Networks: networking/index.md
   - Git և CI/CD: git-ci-cd/index.md
   - Automation և IaC:
