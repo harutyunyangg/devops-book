@@ -36,7 +36,9 @@ nav:
       - Ansible: automation-iac/ansible.md
       - YAML: automation-iac/yaml.md
   - Docker և Kubernetes: docker-kubernetes/index.md
+  - Python: python/venv.md
   - Cloud, Security, Observability:
       - Overview: cloud-security-observability/index.md
       - Least Privilege: cloud-security-observability/least-privilege.md
   - Բառարան: glossary.md
+

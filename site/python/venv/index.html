@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://example.invalid/devops-book/cloud-security-observability/least-privilege/">
+        <link rel="canonical" href="https://example.invalid/devops-book/python/venv/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../../docker-kubernetes/">
       
       
-        <link rel="next" href="../../glossary/">
+        <link rel="next" href="../../cloud-security-observability/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Least Privilege - DevOps ուսումնական ձեռնարկ</title>
+        <title>Python - DevOps ուսումնական ձեռնարկ</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#least-privilege" class="md-skip">
+        <a href="#python-virtual-environments-venv" class="md-skip">
           Անցնել պարունակությանը
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Least Privilege
+              Python
             
           </span>
         </div>
@@ -291,9 +291,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../../python/venv/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -310,13 +312,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../cloud-security-observability/" class="md-tabs__link">
           
   
   
@@ -890,118 +890,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../../python/venv/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Python
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Cloud, Security, Observability
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_8">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Cloud, Security, Observability
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -1021,7 +909,7 @@
   <span class="md-ellipsis">
     
   
-    Least Privilege
+    Python
   
 
     
@@ -1039,7 +927,7 @@
   <span class="md-ellipsis">
     
   
-    Least Privilege
+    Python
   
 
     
@@ -1077,10 +965,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#venv-" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ինչու է դա կարևոր
+        Ինչպե՞ս է կառուցված venv-ը
       
     </span>
   </a>
@@ -1088,10 +976,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#privilege-creep" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Հակառակ սկզբունքը՝ Privilege Creep
+        Ի՞նչ է կրկնվում, և ի՞նչը ոչ
       
     </span>
   </a>
@@ -1102,7 +990,29 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Կիրառման ոլորտներ
+        Ինչու՞ է կրկնությունն ընդունելի
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իսկ ինչպե՞ս է սա տարբերվում Docker-ում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key concepts
       
     </span>
   </a>
@@ -1210,10 +1120,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#least-privilege-mid-level" class="md-nav__link">
+  <a href="#venv-pip-venv-mid-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ի՞նչ է least privilege-ը և ինչո՞ւ է այն կարևոր (mid-level)
+        Ի՞նչ կա venv-ի ներսում, և ինչու՞ է pip-ը կրկնվում ամեն venv-ում (mid-level)
       
     </span>
   </a>
@@ -1221,10 +1131,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#least-privilege-cloud-senior-level" class="md-nav__link">
+  <a href="#interpreter-pip-senior-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ինչպե՞ս կգործարկեիք least privilege-ը ամբողջական cloud ենթակառուցվածքում (senior-level)
+        Ինչու՞ interpreter-ը չի կրկնվում, իսկ pip-ը կրկնվում է, և ինչո՞ւ է դա ընդունելի (senior-level)
       
     </span>
   </a>
@@ -1262,6 +1172,113 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud, Security, Observability
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cloud, Security, Observability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/least-privilege/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Least Privilege
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1340,10 +1357,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#venv-" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ինչու է դա կարևոր
+        Ինչպե՞ս է կառուցված venv-ը
       
     </span>
   </a>
@@ -1351,10 +1368,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#privilege-creep" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Հակառակ սկզբունքը՝ Privilege Creep
+        Ի՞նչ է կրկնվում, և ի՞նչը ոչ
       
     </span>
   </a>
@@ -1365,7 +1382,29 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Կիրառման ոլորտներ
+        Ինչու՞ է կրկնությունն ընդունելի
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իսկ ինչպե՞ս է սա տարբերվում Docker-ում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key concepts
       
     </span>
   </a>
@@ -1473,10 +1512,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#least-privilege-mid-level" class="md-nav__link">
+  <a href="#venv-pip-venv-mid-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ի՞նչ է least privilege-ը և ինչո՞ւ է այն կարևոր (mid-level)
+        Ի՞նչ կա venv-ի ներսում, և ինչու՞ է pip-ը կրկնվում ամեն venv-ում (mid-level)
       
     </span>
   </a>
@@ -1484,10 +1523,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#least-privilege-cloud-senior-level" class="md-nav__link">
+  <a href="#interpreter-pip-senior-level" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ինչպե՞ս կգործարկեիք least privilege-ը ամբողջական cloud ենթակառուցվածքում (senior-level)
+        Ինչու՞ interpreter-ը չի կրկնվում, իսկ pip-ը կրկնվում է, և ինչո՞ւ է դա ընդունելի (senior-level)
       
     </span>
   </a>
@@ -1538,26 +1577,56 @@
 
 
 
-<h1 id="least-privilege">Least Privilege. Նվազագույն արտոնությունների սկզբունք<a class="headerlink" href="#least-privilege" title="Permanent link">&para;</a></h1>
+<h1 id="python-virtual-environments-venv">Python Virtual Environments (venv)<a class="headerlink" href="#python-virtual-environments-venv" title="Permanent link">&para;</a></h1>
 <h2 id="_1">Տեսություն<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p><strong>Least Privilege</strong>-ը (հայերեն՝ «նվազագույն արտոնությունների սկզբունք») տեղեկատվական անվտանգության հիմնարար սկզբունք է։ Այն նշանակում է, որ <strong>ցանկացած օգտատեր, ծրագիր կամ գործընթաց պետք է ունենա միայն այն նվազագույն իրավունքներն ու մուտքերը, որոնք անհրաժեշտ են իր աշխատանքը կատարելու համար, և ոչ ավելին</strong>։ NIST-ը (SP 800-171) այն սահմանում է այսպես. յուրաքանչյուր սուբյեկտին տրվում են միայն այն համակարգային թույլտվություններն ու ռեսուրսները, որոնք անհրաժեշտ են իր գործառույթն իրականացնելու համար։</p>
-<p>Պարզ ասած. յուրաքանչյուրին տվեք միայն այնքան «բանալի», որքան իրականում անհրաժեշտ է, և ոչ մի ավելորդ բանալի մի տվեք։ Սա վերաբերում է ոչ միայն մարդկանց, այլև ծառայություններին ու գործընթացներին՝ նույնիսկ այն դեպքում, երբ դրանց օգտագործումը «իրավաչափ» է բիզնեսի տեսանկյունից։</p>
-<h3 id="_2">Ինչու է դա կարևոր<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>Virtual environment (venv)</strong>-ը Python-ի փոքր, մեկուսացված միջավայր է. յուրաքանչյուր venv ունի իր <code>site-packages</code> պանակը, որտեղ տեղադրված են փաթեթները, և իր executable-ների ուղին։ Այն կառուցվում է արդեն տեղադրված Python-ի վրա, որը կոչվում է <strong>base Python</strong>։ venv-ը մեկուսացնում է տվյալ նախագծի փաթեթները ինչպես system Python-ից, այնպես էլ մյուս venv-ներից։ Ինչպես նշված է <a href="https://docs.python.org/3/library/venv.html">Python-ի պաշտոնական փաստաթղթերում</a>, յուրաքանչյուր venv ստեղծվում է base Python-ի վրա և լռությամբ մեկուսացված է base environment-ի փաթեթներից։ Այդ պատճառով մեկ app-ի թարմացումը չի ազդում մյուս հավելվածների վրա։</p>
+<h3 id="venv-">Ինչպե՞ս է կառուցված venv-ը<a class="headerlink" href="#venv-" title="Permanent link">&para;</a></h3>
+<p>Ubuntu/Linux-ի վրա <code>.venv/</code>-ի կառուցվածքը.</p>
+<div class="highlight"><pre><span></span><code>.venv/
+├── bin/
+│   ├── python             ← base Python-ի symlink (կամ պատճեն)
+│   ├── pip                ← գործարկվող pip
+│   └── activate           ← ակտիվացման script
+├── lib/
+│   └── python3.12/        ← ձեր Python-ի տարբերակով
+│       └── site-packages/ ← փաթեթների պանակը. այստեղ է ծավալը
+│           ├── pip/
+│           ├── setuptools/
+│           └── ...        ← ձեր տեղադրած փաթեթները
+└── pyvenv.cfg             ← ~100 bytes. base Python-ի ուղին
+</code></pre></div>
+<p>(Windows-ի վրա <code>bin/</code>-ը կոչվում է <code>Scripts/</code>, իսկ <code>lib/python3.12/site-packages</code>-ը <code>Lib\site-packages</code>։)</p>
+<p><code>pyvenv.cfg</code>-ը venv-ի անձնագիրն է. այն պարունակում է <code>home</code> բանալին, որը ցույց է տալիս base Python-ի ուղին, և <code>include-system-site-packages = false</code> ցույց է տալիս, որ venv-ը մեկուսացված է system փաթեթներից։</p>
+<div class="highlight"><pre><span></span><code><span class="na">home</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/usr/bin</span>
+<span class="na">include-system-site-packages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">false</span>
+<span class="na">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">3.12.3</span>
+<span class="na">executable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/usr/bin/python3.12</span>
+<span class="na">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/usr/bin/python3 -m venv /home/app/.venv</span>
+</code></pre></div>
+<h3 id="_2">Ի՞նչ է կրկնվում, և ի՞նչը ոչ<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Նվազեցնում է հարձակման մակերեսը (attack surface)։</strong> Որքան քիչ իրավունք ունի օգտատերը կամ գործընթացը, այնքան քիչ հնարավորություններ ունի սպառնալիքը։ Եթե հաքերը գողանա օգտատիրոջ գաղտնաբառը, նա կկարողանա կատարել միայն այն գործողությունները, որոնք թույլատրված են այդ օգտատիրոջը, ոչ թե ամբողջ համակարգը կործանել։</li>
-<li><strong>Սահմանափակում է blast radius-ը (վնասի տարածման գոտին)։</strong> Նույնիսկ եթե սուբյեկտը դիտավորությամբ կամ սխալմամբ վնասակար գործողություն կատարի, վնասը սահմանափակվում է հենց նրա թույլտվությունների շրջանակով։</li>
-<li><strong>Նվազեցնում է սխալների ազդեցությունը։</strong> Եթե ծրագիրը «բագ» ունի, այն չի կարող փոխել կամ ջնջել այն, ինչին մուտք չունի։</li>
-<li><strong>Օգնում է համապատասխանությանը (compliance)։</strong> Շատ ստանդարտներ (օրինակ՝ GDPR, ISO 27001) և պետական պահանջներ (օր.՝ NIST SP 800-171) պահանջում են մուտքերի սահմանափակում ըստ սկզբունքի։</li>
+<li>
+<p><strong>Կրկնվում է.</strong> ամեն անգամ <code>python3 -m venv .venv</code> գործարկելիս <code>pip</code>-ը (մոտ 10-15 MB) և <code>setuptools</code>-ը (մոտ 5 MB) ensurepip-ի միջոցով ընկնում են այդ venv-ի <code>site-packages</code>-ում։ Այսինքն, ամեն venv կրում է նույն <code>pip</code>-ը և <code>setuptools</code>-ը։ Երեք venv-ում այդ ~15-20 MB-ը կրկնվում է երեք անգամ (մոտ 50 MB)։</p>
+</li>
+<li>
+<p><strong>Չի կրկնվում.</strong> Python interpreter-ը (բուն <code>python3.x</code> binary-ը) մեկն է ամբողջ սերվերի վրա. venv-ի <code>bin/python</code>-ը Linux-ում symlink է դեպի base Python-ը, իսկ <code>pyvenv.cfg</code>-ն ցույց է տալիս դրա ուղին (օրինակ <code>/usr/bin/python3.12</code>)։ Իրական interpreter-ը տեղադրված է մեկ անգամ, և բոլոր venv-ները կիսում են այն։</p>
+</li>
 </ul>
-<h3 id="privilege-creep">Հակառակ սկզբունքը՝ Privilege Creep<a class="headerlink" href="#privilege-creep" title="Permanent link">&para;</a></h3>
-<p><strong>Privilege Creep</strong>-ը (արտոնությունների «սողացող» կուտակում) հակառակ երևույթն է. երբ ժամանակի ընթացքում օգտատերերը կուտակում են ավելի ու ավելի շատ իրավունքներ (օրինակ՝ պաշտոն փոխելիս, առանց հին իրավունքները հանելու), և ոչ ոք չի վերանայում դրանք։ Սա հենց այն է, ինչից խուսափում է least privilege-ը։ Հատուկ դեպք է <strong>Privilege Escalation</strong>-ը (արտոնությունների բարձրացում), երբ հարձակվողը օգտվում է չափազանց լայն իրավունքներից՝ ավելի բարձր մակարդակի մուտք ստանալու համար, որը հաճախ հենց privilege creep-ի հետևանք է։</p>
-<h3 id="_3">Կիրառման ոլորտներ<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h3 id="_3">Ինչու՞ է կրկնությունն ընդունելի<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Մեկուսացումն ավելի կարևոր է, քան 20 MB-ը.</strong> Եթե <code>pip</code>-ը կամ ընդհանուր <code>site-packages</code>-ը կիսվեր բոլորի միջև, մեկ app-ի թարմացումը կարող էր կոտրել մյուսներին (dependency hell)։ venv-ն երաշխավորում է, որ յուրաքանչյուր app ունի իր փաթեթների ճշգրիտ տարբերակները։</li>
+<li><strong>Ծավալն աննշան է</strong> ժամանակակից սերվերի համար (GB-ներ). 15-20 MB կրկնություն յուրաքանչյուր venv-ում ռեսուրսի խնդիր չէ։</li>
+<li><strong>Ավելի պարզ է.</strong> ամեն venv ինքնաբավ է և disposable, հեշտ ջնջվում ու նորից ստեղծվում. Ուստի venv-ը ներառվում է <code>.gitignore</code>-ում, իսկ version control-ում չի պահվում։</li>
+</ol>
+<h3 id="docker-">Իսկ ինչպե՞ս է սա տարբերվում Docker-ում<a class="headerlink" href="#docker-" title="Permanent link">&para;</a></h3>
+<p>Docker-ում կրկնությունն ավելի մեծ է. յուրաքանչյուր image սովորաբար ներառում է իր ամբողջական Python runtime-ը (<code>python:3.12</code> base image-ը ~100 MB+ է)։ Այսինքն, ամեն կոնտեյներ կրում է իր Python-ը ի տարբերություն venv-ի, որը կիսում է հոսթի base Python-ը. Բայց Docker-ի layer caching-ը մեղմում է ծավալը. read-only image layer-ները այդ թվում Python layer-ը հոսթի վրա մեկ անգամ են պահվում և կիսվում նույն base-ով աշխատող կոնտեյների միջև։ Այսպիսով, և՛ venv-ը, և՛ Docker-ն էլ միևնույն փոխզիջումն են, փոքր կրկնվող ծավալ մեկուսացման դիմաց։</p>
+<h3 id="key-concepts">Key concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Օպերացիոն համակարգերում.</strong> Օգտատերերի իրավունքներ, file permissions, processes. Ծառայությունները գործարկվում են non-root օգտատիրոջ տակ, ոչ թե ադմինիստրատորով։</li>
-<li><strong>Տվյալների բազաներում.</strong> Կարդալ (read), գրել (write), ջնջել (delete) առանձին իրավունքներ. application-ը չի օգտագործում <code>db_owner</code>/<code>sa</code> մակարդակի հաշիվ (OWASP-ն ուղղակի խորհուրդ է տալիս այդպես)։</li>
-<li><strong>Cloud միջավայրերում.</strong> IAM (Identity and Access Management)՝ գլոբալ ադմին իրավունքների փոխարեն՝ թե՛ աշխատակիցների, թե՛ ծառայությունների համար նվազագույն scope-ներ, roles և policies (օր.՝ AWS, Kubernetes RBAC)։</li>
-<li><strong>Ծրագրային ապահովման մշակման մեջ.</strong> Microservices-ում յուրաքանչյուր ծառայություն ունի իր սեփական, սահմանափակ մուտքը, ոչ թե բոլորը կիսում են մեկ հզոր հաշիվ։ Ֆայլերը (credentials) տրվում են միայն այն ծառայությանը, որն իրականում պետք է դրանք պահի։</li>
-<li><strong>Նվազագույն արտոնությունների սկզբունքը.</strong> Յուրաքանչյուր սուբյեկտի ամեն գործողությունը կատարվում է նվազագույն իրավունքներով, իսկ հատուկ մուտքերի կարիքի դեպքում տրվում է ժամանակավոր, ըստ scope-ի մուտք (JIT)։</li>
+<li><strong>base Python</strong> հոսթի վրա մեկ անգամ տեղադրված Python-ը, որի վրա կառուցվում է venv-ը.</li>
+<li><strong>site-packages</strong> venv-ի ներսի պանակը, որտեղ pip-ը տեղադրում է փաթեթները.</li>
+<li><strong>ensurepip</strong> Python-ի մոդուլը, որը venv-ի ստեղծման ժամանակ ներսում տեղադրում է pip-ը.</li>
+<li><strong>symlink</strong> Linux-ում venv-ի python-ը մատնանշում է base Python-ին առանց այն պատճենելու.</li>
+<li><strong>disposable</strong> venv-ը ժամանակավոր է հեշտ ջնջվում և նորից ստեղծվում.</li>
 </ul>
 <h2 id="_4">Հիմնական հրամաններ<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <table>
@@ -1565,152 +1634,138 @@
 <tr>
 <th>Հրաման</th>
 <th>Նպատակ</th>
-<th>Սպասվող արդյունք</th>
-<th>Անվտանգության ռիսկ</th>
+<th>Զգուշացում</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>ls -l &lt;path&gt;</code></td>
-<td>Դիտել ֆայլի սեփականատիրոջը, խումբը և իրավունքները (rwx)</td>
-<td>Իրավունքների ցուցակ</td>
-<td>Անվտանգ, միայն կարդում է</td>
+<td><code>python3 -m venv .venv</code></td>
+<td>Ստեղծում է venv <code>.venv/</code> պանակում</td>
+<td>Բունդլավորում է pip/setuptools, այստեղից մոտ 15-20 MB կրկնություն</td>
 </tr>
 <tr>
-<td><code>chmod 640 &lt;file&gt;</code></td>
-<td>Իրավունքներ հատկացնել owner-ին rw, group-ին r, մյուսներին՝ ոչինչ</td>
-<td>Ֆայլի իրավունքների փոփոխություն</td>
-<td>Կարող է կտրել մուտքը. ստուգեք owner/group-ը</td>
+<td><code>source .venv/bin/activate</code></td>
+<td>Միացնում է venv-ը (Linux)</td>
+<td>Ազդում է միայն ընթացիկ terminal-ի վրա</td>
 </tr>
 <tr>
-<td><code>umask 077</code></td>
-<td>Լռելյայն սահմանափակել նոր ֆայլերի իրավունքները (միայն owner-ը)</td>
-<td>Նոր ֆայլերի լռելյայն 0600</td>
-<td>Անվտանգ, բայց կարող է խանգարել shared workflows-ին</td>
+<td><code>.venv\Scripts\activate</code></td>
+<td>Միացնում է venv-ը (Windows)</td>
+<td>—</td>
 </tr>
 <tr>
-<td><code>useradd -M -s /usr/sbin/nologin &lt;svc&gt;</code></td>
-<td>Ստեղծել ծառայության օգտատեր առանց login shell-ի</td>
-<td>Ոչ ինտերակտիվ օգտատեր</td>
-<td>Անվտանգ, եթե shell-ը հենց <code>/usr/sbin/nologin</code> է</td>
+<td><code>deactivate</code></td>
+<td>Դուրս է գալիս venv-ից</td>
+<td>—</td>
 </tr>
 <tr>
-<td><code>visudo</code></td>
-<td>Խմբագրել sudoers-ը, ապահով syntax-ստուգմամբ</td>
-<td>Խմբի/օգտատիրոջ սահմանափակ հրամանների ցուցակ</td>
-<td>Սխալ շարահյուսությունը կարող է կոտրել sudo-ն</td>
+<td><code>which python</code></td>
+<td>Ցույց է տալիս ակտիվ python-ի ուղին</td>
+<td>Ակտիվ venv-ում ցույց է տալիս <code>.venv/bin/python</code></td>
 </tr>
 <tr>
-<td><code>setcap 'cap_net_bind_service=+ep' &lt;binary&gt;</code></td>
-<td>Տալ ծրագրին միայն մեկ հատուկ հնարավորություն (օր.՝ 80-րդ պորտ կապել)՝ ամբողջ root-ի փոխարեն</td>
-<td>Root-ից ցածր, նեղ իրավունք</td>
-<td>Զգույշ. setcap-ը կարող է փոխել ծրագրի վարքը</td>
+<td><code>cat .venv/pyvenv.cfg</code></td>
+<td>Ցույց է տալիս base Python-ի ուղին</td>
+<td>Անվտանգ միայն կարդում է</td>
 </tr>
 <tr>
-<td><code>getcap &lt;binary&gt;</code></td>
-<td>Ցույց տալ ֆայլի setcap-հնարավորությունները</td>
-<td>Ընթացիկ capabilities</td>
-<td>Անվտանգ</td>
+<td><code>python -m pip list</code></td>
+<td>Թվարկում է venv-ում տեղադրված փաթեթները</td>
+<td>—</td>
 </tr>
 <tr>
-<td><code>setpriv --reuid=&lt;uid&gt; --regid=&lt;gid&gt; --clear-groups &lt;cmd&gt;</code></td>
-<td>Գործարկել գործընթացը կրճատված իրավունքներով</td>
-<td>Ծրագիրը աշխատում է non-root-ով</td>
-<td>Զգույշ. համոզվեք, որ ծրագիրը կարող է աշխատել առանց root-ի</td>
+<td><code>python -m pip install &lt;pkg&gt;</code></td>
+<td>Տեղադրում է փաթեթ venv-ի մեջ</td>
+<td>Չի ազդում այլ venv-ների վրա</td>
 </tr>
 <tr>
-<td><code>systemctl</code> + <code>User=</code></td>
-<td>systemd-ում ծառայությունը գործարկել որպես սովորական օգտատեր</td>
-<td>Service-ը չի աշխատում root-ով</td>
-<td>Անվտանգ, best practice</td>
+<td><code>python -m pip freeze &gt; requirements.txt</code></td>
+<td>Ամրագրում է ճշգրիտ տարբերակների ցուցակ</td>
+<td>—</td>
 </tr>
 <tr>
-<td><code>usermod -aG &lt;group&gt; &lt;user&gt;</code></td>
-<td>Օգտատիրոջը ավելացնել խումբ (և միայն այդ խումբը)</td>
-<td>Խմբային մուտք</td>
-<td>Հետևեք, որ <code>-a</code>-ն կա, հակառակ դեպքում առկա խմբերը կջնջվեն</td>
-</tr>
-<tr>
-<td><code>last</code>, <code>lastlog</code>, <code>journalctl -u &lt;svc&gt;</code></td>
-<td>Վերանայել, թե ով և երբ է մուտք գործել</td>
-<td>Մուտքի աուդիտ</td>
-<td>Անվտանգ, կարդալու համար</td>
+<td><code>python -m venv --system-site-packages .venv</code></td>
+<td>Թույլ է տալիս տեսնել system փաթեթները</td>
+<td>Թուլացնում է մեկուսացումը</td>
 </tr>
 </tbody>
 </table>
 <h2 id="lab">Փորձարկում (Lab)<a class="headerlink" href="#lab" title="Permanent link">&para;</a></h2>
-<p>Միջավայր. սովորական Ubuntu/Debian Linux VM կամ Docker container (ոչ production)։ Թիրախն է ցույց տալ, որ ծառայությունը 80-րդ պորտ կապելու համար ամբողջ root-ի փոխարեն ստանում է միայն մեկ capability, իսկ sudo-ն սահմանափակվում է մեկ հրամանով։</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># 1. Ստեղծենք ծառայության օգտատեր առանց login shell-ի</span>
-sudo<span class="w"> </span>useradd<span class="w"> </span>-M<span class="w"> </span>-s<span class="w"> </span>/usr/sbin/nologin<span class="w"> </span>app-svc
-id<span class="w"> </span>app-svc
+<p>Միջավայր սովորական Ubuntu VM կամ container. Երկու venv կստեղծենք, որ տեսնենք ինչ է կրկնվում, իսկ ինչը ոչ.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1) Երկու անկախ venv նույն base Python-ի վրա</span>
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>/tmp/app1-venv
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>/tmp/app2-venv
 
-<span class="c1"># 2. Փորձ՝ նորմալ օգտատիրոջը 80-րդ պորտ թույլ չի</span>
-<span class="c1">#    (փոքր Python http server, ավարտել Ctrl+C-ով)</span>
-python3<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">80</span>
-<span class="c1">#    սխալ՝ "PermissionError: [Errno 13] Permission denied"</span>
+<span class="c1"># 2) Կառուցվածքն ու base Python-ի ուղին</span>
+ls<span class="w"> </span>-la<span class="w"> </span>/tmp/app1-venv/bin/
+cat<span class="w"> </span>/tmp/app1-venv/pyvenv.cfg
 
-<span class="c1"># 3. setcap-ով թույլ տանք միայն 80-րդ պորտ կապելը</span>
-sudo<span class="w"> </span>setcap<span class="w"> </span><span class="s1">'cap_net_bind_service=+ep'</span><span class="w"> </span>/usr/bin/python3
-getcap<span class="w"> </span>/usr/bin/python3
-python3<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="m">80</span>
-<span class="c1">#    այժմ աշխատում է — բայց ծրագրի մնացած իրավունքը մնում է սահմանափակ</span>
+<span class="c1"># 3) Ինչ է կրկնվում. pip-ը և setuptools-ը երկու venv-ում էլ կա</span>
+ls<span class="w"> </span>/tmp/app1-venv/lib/python3*/site-packages/
+ls<span class="w"> </span>/tmp/app2-venv/lib/python3*/site-packages/
 
-<span class="c1"># 4. Մաքրենք capability-ն, երբ այլևս չի պետք</span>
-sudo<span class="w"> </span>setcap<span class="w"> </span>-r<span class="w"> </span>/usr/bin/python3
-getcap<span class="w"> </span>/usr/bin/python3<span class="w">   </span><span class="c1"># դատարկ</span>
+<span class="c1"># 4) Ինչը չի կրկնվում. interpreter-ը symlink է դեպի base Python</span>
+ls<span class="w"> </span>-l<span class="w"> </span>/tmp/app1-venv/bin/python
+readlink<span class="w"> </span>-f<span class="w"> </span>/tmp/app1-venv/bin/python
+/tmp/app1-venv/bin/python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import sys; print(sys.prefix)"</span>
 
-<span class="c1"># 5. sudoers-ում սահմանափակենք՝ օգտատիրոջը թույլ տալ միայն systemctl</span>
-sudo<span class="w"> </span>visudo<span class="w"> </span>-f<span class="w"> </span>/etc/sudoers.d/lab
-<span class="c1">#    ավելացրեք՝   labuser ALL=(root) /usr/bin/systemctl</span>
+<span class="c1"># 5) Ծավալը</span>
+du<span class="w"> </span>-sh<span class="w"> </span>/tmp/app1-venv<span class="w"> </span>/tmp/app2-venv
 </code></pre></div>
-<p>! Best Practices
-    - Ծառայությունները միշտ գործարկեք non-root օգտատիրոջ տակ (systemd-ի <code>User=</code>)։
-    - DB-ի application-հաշիվը չպահեք <code>db_owner</code>/<code>sa</code>-ով. տվեք միայն անհրաժեշտ read/write-ը։
-    - Cloud-ում ադմին գլոբալ ռոլորների փոխարեն նախապատվեք scope-ով պայմանավորված, ժամանակավոր (JIT) մուտքերին։
-    - setuid/setcap-ը կիրառեք որպես բացառություն, փաստաթղթավորեք դրանց գոյությունը և պարբերաբար աուդիտ արեք (<code>getcap -r /</code> ցուցակով)։
-    - Պարբերաբար վերանայեք sudoers-ը, խմբերը և IAM-ի policies-ը՝ privilege creep-ը կանգնեցնելու համար։</p>
-<p>Սպասվող արդյունք. սովորական օգտատիրոջը 80-րդ պորտ չի հաջողվում, setcap-ից հետո՝ հաջողվում է, իսկ sudo-ն սահմանափակվում է միայն <code>systemctl</code>-ով. բոլոր փորձերը անվտանգ են VM/container-ի սահմաններում և չեն դիպչում production-ին։</p>
+<p>Սպասվող արդյունք. երկու <code>site-packages</code>-ում նույն <code>pip</code>/<code>setuptools</code>-ն է, իսկ <code>bin/python</code>-ը երկուսում էլ մատնանշում է նույն base Python-ը. interpreter-ը չի կրկնվում. venv-ի ներսում <code>lib/python3*/site-packages/</code>-ը պետք է ստուգես ձեր Python-ի տարբերակով (<code>python3 --version</code>)-ով.</p>
+<div class="admonition note">
+<p class="admonition-title">Best Practices</p>
+<ul>
+<li>venv-ը համարիր disposable. ջնջել ու նորից ստեղծելն ավելի հուսալի է, քան վերանորոգել.</li>
+<li>venv-ը չի version control-վում. <code>.venv/</code>-ը ավելացրու <code>.gitignore</code>-ում.</li>
+<li>Տարբերակներն ամրագրիր. <code>python -m pip freeze &gt; requirements.txt</code> (կամ <code>uv.lock</code>) վերարտադրելի build-ի համար.</li>
+<li>Ծառայությունները գործարկիր venv-ի ամբողջական ուղիով, օրինակ <code>/srv/app/.venv/bin/python</code>:</li>
+</ul>
+</div>
 <h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
 <h3 id="_5">Ախտանիշ<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
-<p>CI/CD pipeline-ը կամ monitoring-agent-ը «կոտրվում» է, իսկ օպերատորը «լուծելու» համար ամեն ինչի թույլտվություն է ավելացնում. օրինակ<code>JSON ֆայլ կարդալու համար տալիս է ամբողջական</code>sudo<code>մուտք կամ Cloud-ում ավելացնում է</code>admin` ռոլոը խմբին։ Եվս մի քանի շաբաթ անց պարզվում է, որ շատ հաշիվներ ունեն շատ ավելի լայն իրավունքներ, քան բիզնեսին անհրաժեշտ է։ Սա դասական privilege creep-ի նախանշան է. անվտանգության աուդիտը (օր.՝ NIST SP 800-171-ի պահանջով) հայտնաբերում է չափազանց առատ թույլտվություններ, որոնց միջոցով հարձակվողը կարող է հասնել զգայուն տվյալների։</p>
+<p>Production սերվերում երեք Python հավելված աշխատում է առանց venv-ի, բոլորը փաթեթներ են տեղադրում system <code>site-packages</code>-ում. Թիմերից մեկը մեկ հավելվածի համար թարմացնում է ընդհանուր փաթեթը (օրինակ <code>requests</code>), և հաջորդ օրը մյուս հավելվածը սկսում է ընկնել <code>ImportError</code>-ով, որովհետև փաթեթի API-ն փոխվել է, իսկ այդ հավելվածն ակնկալում էր հին տարբերակը (dependency hell).</p>
 <h3 id="_6">Ախտորոշում<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Security աուդիտի հաշվետվություն՝ «շատ հաշիվներ արտոնյալ (privileged) ռոլոր ունեն»։</li>
-<li>Գործնական ստուգում. թիմը «խրվում» է այդ հաշվի փակ հրամանում, բայց աուդիտը ցույց է տալիս, որ մոռացված, ավելի հին հաշիվը դեռ ունի հզոր իրավունքներ։</li>
-<li>Բաղադրիչների վերանայում. <code>sudo -l</code>, <code>groups</code>, <code>getcap -r /</code>, Cloud-ի IAM-ի ռոլորների ցուցակ, DB-ի grants. երևում է մեծ տարբերություն «ինչ պետք է» և «ինչ իրականում կա» միջև։</li>
+<li>Պարզիր թե ինչ տարբերակ է ակտիվ.
+   <div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>show<span class="w"> </span>requests
+python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>requests
+</code></pre></div></li>
+<li>Համոզվիր, որ նույն system <code>site-packages</code>-ից օգտվում են մի քանի app-ներ.</li>
+<li>Եզրակացրու. մեկի թարմացումն ազդում է բոլորի վրա.</li>
 </ol>
 <h3 id="_7">Լուծում<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Յուրաքանչյուր գործողության համար որոշեք «նվազագույն բավարարությունը» և կիրառեք RBAC. իրավունքներն ու դերերը խմբավորեք ըստ փաստացի աշխատանքային պահանջի։</li>
-<li>Սահմանափակեք sudo-ն ըստ հրամանի<code></code>/etc/sudoers.d/`-ում նշեք միայն անհրաժեշտ հրամանները, ոչ թե ամեն ինչ։</li>
-<li>Ծառայություններին տվեք setcap/<code>User=</code>-ով նեղ իրավունքներ, իսկ Cloud-ում ստեղծեք ժամանակավոր (JIT) մուտքեր՝ ըստ ժամանակի և scope-ի։</li>
-<li>Ջնջեք կամ ապաակտիվացրեք մոռացված հաշիվները, և հանեք «միայն մոռացության պատճառով» մնացած հզոր ռոլորները։</li>
-</ul>
+<p>Կարճաժամկետ rollback վերադարձրու նախկին տարբերակը.</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">requests</span><span class="o">==</span>&lt;նախորդ_տարբերակ&gt;
+</code></pre></div>
+<p>Երկարաժամկետ յուրաքանչյուր app-ին տուր իր venv-ը.</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>/srv/app1/.venv
+/srv/app1/.venv/bin/python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>/srv/app1/requirements.txt
+<span class="c1"># նույնը app2-ի և app3-ի համար</span>
+</code></pre></div>
+<p>Այսուհետ ամեն app-ի թարմացումն ազդում է միայն իր venv-ի վրա. systemd unit-ի <code>ExecStart</code>-ում գրիր venv-ի <code>bin/python</code>-ը, օրինակ <code>/srv/app1/.venv/bin/python /srv/app1/main.py</code>.</p>
 <h3 id="_8">Կանխարգելում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Պարբերաբար վերանայեք իրավունքները (quarterly access review) և նշեք՝ յուրաքանչյուրը ինչու ունի յուրաքանչյուր մուտքը։</li>
-<li>Կիրառեք <strong>Just-In-Time (JIT)</strong> մուտքեր. իրավունք տվեք միայն անհրաժեշտ ժամանակահատվածի համար՝ ավտոմատ ավարտվող (օր.՝ 30 րոպե)։</li>
-<li>Օգտագործեք <strong>RBAC</strong> և, հաջորդ քայլում, <strong>ABAC</strong>՝ դերերով, ապա ատրիբուտներով (ժամանակ, վայր, սարք) պայմանավորված մուտքեր։</li>
-<li>Կազմեք աուդիտ և alerting. «ինչ կա» vs «ինչ պետք է» անհամապատասխանության դեպքում alert ստացեք՝ նախքան այն դառնա հարձակման ուղի։</li>
+<li>Յուրաքանչյուր app սեփական venv ամրագրված <code>requirements.txt</code>-ով (կամ <code>uv.lock</code>).</li>
+<li>CI-ում փորձարկիր venv-ով, իսկ deploy-ի ժամանակ վերստեղծիր venv-ը նույն ցուցակից (reproducible build).</li>
+<li>Ծառայությունները գործարկիր venv-ի ամբողջական ուղիով, ոչ թե PATH-ից.</li>
+<li>Ավելի խոր մեկուսացման համար փաթեթավորիր app-ը Docker image-ով (տես <a href="../../docker-kubernetes/">Docker և Կոնտեյներներ</a>).</li>
 </ul>
 <h2 id="_9">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
-<h3 id="least-privilege-mid-level">Ի՞նչ է least privilege-ը և ինչո՞ւ է այն կարևոր (mid-level)<a class="headerlink" href="#least-privilege-mid-level" title="Permanent link">&para;</a></h3>
-<p>Least privilege (կամ principle of least privilege) սկզբունքն է, որ յուրաքանչյուր օգտատեր, ծրագիր կամ գործընթաց ստանում է միայն իր աշխատանքը կատարելու համար անհրաժեշտ նվազագույն իրավունքներն ու մուտքերը, ոչ ավելին (NIST SP 800-171)։ Այն կարևոր է, որովհետև սահմանափակում է attack surface-ը և blast radius-ը. եթե ինչ-որ մեկի իրավունքները գողանում են կամ չարաշահվում, վնասը մնում է նվազագույն, բացի այդ պաշտպանում է սխալներից ու օգնում compliance-ին (ISO 27001, GDPR)։ Հակառակ երևույթը privilege creep-ն է՝ ժամանակի ընթացքում կուտակվող, չվերանայվող ավելորդ իրավունքները։</p>
-<h3 id="least-privilege-cloud-senior-level">Ինչպե՞ս կգործարկեիք least privilege-ը ամբողջական cloud ենթակառուցվածքում (senior-level)<a class="headerlink" href="#least-privilege-cloud-senior-level" title="Permanent link">&para;</a></h3>
-<p>Կսկսեի RBAC/ABAC-ով<code>դերեր և policies ըստ աշխատանքային ֆունկցիաների, և յուրաքանչյուր սուբյեկտին (մարդ, service, workload) կտայի միայն անհրաժեշտ scope-ներն ու permissions-ը, ոչ թե ադմին ռոլոր. սա NIST-ի «minimum necessary» սկզբունքն է։ Բոլոր արտոնյալ մուտքերը կդարձնեի Just-In-Time</code> ժամանակավոր, ավտոմատ ավարտվող sessions, ոչ persistent ադմին մուտք. իսկ ծառայությունները կգործարկեի non-root օգտատիրոջ տակ<code>DB-ի application-հաշիվները պահելով առանց</code>db_owner`-ի, իսկ նեղ մուտքերի համար կիրառեի capabilities (setcap) կամ OS-ի MAC (SELinux/AppArmor)։ Ամեն ինչ կուղեկցեի ավտոմատ աուդիտով ու alerting-ով, որպեսզի «ինչ կա» vs «ինչ պետք է» տարբերությունը անհապաղ երևա, և պարբերական access review-ով՝ privilege creep-ը կանգնեցնելու համար. least privilege-ը կիրառվում է ոչ միայն մարդու, այլ ամեն սուբյեկտի և ամեն interface-ի մակարդակում։</p>
+<h3 id="venv-pip-venv-mid-level">Ի՞նչ կա venv-ի ներսում, և ինչու՞ է pip-ը կրկնվում ամեն venv-ում (mid-level)<a class="headerlink" href="#venv-pip-venv-mid-level" title="Permanent link">&para;</a></h3>
+<p>venv-ի ներսում կան <code>bin/</code> (Windows-ում <code>Scripts/</code>), <code>lib/pythonX.Y/site-packages/</code> (փաթեթները) և <code>pyvenv.cfg</code> (base Python-ի ուղին). <code>pip</code>-ն ու <code>setuptools</code>-ը կրկնվում են, որովհետև ensurepip-ը դրանք ավելացնում է յուրաքանչյուր <code>site-packages</code>-ում, որպեսզի ամեն venv ինքնավար լինի. մեկուսացումն այստեղ ավելի կարևոր է, քան 15-20 MB կրկնվող ծավալը.</p>
+<h3 id="interpreter-pip-senior-level">Ինչու՞ interpreter-ը չի կրկնվում, իսկ pip-ը կրկնվում է, և ինչո՞ւ է դա ընդունելի (senior-level)<a class="headerlink" href="#interpreter-pip-senior-level" title="Permanent link">&para;</a></h3>
+<p>Interpreter-ը մեկն է ամբողջ սերվերի վրա. venv-ը չի պատճենում Python-ը. Linux-ում <code>bin/python</code>-ը symlink է դեպի base Python-ը, իսկ <code>pyvenv.cfg</code>-ի <code>home</code>-ը ցույց է տալիս դրա ուղին. Փաթեթները յուրաքանչյուր venv-ում տարբեր են, որովհետև դրանք նախագծից նախագիծ պետք է տարբերվեն. venv-ը կրկնում է փաթեթի շերտը, բայց կիսում է interpreter-ի շերտը հոսթի մակարդակով. Docker-ում պատկերն հակառակն է. ամեն image-ը կրում է իր Python runtime-ը (base image ~100 MB+), այսինքն կրկնվում է ամբողջ interpreter-ը ևս. Բայց layer caching-ը read-only layer-ները մեկ անգամ է պահում հոսթի վրա, կիսելով նույն base-ով աշխատող կոնտեյների միջև.</p>
 <h2 id="_10">Ինքնաստուգում<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Ի՞նչ է least privilege-ը և որո՞նք են դրա հիմնական առավելությունները (attack surface, blast radius, compliance)։</li>
-<li>Ի՞նչ տարբերություն կա privilege creep-ի և privilege escalation-ի միջև, և ինչպե՞ս է դրանցից յուրաքանչյուրը կապված least privilege-ի հետ։</li>
-<li>Ի՞նչ տարբերություն կա RBAC-ի, ABAC-ի և MAC-ի միջև, և ե՞րբ է յուրաքանչյուրը կիրառվում։</li>
-<li>Ի՞նչ է JIT (Just-In-Time) մուտքը և ինչո՞ւ է այն նվազեցնում ռիսկը։</li>
-<li>Ինչո՞ւ է service-ը root-ով աշխատեցնելը վտանգավոր, և ինչպե՞ս եք դա կանխում systemd-ում (<code>User=</code>)։</li>
-<li>Ի՞նչ է setcap-ը և ինչպե՞ս է այն ավելի նեղ, քան ամբողջ root-ը (օր.՝ <code>cap_net_bind_service</code>)։</li>
-<li>Ինչո՞ւ է application-ի DB-հաշիվը <code>db_owner</code>/<code>sa</code>-ով պահելը հակառակ least privilege-ին (OWASP-ի տեսանկյունից)։</li>
-<li>Ի՞նչ հրամաններով կվերանայեիք օգտատերերի իրավունքները Linux-ում (<code>sudo -l</code>, <code>groups</code>, <code>getcap -r /</code>) և ի՞նչ կփնտրեիք դրանցում։</li>
+<li>Որ ֆայլերն են կրկնվում ամեն venv-ում, և որո՞նք ոչ.</li>
+<li>Ի՞նչ է ցույց տալիս <code>pyvenv.cfg</code>-ի <code>home</code> բանալին, և ինչու է venv-ը կիսում base Python-ը.</li>
+<li>Ինչու՞ չի կարելի օպտիմիզացնել ջնջելով կամ կիսելով venv-ների <code>pip</code>/<code>site-packages</code>-ը.</li>
+<li>Ինչու՞ venv-ը չի ներառվում Git-ում, և ինչպե՞ս է այն վերստեղծվում նոր մեքենայում.</li>
+<li>Ինչպե՞ս է venv-ի կրկնությունը համեմատվում Docker-ի, և ինչպե՞ս է layer caching-ը մեղմում այն.</li>
 </ol>
 <h2 id="_11">Հաջորդ քայլեր<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
-<p>Շարունակեք Cloud, Security, Observability բաժնում՝ <a href="../">IAM</a> ներդրմամբ. least privilege-ը դրա հիմքն է։ Կարդացեք <a href="../../linux/firewall/">Linux-ի firewall</a> և <a href="../../linux/processes/">Processes</a> էջերը՝ OS-ի մակարդակում իրավունքների ու գործընթացների սահմանափակման համար, և <a href="../../automation-iac/ansible/">Ansible</a>՝ թե ինչպես playbook-ներով ավտոմատ կիրառել սահմանափակ իրավունքները։ Գործնական հաջորդ քայլ կարող է լինել «Ինչպես կազմել IAM-ի ռոլոր-մոդել» թեման՝ RBAC-ի ու JIT-ի գործնական ներդրմամբ։</p>
+<p>Հիմա, երբ հասկանում ես, որ venv-ում կրկնությունը գիտակցված փոխզիջում է, խորացրու թեման <a href="../../docker-kubernetes/">Docker և Կոնտեյներներ</a>, որտեղ նույն մեկուսացման սկզբունքը լուծվում է image layer-ների միջոցով, կամ <a href="../../linux/processes/">Linux Processes</a> որպեսզի տեսնես, թե ինչպես են process-ները դիտարկվում հոսթի վրա. Package management-ի հաջորդ քայլը <code>pip-tools</code>/<code>uv</code> տարբերակների ամրագրման և վերարտադրելի build-ի գործիքներն են.</p>
 
 
 
