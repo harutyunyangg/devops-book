@@ -145,6 +145,89 @@ network:
 
 Ամփոփելով. `ip`-ը լավ է արագ թեստավորման ու ժամանակավոր փոփոխության համար, իսկ մշտական կարգավորումների համար Ubuntu Server-ում միշտ օգտագործեք Netplan-ը։
 
+### Ubuntu Desktop. NetworkManager-ը և static IP-ն
+
+Մինչ Ubuntu Server-ը լռելյայն օգտագործում է systemd-networkd-ը (Netplan-ի `renderer: networkd`), Ubuntu Desktop-ը ցանցի կառավարումը լռելյայն հանձնում է **NetworkManager**-ին։ Netplan-ի YAML ֆայլում այդ նշվում է `renderer: NetworkManager` տողով. renderer-ը որոշում է, թե որ գործիքն է իրականում «քշում» սարքերը` systemd-networkd-ը, թե NetworkManager-ը.
+
+#### Ինչու Desktop-ի `/etc/netplan/`-ում երկու ֆայլ է կարևոր
+
+| Ֆայլ | Դերը |
+| --- | --- |
+| `00-installer-config.yaml` | Ստեղծվում է Ubuntu-ի տեղադրման ժամանակ. հիմնական ցանցային կոնֆիգուրացիան (հաճախ DHCP) |
+| `01-network-manager-all.yaml` | Ասում է Netplan-ին` ցանցի կառավարումը հանձնել NetworkManager-ին |
+
+Netplan-ը կարդում և միացնում (merge) է `/etc/netplan/`-ի բոլոր YAML ֆայլերը **ֆայլանունի համարակիալ կարգով**, և ավելի ուշ ֆայլի արժեքը գերակշռում է ավելի վաղին։ Քանի որ `01-network-manager-all.yaml`-ը մշակվում է `00-installer-config.yaml`-ից հետո, նրա `renderer: NetworkManager`-ը «ծածկում» է installer-ի կարգավորումը։ Սովորաբար այս ֆայլը պարունակում է.
+
+```yaml
+# Let NetworkManager manage all devices on this system
+network:
+  version: 2
+  renderer: NetworkManager
+```
+
+Սա նշանակում է, որ Desktop-ում IP-ն սովորաբար կարգավորում եք Settings > Network GUI-ով կամ `nmcli`-ով, այլ ոչ թե ուղղակիորեն YAML-ը խմբագրելով, քանի որ NetworkManager-ն է, որ կառավարում է սարքերը.
+
+#### `renderer`-ի երկու արժեքը
+
+| renderer | Ինչ է անում |
+| --- | --- |
+| `networkd` (լռելյայն) | Ինտերֆեյսները «քշում» է systemd-networkd-ը. հարմար է Server-ի և ֆայլ-հենված կոնֆիգուրացիայի համար |
+| `NetworkManager` | Ինտերֆեյսները «քշում» է NetworkManager-ը. հարմար է Desktop-ի GUI/nmcli-ի համար |
+
+#### Static IP-ն Desktop-ում. երկու եղանակ
+
+**1. NetworkManager-ի միջոցով (խորհուրդ է տրվում Desktop-ի համար).** Քանի որ renderer-ը NetworkManager է, ամենատարածված ու կայուն եղանակը `nmcli`-ն է` առանց YAML-ին դիպչելու.
+
+```bash
+# Թվարկել միացումները (նշենք ձեր միացման անունը)
+nmcli connection show
+
+# Static IP նշանակել (անվանը փոխարինեք ձեր իրականով)
+sudo nmcli connection modify "Wired connection 1" \
+  ipv4.addresses 192.168.1.100/24 \
+  ipv4.gateway 192.168.1.1 \
+  ipv4.dns "8.8.8.8,1.1.1.1" \
+  ipv4.method manual
+
+# Վերագործարկել միացումը, որ փոփոխությունը կիրառվի
+sudo nmcli connection down "Wired connection 1" && sudo nmcli connection up "Wired connection 1"
+```
+
+- `ipv4.method manual`-ը միացումը DHCP-ից փոխադրում է «ձեռքով» (static) ռեժիմի.
+- `ipv4.dns`-ը ընդունում է DNS-ների ցուցակը ստորակետով բաժանված.
+- `nmcli connection down`/`up`-ը անջատում ու նորից միացնում է միացումը, որ փոփոխությունը ակտիվանա.
+
+**2. Netplan YAML-ով (server-ոյի ոճ).** Եթե ուզում եք ամեն ինչ կառավարել YAML-ով, ստեղծեք ավելի բարձր համարով ֆայլ, որը կմշակվի ավելի ուշ` օր. `99-static-ip.yaml`.
+
+```yaml
+network:
+  version: 2
+  renderer: networkd   # Ինտերֆեյսը «հեռացնում» է NetworkManager-ից
+  ethernets:
+    enp0s3:            # Գտեք ճշգրիտ անունը `ip link show`-ով
+      dhcp4: false
+      addresses:
+        - 192.168.1.100/24
+      routes:
+        - to: default
+          via: 192.168.1.1
+      nameservers:
+        addresses: [8.8.8.8, 1.1.1.1]
+```
+
+!!! warning "Desktop-ում renderer-ը փոխելու հետևանքը"
+    Եթե Desktop-ում renderer-ը դարձնեք `networkd`, այդ ինտերֆեյսը «դուրս է գալիս» NetworkManager-ի վերահսկողությունից, և GUI-ի Settings > Network-ի (և `nmcli`-ի) փոփոխություններն դրա համար այլևս չեն աշխատի։ Նախ փորձեք `sudo netplan try`-ով` 120 վայրկյան auto-revert պատուհանով` որպեսզի սխալի դեպքում կապը ավտոմատ իսկապես վերականգնվի.
+
+#### `netplan try` vs `netplan apply`
+
+| Հրաման | Վարքը |
+| --- | --- |
+| `sudo netplan generate` | «Չոր» ստուգում. վավերացնում է YAML-ը և «ծնում» backend-ի կոնֆիգուրացիան` առանց կիրառելու |
+| `sudo netplan try` | Կիրառում է ժամանակավորապես (լռելյայն 120 վայրկյան), հարցնում հաստատում, չհաստատելու դեպքում ավտոմատ վերադարձնում (auto-revert) |
+| `sudo netplan apply` | Կիրառում է անմիջապես ու մշտապես` առանց auto-revert-ի |
+
+SSH-ով աշխատելիս `sudo netplan try`-ն ավելի անվտանգ է. եթե նոր կոնֆիգուրացիան «կտրում» է կապը, հրամանը ժամանակի լրացումից հետո ինքնուրույն վերադարձնում է հինը, և դուք չեք մնում «դուրս» սերվերից. ի հակառակն` `netplan apply`-ը կիրառում է վերջնական, ուստի դրա դեպքում backup SSH session-ը պարտադիր է.
+
 ### Ինտերֆեյսի անունը փոխելը
 
 !!! warning "Զգույշ. անվան փոփոխությունը կարող է խաթարել ծառայությունները"
@@ -242,6 +325,25 @@ ip link show <iface>     # state UP
     - Firewall-ի կանոն գրելիս մի ունեցեք չափազանց կոշտ կախվածություն մեկ ինտերֆեյսի անվան վրա. անվան ցանկացած փոփոխություն կդադարեցնի կանոնը.
     - Սկրիպտներում նախընտրեք sysfs-ը (`/sys/class/net`), քան `ip`-ի output-ի parser-ը. sysfs-ի ֆայլերը կայուն են և կանխատեսելի.
 
+**Netplan / NetworkManager lab (test VM, ոչ production).** Այստեղ `netplan try`-ն ավելի անվտանգ է, քան `netplan apply`-ը, քանի որ սխալ կոնֆիգուրացիայի դեպքում 120 վայրկյանում ավտոմատ վերադարձնում է (auto-revert) հին վիճակը։ Տնային test VM-ում կարող եք փորձել static IP դնել `nmcli`-ով և հաստատել `ip a`-ով.
+
+```bash
+# 1. Որ renderer-ն է ակտիվ (տես /etc/netplan/-ի ֆայլերը)
+cat /etc/netplan/*.yaml
+nmcli device status
+
+# 2. Թվարկել միացումները NetworkManager-ի դեպքում
+nmcli connection show
+
+# 3. «Չոր» ստուգում՝ YAML-ը վավերացնելու համար (չի կիրառում)
+sudo netplan generate
+
+# 4. Անվտանգ կիրառում. 120 վայրկյան auto-revert պատուհան
+sudo netplan try
+```
+
+Խորհուրդ. այս lab-ի հրամաններն «շոշափելի» փոփոխություն չեն անում, բայց `netplan try`/`apply`-ը կիրառում են ցանցային կոնֆիգուրացիա. արեք միայն console-ից կամ `netplan try`-ով, որպեսզի վրիպումը չ«կտրի» ձեր միակ SSH կապը։
+
 ## Իրական DevOps իրավիճակ
 
 ### Ախտանիշ
@@ -287,6 +389,32 @@ Ubuntu Server-ի վրա, վերագործարկումից հետո, վեբ հա�
 - Firewall-ի կանոններում նախապատվությունը տվեք interface-ի մակարդակին (`ufw allow in on <iface>`) և պարբերաբար sync արեք կարգավորման ֆայլերը boot-ի փաստացի վիճակի հետ.
 - Փոփոխություններից առաջ միշտ ունենաք out-of-band կամ backup SSH access, և ցանցային փոփոխություններից հետո գրանցեք ակնկալվող և փաստացի վիճակը runbook-ում.
 
+### Ախտանիշ (երկրորդ. Desktop-ում NetworkManager-ի «չկիրառվող» static IP)
+
+Ubuntu Desktop-ի օգտատերը ցանկացավ static IP դնել և ուղղակիորեն խմբագրեց `/etc/netplan/00-installer-config.yaml`-ը. `sudo netplan apply`-ից հետո IP-ն չփոխվեց այնպես, ինչպես սպասվում էր. իսկ հետագայում, GUI-ի Settings > Network-ից IP փոխելուց հետո, կապը սկսեց երբեմն «կտրվել»։ Պատճառը. Desktop-ում ակտիվ renderer-ը NetworkManager-ն է (`01-network-manager-all.yaml`), և YAML-ով արված systemd-networkd-ի ոճի կարգավորումը չի համապատասխանում NetworkManager-ի «հսկողությանը»` երկու գործիք փորձում են կառավարել նույն ինտերֆեյսը։
+
+### Ախտորոշում
+
+1. Որ renderer-ն է ակտիվ. ստուգեք `/etc/netplan/`-ի ֆայլերը.
+   ```bash
+   cat /etc/netplan/*.yaml
+   ```
+2. Ով է իրականում «քշում» սարքը.
+   ```bash
+   nmcli device status
+   ```
+3. Համոզվեք, որ Netplan-ի «ծնած» backend-ը համապատասխանում է այն գործիքին, որն իրականում վերահսկում է ինտերֆեյսը.
+
+### Լուծում
+
+Խորհուրդ է տրվում Desktop-ում static IP դնել NetworkManager-ի միջոցով (`nmcli connection modify ... ipv4.method manual`, ոչ թե `systemd-networkd`-ի ոճի YAML-ով), եթե հստակ կարիք չկա `renderer: networkd`-ի համար. այդպես GUI-ն ու `nmcli`-ը շարունակում են ազդել միացման վրա։ Եթե ամեն դեպքում պետք է YAML-ը, «ծեծեք» սարքը մեկ գործիքի հսկողության տակ՝ ավելի բարձր համարով ֆայլում (օր. `99-static-ip.yaml`), և կիրառեք `sudo netplan try`-ով` 120 վայրկյան auto-revert պատուհանով, որպեսզի սխալը չ«կտրի» կապը ընդմիշտ.
+
+### Կանխարգելում
+
+- Desktop-ի վրա նախընտրեք NetworkManager-ը (`nmcli`/GUI), իսկ `renderer: networkd`-ը թողեք Server-ի համար, որտեղ ֆայլ-հենված կոնֆիգուրացիան գերակշռող է.
+- Մինչև վերջնական `netplan apply`-ը միշտ օգտագործեք `sudo netplan try`-ը (auto-revert) կամ backup SSH/console session.
+- Պարբերաբար համոզվեք, որ յուրաքանչյուր ինտերֆեյս կառավարում է միայն մեկ գործիք.
+
 ## Հարցազրույցի հարցեր և պատասխաններ
 
 ### Ի՞նչ է նշանակում `ens33` ինտերֆեյսի անունը, և որտե՞ղ կպարզես քո ինտերֆեյսների անունները (mid-level)
@@ -301,6 +429,10 @@ Ubuntu Server-ի վրա, վերագործարկումից հետո, վեբ հա�
 
 Կայունության հիմքը «կանխատեսելի» անվանումն է կամ udev-ի MAC-ի վրա հենված կանոնը. ամենահուսալին PCI slot-ի վրա հիմնված անունն է, որը տալիս է «կանխատեսելի» սկզբունքը, իսկ անհրաժեշտության դեպքում՝ `/etc/udev/rules.d/70-persistent-net.rules` կանոնը, որում `ATTR{address}` (MAC) կապվում է ցանկալի `NAME`-ի հետ։ Երբ ցանցային քարտը զբաղեցնում է ֆիքսված PCI slot (VM-ում հաճախ այդպես է), անունը կայուն է. իսկ ֆիզիկական տեղափոխության դեպքում՝ MAC-ի վրա հենված udev կանոնը տալիս է երաշխիք, որ firewall-ն ու Netplan-ը միշտ կճանաչեն ինտերֆեյսը՝ առանց անվան պատճառով կապի կորստի.
 
+### Ինչո՞ւ Ubuntu Desktop-ում `renderer: NetworkManager`-ն է լռելյայն, և ինչ հետևանք ունի այն `networkd`-ի փոխելը (mid-level)
+
+Ubuntu Desktop-ը լռելյայն տրամադրում է `/etc/netplan/01-network-manager-all.yaml` ֆայլը `renderer: NetworkManager`-ով. այս renderer-ը ասում է Netplan-ին, որ ցանցի կառավարումը հանձնի NetworkManager-ին, որպեսզի օգտատերը IP-ն կարգավորի GUI-ից (Settings > Network) կամ `nmcli`-ով։ Քանի որ Netplan-ը ֆայլերը միացնում է ֆայլանունի համարակիալ կարգով, և ավելի ուշ ֆայլը գերակշռում է, `01-network-manager-all.yaml`-ը մշակվում է `00-installer-config.yaml`-ից հետո և «ծածկում» է նրա renderer-ը։ Եթե Desktop-ում renderer-ը փոխեմ `networkd`, այդ ինտերֆեյսի կառավարումը անցնում է systemd-networkd-ին, և NetworkManager-ի (GUI/nmcli) փոփոխություններն դրա համար այլևս չեն ազդում. երկու գործիք կարող են միաժամանակ «վիճել» մեկ սարքի համար, ուստի Desktop-ում ավելի ապահով է մնալ `NetworkManager`-ի մոտ, քան փոխել renderer-ը.
+
 ## Ինքնաստուգում
 
 1. Ի՞նչ է ցույց տալիս `ls /sys/class/net`-ը, և ինչո՞վ է այն տարբերվում `ip a`-ից։
@@ -310,7 +442,9 @@ Ubuntu Server-ի վրա, վերագործարկումից հետո, վեբ հա�
 5. Ի՞նչ է անում `sudo netplan apply`-ը, և ինչո՞ւ է YAML-ի նահանջների մասին զգուշացումը կարևոր SSH-ով աշխատելիս։
 6. Ի՞նչ տարբերություն կա GRUB-ի `net.ifnames=0 biosdevname=0`-ի և udev-ի MAC-ի վրա հենված կանոնի միջև՝ ինտերֆեյսի անունը փոխելիս։
 7. Ինչպե՞ս կգտնես խնդիրը, երբ վերագործարկումից հետո firewall-ը դադարում է «տեսնել» քո ինտերֆեյսը սխալ անվան/հասցեի պատճառով (ախտորոշման քայլերը)։
+8. Ինչո՞ւ է Desktop-ի `/etc/netplan/01-network-manager-all.yaml` ֆայլի `renderer: NetworkManager`-ը «ծածկում» `00-installer-config.yaml`-ը, և ինչ դեր ունի ֆայլերի մշակման կարգը։
+9. Ինչպե՞ս static IP դնել Ubuntu Desktop-ում `nmcli`-ով, և որ հրամանը կիրառել մինչև վերջնական `netplan apply`-ը, որ SSH-ով կապը չկտրվի (auto-revert)։
 
 ## Հաջորդ քայլեր
 
-Շարունակիր ցանցի «վերևի» շերտերով. [Bash Scripting](bash-scripting.md)-ով սովորիր ցանցի դիտարկումն ու ախտորոշումը ավտոմատացնել՝ օգտագործելով այստեղ նկարագրված sysfs-ի կայուն ֆայլերը կամ `ip`-ը, իսկ systemd-ով ծառայությունների կառավարման համար տես [Processes](processes.md)։ Ցանցի խորը թեմաների (TCP/IP, DNS, firewalls, TLS) համար անցիր [Networks](../networking/index.md) բաժինը, որտեղ քննարկվում են ցանցային արձանագրություններն ու անվտանգությունը ամբողջ ցանցային շղթայի երկայնքով.
+Այս էջում նաև խորը բաժին կա Desktop-ի static IP-ի մասին (Netplan-ի renderer-ը, NetworkManager-ը, `nmcli`-ը, `netplan try`/`apply`-ն)։ Շարունակիր ցանցի «վերևի» շերտերով. [Bash Scripting](bash-scripting.md)-ով սովորիր ցանցի դիտարկումն ու ախտորոշումը ավտոմատացնել՝ օգտագործելով այստեղ նկարագրված sysfs-ի կայուն ֆայլերը կամ `ip`-ը, իսկ systemd-ով ծառայությունների կառավարման համար տես [Processes](processes.md)։ Ցանցի խորը թեմաների (TCP/IP, DNS, firewalls, TLS) համար անցիր [Networks](../networking/index.md) բաժինը, որտեղ քննարկվում են ցանցային արձանագրություններն ու անվտանգությունը ամբողջ ցանցային շղթայի երկայնքով.
