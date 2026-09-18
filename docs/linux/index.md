@@ -9,4 +9,5 @@ Linux-ը DevOps-ի հիմքն է. production workload-ների մեծ մասը �
 - [Cgroups](cgroups.md) — ռեսուրսների (CPU, memory, I/O) խմբավորում և սահմանափակում systemd-ի և կոնտեյներների համար։
 - [Firewall](firewall.md) — Ubuntu-ի firewall (UFW + nftables) Linux-ի ցանցային կարգավորումների մասով։
 - [Filesystem](filesystem.md) — ֆայլերի ցուցակում, գրացանակային կառուցվածք և permissions-ի հիմունքներ (`ls -ld`, `ls -R`)։
+- [Special Bits (SUID/SGID/Sticky)](special-bits.md) — հատուկ permission բիթեր. shared folder-ներ, privilege escalation-ի ռիսկեր և աուդիտ։
 - systemd — շուտով։

@@ -1,0 +1,1880 @@
+
+<!doctype html>
+<html lang="hy" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Հայերեն, գործնական DevOps ուղեցույց">
+      
+      
+      
+        <link rel="canonical" href="https://example.invalid/devops-book/linux/special-bits/">
+      
+      
+        <link rel="prev" href="../filesystem/">
+      
+      
+        <link rel="next" href="../../networking/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Special Bits (SUID/SGID/Sticky) - DevOps ուսումնական ձեռնարկ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#suid-sgid-sticky-bit" class="md-skip">
+          Անցնել պարունակությանը
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Գլխագիր">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-header__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DevOps ուսումնական ձեռնարկ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Special Bits (SUID/SGID/Sticky)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Որոնում" placeholder="Որոնում" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Որոնում">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Ջնջել" aria-label="Ջնջել" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Որոնում
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Ներդիրներ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Սկիզբ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Linux
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../networking/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Networks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../git-ci-cd/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Git և CI/CD
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../automation-iac/" class="md-tabs__link">
+          
+  
+  
+  Automation և IaC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../docker-kubernetes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Docker և Kubernetes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../python/venv/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Python
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../cloud-security-observability/" class="md-tabs__link">
+          
+  
+  
+  Cloud, Security, Observability
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Բառարան
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Տեղորոշում" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-nav__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    DevOps ուսումնական ձեռնարկ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Սկիզբ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bash-scripting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bash Scripting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cgroups/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cgroups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../firewall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firewall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../filesystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filesystem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Special Bits (SUID/SGID/Sticky)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Special Bits (SUID/SGID/Sticky)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#suid-set-user-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SUID (Set User ID)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sgid-set-group-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SGID (Set Group ID)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sticky-bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sticky bit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sgid-shared-folder-mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է անում SGID բիթը գրացանակի վրա, և ինչո՞ւ է դա կարևոր shared folder-ում (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#suid-root-binary-privilege-escalation-production-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչո՞ւ է SUID root binary-ը համարվում privilege escalation-ի ռիսկ, և ինչպե՞ս կմեղմեիր այն production-ում (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git-ci-cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git և CI/CD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automation և IaC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Automation և IaC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation-iac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation-iac/ansible/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ansible
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../automation-iac/yaml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    YAML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker և Kubernetes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/venv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud, Security, Observability
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cloud, Security, Observability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-security-observability/least-privilege/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Least Privilege
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Բառարան
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Բովանդակություն
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Տեսություն
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Տեսություն">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#suid-set-user-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SUID (Set User ID)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sgid-set-group-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SGID (Set Group ID)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sticky-bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sticky bit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հիմնական հրամաններ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Փորձարկում (Lab)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Իրական DevOps իրավիճակ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտանիշ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ախտորոշում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Լուծում
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Կանխարգելում
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հարցազրույցի հարցեր և պատասխաններ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sgid-shared-folder-mid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ի՞նչ է անում SGID բիթը գրացանակի վրա, և ինչո՞ւ է դա կարևոր shared folder-ում (mid-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#suid-root-binary-privilege-escalation-production-senior-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինչո՞ւ է SUID root binary-ը համարվում privilege escalation-ի ռիսկ, և ինչպե՞ս կմեղմեիր այն production-ում (senior-level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ինքնաստուգում
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Հաջորդ քայլեր
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="suid-sgid-sticky-bit">SUID, SGID և Sticky bit<a class="headerlink" href="#suid-sgid-sticky-bit" title="Permanent link">&para;</a></h1>
+<h2 id="_1">Տեսություն<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>Linux-ում ֆայլերն ու գրացանակները (directories) ունեն 9 հիմնական թույլտվության բիթ՝ read (<code>r</code>), write (<code>w</code>), execute (<code>x</code>)՝ երեք խմբի համար. տեր (owner/user), խումբ (group), մնացածը (others)։ Այս 9 բիթերին գումարվում է ևս <strong>3 հատուկ բիթ</strong>, որոնք փոխում են համակարգի վարքը՝ <strong>SUID</strong> (Set User ID), <strong>SGID</strong> (Set Group ID) և <strong>Sticky bit</strong>։ Դրանք հանդիպում են երկու տեղում՝ <code>chmod</code>-ի թվային 4-նիշ ձևաչափում (առաջին նիշը) և <code>ls -l</code>-ի ելքի <code>x</code> դիրքերում՝ <code>s</code>, <code>S</code>, <code>t</code>, <code>T</code> տառերով։</p>
+<p>Կարևոր հիմք. այս բիթերը <strong>չեն ավելացնում</strong> նոր թույլտվություն, այլ փոխում են <strong>ում անունից</strong> է կատարվում գործողությունը (SUID/SGID) կամ <strong>ում ֆայլերը</strong> կարելի է ջնջել (sticky)։ Դրանք permissions-ի մոդելի մաս են և չեն շրջանցում այն. արդյունավետ իրավունքները դեռ որոշվում են <code>r</code>/<code>w</code>/<code>x</code> բիթերով։</p>
+<h3 id="suid-set-user-id">SUID (Set User ID)<a class="headerlink" href="#suid-set-user-id" title="Permanent link">&para;</a></h3>
+<p><strong>Ինչ է անում.</strong> երբ ֆայլը executable է և ունի SUID բիթ, ապա գործարկման պահին պրոցեսը ստանում է <strong>ֆայլի տիրոջ</strong> (owner) իրավունքներ, ոչ թե նրան, ով գործարկում է։ Դա կոչվում է effective UID (EUID) փոխարկում. իրական UID-ը (RUID) մնում է գործարկողի, իսկ effective-ը դառնում է ֆայլի տիրոջը։</p>
+<p>Դասական օրինակ՝ <code>/usr/bin/passwd</code>։</p>
+<div class="highlight"><pre><span></span><code>-rwsr-xr-x 1 root root 68208 ... /usr/bin/passwd
+</code></pre></div>
+<p><code>passwd</code>-ը գործարկվում է սովորական օգտատիրոջ կողմից, բայց <code>/etc/shadow</code> ֆայլը կարդալ/գրել կարող է միայն root-ը։ SUID-ի շնորհիվ <code>passwd</code>-ը աշխատում է root-ի EUID-ով և կարողանում է թարմացնել shadow-ը։</p>
+<p><strong>Նրբություններ.</strong></p>
+<ul>
+<li>SUID-ն իմաստ ունի <strong>միայն ֆայլերի</strong> վրա (ոչ գրացանակների)։ Linux-ում գրացանակի SUID բիթը անտեսվում է։</li>
+<li>Եթե owner-ի <code>x</code> բիթը դրված չէ, <code>ls -l</code>-ը ցույց է տալիս <strong>մեծատառ <code>S</code></strong> (<code>rwS</code>), որը նշանակում է. SUID բիթը դրված է, բայց ֆայլը executable չէ. այդպիսի բիթը գործնականում չի աշխատի։</li>
+<li>Linux kernel-ը <strong>չի կատարում</strong> shell սկրիպտերի SUID-ն (ինչպես նաև <code>#!</code>-ով սկսվող ինտերպրետավորվող սկրիպտների)։ Այնուամենայնիվ, եթե binary-ն ինքն է կանչում այլ ծրագիր, այդ ծրագիրը կարող է դիտարկել ժառանգված EUID-ը. այստեղից է առաջանում <strong>PATH hijacking</strong> ռիսկը, երբ SUID ծրագիրն օգտագործում է հարաբերական ուղի կամ չմաքրված <code>PATH</code>։</li>
+<li>Սա ամենամեծ անվտանգության ռիսկերից է. SUID root binary-ի ցանկացած bug (buffer overflow, անապահով ֆայլի գրառում) վերածվում է <strong>privilege escalation</strong>-ի։ Այդ իսկ պատճառով SUID root ֆայլերի ցանկը պետք է պարբերաբար աուդիտ անել և նվազագույնի հասցնել։</li>
+</ul>
+<h3 id="sgid-set-group-id">SGID (Set Group ID)<a class="headerlink" href="#sgid-set-group-id" title="Permanent link">&para;</a></h3>
+<p>SGID-ն ունի երկու տարբեր իմաստ՝ կախված նրանից՝ ֆայլի՞, թե՞ գրացանակի վրա է։</p>
+<p><strong>ա) Ֆայլի վրա.</strong> executable ֆայլը գործարկվում է <strong>ֆայլի խմբի</strong> իրավունքներով (effective GID)։ Նույն տրամաբանությամբ, ինչ SUID-ը, բայց group-ի համար։ Այսօր հազվադեպ է հանդիպում և նույնպես համարվում է անվտանգության ռիսկ։</p>
+<p><strong>բ) Գրացանակի վրա (հիմնական գործնական օգտագործումը).</strong> այդ գրացանակում ստեղծված <strong>նոր ֆայլերն ու ենթագրացանակները</strong> ժառանգում են <strong>գրացանակի խումբը</strong>, ոչ թե ստեղծողի հիմնական (primary) խումբը։ Սա <strong>shared folder</strong>-ի կարևորագույն մեխանիզմն է. առանց SGID-ի մի քանի օգտատերեր, որոնք գրում են նույն գրացանակում, ստեղծում են տարբեր group-ներով ֆայլեր, և մյուսները չեն կարողանում կարդալ/գրել դրանք։ SGID-ով բոլոր ֆայլերը մնում են մեկ ընդհանուր խմբի տիրապետության տակ։</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/srv/shared/project
+sudo<span class="w"> </span>chgrp<span class="w"> </span>devteam<span class="w"> </span>/srv/shared/project
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">2775</span><span class="w"> </span>/srv/shared/project<span class="w">      </span><span class="c1"># rwxrwsr-x + SGID</span>
+sudo<span class="w"> </span>chmod<span class="w"> </span>g+s<span class="w"> </span>/srv/shared/project<span class="w">       </span><span class="c1"># համարժեք՝ սիմվոլիկ ձև</span>
+</code></pre></div>
+<p>Այժմ <code>devteam</code> խմբի ցանկացած անդամ այստեղ ստեղծած ֆայլը կունենա <code>devteam</code> խումբ՝ անկախ իր primary group-ից։</p>
+<p><strong>Նրբություններ.</strong></p>
+<ul>
+<li>Գրացանակի SGID-ն <strong>ժառանգվում է</strong> ենթագրացանակների վրա (նրանք նույնպես ստանում են SGID բիթ և նույն խումբը)։</li>
+<li>SGID-ն չի ազդում <strong>umask</strong>-ի վրա. նոր ֆայլի <code>r</code>/<code>w</code>/<code>x</code> բիթերը դեռ որոշում է umask-ը (տիպիկ <code>002</code> shared folder-ի համար)։ Սովորական umask <code>022</code>-ով նոր ֆայլերը չեն լինի group-writable՝ նույնիսկ SGID-ով. shared folder-ում պետք է <code>umask 002</code>։</li>
+<li>Եթե group-ի <code>x</code> բիթը բացակայում է, <code>ls -l</code>-ը ցույց է տալիս <strong>մեծատառ <code>S</code></strong> (<code>rwS</code>), որը նույնպես գործնականում անիմաստ է։</li>
+</ul>
+<h3 id="sticky-bit">Sticky bit<a class="headerlink" href="#sticky-bit" title="Permanent link">&para;</a></h3>
+<p>Sticky bit-ը այսօր իմաստ ունի <strong>միայն գրացանակների</strong> վրա (ֆայլերի վրա այն պատմական ժամանակներում էր օգտագործվում և ժամանակակից kernel-երը անտեսում են)։ Երբ գրացանակն ունի sticky bit, ֆայլ <strong>ջնջել կամ վերանվանել կարող է միայն՝</strong></p>
+<ol>
+<li>ֆայլի տերը,</li>
+<li>գրացանակի տերը,</li>
+<li>root-ը։</li>
+</ol>
+<p>Մնացած բոլորի համար գրացանակում գրելը թույլատրված է, բայց ուրիշի ֆայլը ջնջելը՝ ոչ։</p>
+<p>Դասական օրինակ՝ <code>/tmp</code>։</p>
+<div class="highlight"><pre><span></span><code>drwxrwxrwt 1 root root 4096 ... /tmp
+</code></pre></div>
+<p>Բոլորը կարող են գրել <code>/tmp</code>-ում (ինչպես նաև ստեղծել ֆայլեր), բայց ոչ ոք չի կարող ջնջել ուրիշի ֆայլերը։ Իրավական մոդելը կապված է գրացանակի <code>w</code> + <code>x</code> բիթերի հետ. ֆայլ ջնջելու համար անհրաժեշտ է <strong>գրացանակի</strong> <code>w</code> + <code>x</code> (ոչ թե ֆայլի), ապա sticky-ն ավելացնում է տիրոջ ստուգումը։</p>
+<p><strong>Նրբություններ.</strong></p>
+<ul>
+<li>Sticky bit-ը <strong>չի արգելում</strong> ուրիշի ֆայլը կարդալ կամ փոփոխել, եթե ֆայլի <code>r</code>/<code>w</code> բիթերը դա թույլ են տալիս. այն սահմանափակում է միայն <strong>ջնջելը/վերանվանելը</strong>։</li>
+<li>Եթե others-ի <code>x</code> բիթը բացակայում է, <code>ls -l</code>-ը ցույց է տալիս <strong>մեծատառ <code>T</code></strong> (<code>rwT</code>)։</li>
+<li>Սա առաջին պաշտպանության գիծն է միայն. <code>/tmp</code>-ում ուրիշի ֆայլի բովանդակությունը կարող է դեռ ընթեռնելի լինել։ Համատեղ ժամանակավոր գրացանակների համար ավելի ապահով է օգտագործել per-user գրացանակներ կամ <code>TMPDIR</code>։</li>
+<li><code>nosuid</code>/<code>noexec</code>/<code>nodev</code> mount option-ների հետ միասին sticky-ն սովորական hardening միջոց է <code>/tmp</code>-ի և կոնտեյներների volume-ների համար։</li>
+</ul>
+<h2 id="_2">Հիմնական հրամաններ<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Հրաման</th>
+<th>Նպատակ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ls -l file</code></td>
+<td>Տեսնել հատուկ բիթերը <code>s</code>/<code>S</code>/<code>t</code>/<code>T</code> տառերով</td>
+</tr>
+<tr>
+<td><code>chmod u+s file</code></td>
+<td>Դնել SUID ֆայլի վրա (նպատակահարմար է միայն executable binary-ի)</td>
+</tr>
+<tr>
+<td><code>chmod u-s file</code></td>
+<td>Հանել SUID-ն</td>
+</tr>
+<tr>
+<td><code>chmod 4755 file</code></td>
+<td>Թվային ձևով SUID + <code>rwxr-xr-x</code></td>
+</tr>
+<tr>
+<td><code>chmod g+s dir</code></td>
+<td>Դնել SGID գրացանակի վրա (shared folder)</td>
+</tr>
+<tr>
+<td><code>chmod g-s dir</code></td>
+<td>Հանել SGID-ն</td>
+</tr>
+<tr>
+<td><code>chmod 2775 dir</code></td>
+<td>Թվային ձևով SGID + <code>rwxrwsr-x</code></td>
+</tr>
+<tr>
+<td><code>chmod +t dir</code></td>
+<td>Դնել sticky bit</td>
+</tr>
+<tr>
+<td><code>chmod -t dir</code></td>
+<td>Հանել sticky bit-ը</td>
+</tr>
+<tr>
+<td><code>chmod 1777 dir</code></td>
+<td>Թվային ձևով sticky + <code>rwxrwxrwx</code> (ինչպես <code>/tmp</code>)</td>
+</tr>
+<tr>
+<td><code>stat -c '%A %a %U %G %n' file</code></td>
+<td>Ցույց տալ թույլտվությունները և սիմվոլիկ, և՛ octal ձևով</td>
+</tr>
+<tr>
+<td><code>find / -perm -4000 -type f 2&gt;/dev/null</code></td>
+<td>SUID ֆայլերի աուդիտ ամբողջ համակարգում</td>
+</tr>
+<tr>
+<td><code>find / -perm -2000 -type f 2&gt;/dev/null</code></td>
+<td>SGID ֆայլերի աուդիտ</td>
+</tr>
+<tr>
+<td><code>find / -perm -1000 -type d 2&gt;/dev/null</code></td>
+<td>Sticky bit ունեցող գրացանակների ցանկ</td>
+</tr>
+<tr>
+<td><code>sudo mount -o remount,nosuid /tmp</code></td>
+<td>Ժամանակավորապես անջատել SUID-ն mount-ի վրա (եթե partition-ը առանձին է)</td>
+</tr>
+</tbody>
+</table>
+<p>Թվային ձևաչափի տրամաբանությունը. <code>4xxx</code> SUID, <code>2xxx</code> SGID, <code>1xxx</code> sticky, և դրանք <strong>գումարվում են</strong>՝ <code>chmod 6755</code> = SUID + SGID + <code>rwxr-xr-x</code>, <code>chmod 3775</code> = SGID + sticky + <code>rwxrwxr-x</code>։</p>
+<h2 id="lab">Փորձարկում (Lab)<a class="headerlink" href="#lab" title="Permanent link">&para;</a></h2>
+<p>Միջավայր՝ ցանկացած Linux VM կամ Ubuntu container՝ <code>sudo</code> իրավունքով։ Փորձարկումները կատարվում են առանձին թեստային գրացանակներում, որպեսզի համակարգի ֆայլերը չփոփոխվեն։</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Ստեղծենք թեստային օգտատերեր և ընդհանուր խումբ</span>
+sudo<span class="w"> </span>groupadd<span class="w"> </span>-f<span class="w"> </span>devteam
+sudo<span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>-G<span class="w"> </span>devteam<span class="w"> </span>alice
+sudo<span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>-G<span class="w"> </span>devteam<span class="w"> </span>bob
+
+<span class="c1"># 2. SUID-ի տարբերությունը. կրկնօրինակենք passwd-ը թեստային ուղու վրա</span>
+sudo<span class="w"> </span>cp<span class="w"> </span>/usr/bin/passwd<span class="w"> </span>/tmp/passwd-copy
+ls<span class="w"> </span>-l<span class="w"> </span>/tmp/passwd-copy<span class="w">          </span><span class="c1"># -rwxr-xr-x  (առանց SUID)</span>
+ls<span class="w"> </span>-l<span class="w"> </span>/usr/bin/passwd<span class="w">           </span><span class="c1"># -rwsr-xr-x  (SUID, տերը root)</span>
+sudo<span class="w"> </span>chmod<span class="w"> </span>u+s<span class="w"> </span>/tmp/passwd-copy
+ls<span class="w"> </span>-l<span class="w"> </span>/tmp/passwd-copy<span class="w">          </span><span class="c1"># -rwsr-xr-x  (s = SUID դրված է)</span>
+sudo<span class="w"> </span>chmod<span class="w"> </span>u-s<span class="w"> </span>/tmp/passwd-copy
+ls<span class="w"> </span>-l<span class="w"> </span>/tmp/passwd-copy<span class="w">          </span><span class="c1"># -rwxr-xr-x  (s հանված է)</span>
+
+<span class="c1"># 3. SUID առանց x բիթի. մեծատառ S</span>
+touch<span class="w"> </span>/tmp/noexec-file
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">4644</span><span class="w"> </span>/tmp/noexec-file
+ls<span class="w"> </span>-l<span class="w"> </span>/tmp/noexec-file<span class="w">          </span><span class="c1"># -rwSr--r--  (S = SUID կա, բայց x չկա. անիմաստ է)</span>
+
+<span class="c1"># 4. SGID գրացանակի վրա. shared folder</span>
+sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/srv/shared/project
+sudo<span class="w"> </span>chgrp<span class="w"> </span>devteam<span class="w"> </span>/srv/shared/project
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">2775</span><span class="w"> </span>/srv/shared/project
+ls<span class="w"> </span>-ld<span class="w"> </span>/srv/shared/project<span class="w">      </span><span class="c1"># drwxrwsr-x  (s = SGID group-ի դիրքում)</span>
+
+<span class="c1"># 5. Ստուգենք խմբի ժառանգումը. ֆայլերը ստանում են devteam խումբը</span>
+sudo<span class="w"> </span>-u<span class="w"> </span>alice<span class="w"> </span>touch<span class="w"> </span>/srv/shared/project/alice-file
+sudo<span class="w"> </span>-u<span class="w"> </span>bob<span class="w">   </span>touch<span class="w"> </span>/srv/shared/project/bob-file
+ls<span class="w"> </span>-l<span class="w"> </span>/srv/shared/project<span class="w">       </span><span class="c1"># երկուսն էլ alice/bob ունեն, բայց group-ը devteam է</span>
+
+<span class="c1"># 6. Համեմատության համար՝ առանց SGID-ի</span>
+sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/srv/nosgid
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">777</span><span class="w"> </span>/srv/nosgid
+sudo<span class="w"> </span>-u<span class="w"> </span>alice<span class="w"> </span>touch<span class="w"> </span>/srv/nosgid/alice-file
+ls<span class="w"> </span>-l<span class="w"> </span>/srv/nosgid<span class="w">               </span><span class="c1"># group-ը alice-ի primary group-ն է, ոչ թե devteam</span>
+</code></pre></div>
+<p>Սպասվող արդյունք. SGID ունեցող գրացանակում նոր ֆայլի <code>group</code> դաշտը ցույց է տալիս <code>devteam</code>, իսկ առանց SGID-ի՝ տվյալ օգտատիրոջ primary group-ը։ Այս տարբերությունն է shared folder-ի ամբողջ իմաստը։</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 7. Sticky bit. ուրիշի ֆայլը ջնջելը արգելվում է</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>/tmp/sticky-demo
+chmod<span class="w"> </span><span class="m">1777</span><span class="w"> </span>/tmp/sticky-demo
+ls<span class="w"> </span>-ld<span class="w"> </span>/tmp/sticky-demo<span class="w">          </span><span class="c1"># drwxrwxrwt  (t = sticky others-ի դիրքում)</span>
+
+sudo<span class="w"> </span>-u<span class="w"> </span>alice<span class="w"> </span>touch<span class="w"> </span>/tmp/sticky-demo/alice-file
+sudo<span class="w"> </span>-u<span class="w"> </span>bob<span class="w"> </span>rm<span class="w"> </span>/tmp/sticky-demo/alice-file<span class="w">      </span><span class="c1"># Operation not permitted</span>
+sudo<span class="w"> </span>-u<span class="w"> </span>bob<span class="w"> </span>touch<span class="w"> </span>/tmp/sticky-demo/bob-file<span class="w">     </span><span class="c1"># սեփական ֆայլը՝ ստեղծվում է</span>
+sudo<span class="w"> </span>-u<span class="w"> </span>bob<span class="w"> </span>rm<span class="w"> </span>/tmp/sticky-demo/bob-file<span class="w">        </span><span class="c1"># իր ֆայլը՝ ջնջվում է</span>
+
+<span class="c1"># 8. Sticky-ն առանց x բիթի → մեծատառ T</span>
+chmod<span class="w"> </span><span class="m">1776</span><span class="w"> </span>/tmp/sticky-demo
+ls<span class="w"> </span>-ld<span class="w"> </span>/tmp/sticky-demo<span class="w">          </span><span class="c1"># drwxrwxrwT</span>
+
+<span class="c1"># 9. Աուդիտ. ինչ SUID/SGID/sticky ֆայլեր կան համակարգում</span>
+find<span class="w"> </span>/<span class="w"> </span>-perm<span class="w"> </span>-4000<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="m">2</span>&gt;/dev/null
+find<span class="w"> </span>/<span class="w"> </span>-perm<span class="w"> </span>-2000<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="m">2</span>&gt;/dev/null
+find<span class="w"> </span>/<span class="w"> </span>-perm<span class="w"> </span>-1000<span class="w"> </span>-type<span class="w"> </span>d<span class="w"> </span><span class="m">2</span>&gt;/dev/null
+stat<span class="w"> </span>-c<span class="w"> </span><span class="s1">'%A %a %U %G %n'</span><span class="w"> </span>/usr/bin/passwd
+</code></pre></div>
+<p>Մաքրում. փորձարկումից հետո հեռացրու <code>sudo rm -rf /tmp/passwd-copy /tmp/noexec-file /tmp/sticky-demo /srv/shared /srv/nosgid</code>-ով ստեղծված ամեն ինչ, այլապես թեստային օգտատերերն ու SGID-ով գրացանակները կմնան համակարգում։</p>
+<div class="admonition tip">
+<p class="admonition-title">Best Practices</p>
+<ul>
+<li>SUID-ը դիր միայն այն binary-ների վրա, որոնք իսկապես պետք են (սովորաբար՝ միայն փաթեթների կողմից տրամադրվածները)։</li>
+<li>Shared folder-ների համար օգտագործիր SGID + <code>umask 002</code>-ը համատեղ. SGID-ն տալիս է խումբը, umask-ը՝ գրելու իրավունքը։</li>
+<li>Sticky bit-ը պահպանիր այն գրացանակներում, որտեղ գրելու արտոնություն ունեն բազմաթիվ օգտատերեր (<code>/tmp</code>, <code>/var/tmp</code>)։</li>
+<li>SUID/SGID ֆայլերի ցանկը պարբերաբար աուդիտ արա և փոփոխությունները գրանցիր monitoring-ով (AIDE, <code>auditd</code>)։</li>
+<li>Ժամանակավոր գրացանակների համար, որտեղ exec-ի արգելք է պետք, միավորիր sticky-ն <code>noexec</code>/<code>nosuid</code> mount option-ների հետ։</li>
+</ul>
+</div>
+<h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
+<h3 id="_3">Ախտանիշ<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>CI/CD deployment-ից հետո application-ը (սովորական <code>app</code> օգտատիրոջ տակ) կարողանում է ֆայլեր ստեղծել shared <code>/srv/shared/releases</code> գրացանակում, բայց report-ների generator-ը (մեկ այլ օգտատեր՝ <code>reporter</code>, նույն <code>devteam</code> խմբում) ստանում է «Permission denied», երբ փորձում է թարմացնել այնտեղի ֆայլերը։</p>
+<h3 id="_4">Ախտորոշում<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Ստուգիր գրացանակի և ֆայլերի տերին ու խումբը.
+   <div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-ld<span class="w"> </span>/srv/shared/releases
+ls<span class="w"> </span>-l<span class="w"> </span>/srv/shared/releases<span class="w"> </span><span class="p">|</span><span class="w"> </span>head
+</code></pre></div></li>
+<li>Համոզվիր, որ <code>reporter</code>-ը իրոք <code>devteam</code> խմբում է (խմբի անդամությունը կիրառվում է նոր login-ից. <code>id reporter</code>-ը ցույց կտա)։</li>
+<li>Ստուգիր deployment-ի պրոցեսի umask-ը.
+   <div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>-u<span class="w"> </span>app<span class="w"> </span><span class="nb">umask</span>
+</code></pre></div>
+   Եթե արդյունքը <code>0022</code> է, ապա նոր ֆայլերը կստանան <code>-rw-r--r--</code> (խումբը չի կարողանա գրել)։ Եթե ֆայլերի <code>group</code> դաշտը <code>app</code>-ն է, ապա գրացանակի վրա SGID բիթը բացակայում է։</li>
+</ol>
+<h3 id="_5">Լուծում<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Գրացանակին տալ ընդհանուր խումբ և SGID</span>
+sudo<span class="w"> </span>chgrp<span class="w"> </span>devteam<span class="w"> </span>/srv/shared/releases
+sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">2775</span><span class="w"> </span>/srv/shared/releases
+
+<span class="c1"># 2. Ուղղել արդեն գոյություն ունեցող ֆայլերի խումբը և գրելու իրավունքը</span>
+sudo<span class="w"> </span>chgrp<span class="w"> </span>-R<span class="w"> </span>devteam<span class="w"> </span>/srv/shared/releases
+sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>g+rwX<span class="w"> </span>/srv/shared/releases
+
+<span class="c1"># 3. Ծառայության umask-ը դարձնել 002 (systemd)</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>edit<span class="w"> </span>app.service
+<span class="c1"># [Service]</span>
+<span class="c1"># UMask=0002</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>app.service
+</code></pre></div>
+<p><code>chmod g+rwX</code>-ի <code>X</code>-ը կարևոր է. այն <code>x</code> բիթը ավելացնում է միայն գրացանակներին (և արդեն executable ֆայլերին), ոչ թե բոլոր հասարակ ֆայլերին։</p>
+<h3 id="_6">Կանխարգելում<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Shared գրացանակները ստեղծիր infrastructure-ի կոդով (Ansible/<code>cloud-init</code>)՝ SGID-ը և խումբը սկզբից դրված, ոչ թե ձեռքով ուղղումով։</li>
+<li>Ծառայությունների umask-ը սահմանիր systemd unit-ի <code>UMask=</code>-ով, որ ֆայլերը լռելյայն չստանան <code>644</code>։</li>
+<li>SUID/SGID ֆայլերի ցանկը գրանցիր baseline-ով և պարբերաբար համեմատիր <code>find / -perm -4000</code>-ի արդյունքի հետ. նոր SUID ֆայլը կարող է compromise-ի ազդանշան լինել։</li>
+<li><code>/tmp</code>-ի և կոնտեյներների volume-ների վրա պահիր sticky-ն, իսկ հնարավորության դեպքում՝ նաև <code>nosuid,noexec</code> mount option-ները։</li>
+</ul>
+<h2 id="_7">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h3 id="sgid-shared-folder-mid-level">Ի՞նչ է անում SGID բիթը գրացանակի վրա, և ինչո՞ւ է դա կարևոր shared folder-ում (mid-level)<a class="headerlink" href="#sgid-shared-folder-mid-level" title="Permanent link">&para;</a></h3>
+<p>Գրացանակի SGID-ն այդ գրացանակում ստեղծվող նոր ֆայլերին ու ենթագրացանակներին տալիս է ոչ թե ստեղծողի primary group-ը, այլ գրացանակի group-ը։ Առանց դրա՝ մի քանի օգտատերեր, գրելով նույն գրացանակում, ստեղծում են տարբեր group-ներով ֆայլեր, և միմյանց ֆայլերը չեն կարողանում կարդալ կամ թարմացնել։ SGID + <code>umask 002</code>-ը ստանդարտ պատասխանն է shared folder-ի համար, և այն սովորաբար լրացվում է sticky bit-ով, եթե գրացանակում գրելու իրավունք ունի ավելի լայն շրջանակ։</p>
+<h3 id="suid-root-binary-privilege-escalation-production-senior-level">Ինչո՞ւ է SUID root binary-ը համարվում privilege escalation-ի ռիսկ, և ինչպե՞ս կմեղմեիր այն production-ում (senior-level)<a class="headerlink" href="#suid-root-binary-privilege-escalation-production-senior-level" title="Permanent link">&para;</a></h3>
+<p>SUID root binary-ի ցանկացած անվտանգության թերություն (buffer overflow, անապահով ժամանակավոր ֆայլ, չմաքրված <code>PATH</code>-ով արտաքին ծրագրի կանչ) վերածվում է root-ի իրավունքների ձեռքբերման, քանի որ պրոցեսն աշխատում է EUID=0-ով։ Մեղմումը բազմաշերտ է. (1) SUID root ցանկը նվազագույնի հասցնել և աուդիտ անել <code>find / -perm -4000 -type f</code>-ով baseline-ի համեմատ (AIDE, <code>auditd</code>)։ (2) Ամբողջական root-ի փոխարեն օգտագործել նեղ մեխանիզմներ՝ Linux capabilities (<code>setcap</code>), sudo-ի կանոններ կամ polkit։ (3) Մեկուսացնել systemd-ի sandboxing-ով (<code>NoNewPrivileges=yes</code>, <code>ProtectSystem=strict</code>, <code>CapabilityBoundingSet=</code>) և AppArmor/SELinux-ով։ (4) <code>/tmp</code>, <code>/home</code> և կոնտեյներների volume-ները mount անել <code>nosuid,nodev,noexec</code>-ով։ (5) Պահել <code>fs.suid_dumpable=0</code>, որ SUID պրոցեսի core dump-ը չարտահոսի գաղտնիքները։ Այս ամենը կրկնվող գործընթաց է, ոչ թե մեկանգամյա կարգավորում։</p>
+<h2 id="_8">Ինքնաստուգում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Ինչ տարբերություն կա փոքրատառ <code>s</code>-ի և մեծատառ <code>S</code>-ի միջև <code>ls -l</code>-ի ելքում</li>
+<li>Ինչո՞ւ SUID shell սկրիպտի վրա չի աշխատում</li>
+<li>Ինչպե՞ս կստուգես, թե գրացանակում նոր ֆայլը կժառանգի՞ արդյոք ընդհանուր խումբը</li>
+<li>Ի՞նչ է անում sticky bit-ը, և ո՞ր գրացանակների վրա է այն սովորաբար դրված</li>
+<li>Ինչո՞ւ SGID-ն միայնակ բավարար չէ shared folder-ի համար (ինչ դեր ունի umask-ը)</li>
+<li>Ինչպե՞ս կգտնես համակարգում բոլոր SUID և SGID ֆայլերը</li>
+</ol>
+<h2 id="_9">Հաջորդ քայլեր<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>Այս թեման permissions-ի մոդելի խորացումն է. շարունակիր <a href="../filesystem/">Filesystem</a>-ի հետ (<code>chmod</code>, <code>chown</code>, <code>umask</code>), ապա անցիր <strong>ACL</strong>-ներին (<code>setfacl</code>/<code>getfacl</code>), որոնք SGID-ից ավելի նուրբ լուծում են տալիս բազմաթիվ օգտատերերի և ծառայությունների համար, և <strong>Linux capabilities</strong>-ին՝ SUID-ի ավելի անվտանգ այլընտրանքին (տես նաև <a href="../processes/">Processes</a>)։</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Վերադառնալ սկիզբ
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u054a\u0561\u057f\u0573\u0565\u0576\u057e\u0561\u056e \u0567", "clipboard.copy": "\u054a\u0561\u057f\u0573\u0565\u0576\u0565\u056c", "search.result.more.one": "\u0587\u057d 1-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.more.other": "\u0587\u057d #-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.none": "\u0531\u0580\u0564\u0575\u0578\u0582\u0576\u0584\u0576\u0565\u0580 \u0579\u056f\u0561\u0576", "search.result.one": "1 \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.other": "# \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.placeholder": "\u0544\u0578\u0582\u057f\u0584\u0561\u0563\u0580\u0565\u0584 \u0578\u0580\u0578\u0576\u0565\u056c\u0578\u0582 \u0570\u0561\u0574\u0561\u0580", "search.result.term.missing": "\u0532\u0561\u0581\u0561\u056f\u0561\u0575\u0578\u0582\u0574 \u0567", "select.version": "\u0538\u0576\u057f\u0580\u0565\u056c \u057f\u0561\u0580\u0562\u0565\u0580\u0561\u056f\u0568"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

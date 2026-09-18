@@ -137,3 +137,5 @@ sudo chmod 2775 /var/log/application
 ## Հաջորդ քայլեր
 
 Շարունակիր ֆայլային համակարգի թեմայով. ուսումնասիրիր permissions-ը (`chmod`, `umask`, sticky bit), symbolic links-ը և `find`/`du`/`df`-ը՝ ֆայլերի որոնման ու տարածության վերլուծության համար (տես նաև [Processes](processes.md) և [Bash Scripting](bash-scripting.md))։
+
+Հատուկ permission բիթերին (SUID, SGID, sticky) անցիր [Special Bits](special-bits.md) էջով. այնտեղ տես կապը `chmod`-ի թվային ձևաչափի հետ, shared folder-ի SGID + `umask` զույգը և SUID-ի անվտանգության ռիսկերը։

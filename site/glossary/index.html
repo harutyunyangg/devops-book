@@ -653,6 +653,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux/special-bits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Special Bits (SUID/SGID/Sticky)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1170,6 +1198,22 @@
 <tr>
 <td>setcap</td>
 <td>Linux-ի ֆայլի capability-ի կարգավորում. տալիս է ծրագրին մեկ նեղ հնարավորություն (օր.՝ cap_net_bind_service)՝ ամբողջ root-ի փոխարեն</td>
+</tr>
+<tr>
+<td>SUID</td>
+<td>Set User ID. permission բիթ, որի դեպքում executable ֆայլը գործարկվում է տիրոջ (սովորաբար root-ի) իրավունքներով. ցուցադրվում է <code>s</code>/<code>S</code>-ով owner-ի դիրքում</td>
+</tr>
+<tr>
+<td>SGID</td>
+<td>Set Group ID. ֆայլի վրա՝ գործարկում է խմբի իրավունքներով. գրացանակի վրա՝ ներսում ստեղծված ֆայլերը ժառանգում են գրացանակի խումբը</td>
+</tr>
+<tr>
+<td>Sticky bit</td>
+<td>Գրացանակի permission բիթ, որի դեպքում ֆայլը ջնջել/վերանվանել կարող է միայն ֆայլի տերը, գրացանակի տերը կամ root-ը (օր.՝ <code>/tmp</code>, <code>t</code> others-ի դիրքում)</td>
+</tr>
+<tr>
+<td>umask</td>
+<td>Ծրագրերի կողմից նոր ֆայլերի/գրացանակների ստեղծման ժամանակ «հանվող» permission բիթերի դիմակ (օր.՝ <code>022</code> → <code>644</code> ֆայլեր)</td>
 </tr>
 </tbody>
 </table>
