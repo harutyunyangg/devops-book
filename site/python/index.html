@@ -10,19 +10,19 @@
       
       
       
-        <link rel="canonical" href="https://example.invalid/devops-book/python/venv/">
+        <link rel="canonical" href="https://example.invalid/devops-book/python/">
       
       
-        <link rel="prev" href="../../docker-kubernetes/">
+        <link rel="prev" href="../containers/">
       
       
-        <link rel="next" href="../../cloud-security-observability/">
+        <link rel="next" href="../security/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -50,7 +50,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#python-virtual-environments-venv" class="md-skip">
+        <a href="#python" class="md-skip">
           Անցնել պարունակությանը
         </a>
       
@@ -82,7 +82,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Գլխագիր">
-    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-header__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+    <a href=".." title="DevOps ուսումնական ձեռնարկ" class="md-header__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -177,7 +177,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href=".." class="md-tabs__link">
         
   
   
@@ -195,35 +195,15 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../linux/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../linux/" class="md-tabs__link">
+        
   
+  
+    
   
   Linux
 
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../../networking/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Networks
-
       </a>
     </li>
   
@@ -235,36 +215,16 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../git-ci-cd/" class="md-tabs__link">
+      <a href="../automation-iac/" class="md-tabs__link">
         
   
   
     
-  
-  Git և CI/CD
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../automation-iac/" class="md-tabs__link">
-          
-  
   
   Automation և IaC
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -274,13 +234,13 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../docker-kubernetes/" class="md-tabs__link">
+      <a href="../containers/" class="md-tabs__link">
         
   
   
     
   
-  Docker և Kubernetes
+  Containers
 
       </a>
     </li>
@@ -313,18 +273,17 @@
   
   
   
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../cloud-security-observability/" class="md-tabs__link">
-          
+    <li class="md-tabs__item">
+      <a href="../security/" class="md-tabs__link">
+        
   
   
-  Cloud, Security, Observability
+    
+  
+  Security, Observability և Cloud
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -334,7 +293,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../glossary/" class="md-tabs__link">
+      <a href="../glossary/" class="md-tabs__link">
         
   
   
@@ -367,9 +326,11 @@
   
 
 
-<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Տեղորոշում" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Տեղորոշում" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="DevOps ուսումնական ձեռնարկ" class="md-nav__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
+    <a href=".." title="DevOps ուսումնական ձեռնարկ" class="md-nav__button md-logo" aria-label="DevOps ուսումնական ձեռնարկ" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -387,7 +348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -413,25 +374,9 @@
   
   
   
-    
-    
-    
-    
-      
-      
+    <li class="md-nav__item">
+      <a href="../linux/" class="md-nav__link">
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
   
   
   <span class="md-ellipsis">
@@ -445,273 +390,6 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Linux
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../linux/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../linux/processes/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Processes
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../linux/bash-scripting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Bash Scripting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../linux/cgroups/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Cgroups
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../linux/networking/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Networking
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../linux/firewall/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Firewall
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../linux/filesystem/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Filesystem
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../linux/special-bits/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Special Bits (SUID/SGID/Sticky)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../networking/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Networks
-  
-
-    
-  </span>
-  
-  
-
       </a>
     </li>
   
@@ -724,51 +402,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../git-ci-cd/" class="md-nav__link">
+      <a href="../automation-iac/" class="md-nav__link">
         
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Git և CI/CD
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-            
   
   
   <span class="md-ellipsis">
@@ -782,107 +417,7 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Automation և IaC
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../automation-iac/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Overview
-  
-
-    
-  </span>
-  
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../automation-iac/ansible/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Ansible
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../automation-iac/yaml/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    YAML
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -894,14 +429,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../docker-kubernetes/" class="md-nav__link">
+      <a href="../containers/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Docker և Kubernetes
+    Containers
   
 
     
@@ -984,6 +519,29 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
+        Էջի բաժիններ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#venv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual Environments (venv)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Virtual Environments (venv)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         Տեսություն
       
     </span>
@@ -1004,7 +562,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         Ի՞նչ է կրկնվում, և ի՞նչը ոչ
@@ -1015,7 +573,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         Ինչու՞ է կրկնությունն ընդունելի
@@ -1051,9 +609,9 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         Հիմնական հրամաններ
@@ -1062,8 +620,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#lab" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1073,8 +631,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#devops" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1087,7 +645,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         Ախտանիշ
@@ -1098,7 +656,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         Ախտորոշում
@@ -1109,7 +667,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         Լուծում
@@ -1120,7 +678,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       
         Կանխարգելում
@@ -1134,9 +692,9 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       
         Հարցազրույցի հարցեր և պատասխաններ
@@ -1173,9 +731,9 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
     <span class="md-ellipsis">
       
         Ինքնաստուգում
@@ -1184,15 +742,20 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
     <span class="md-ellipsis">
       
         Հաջորդ քայլեր
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1210,67 +773,15 @@
   
   
   
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
-        
-          
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Cloud, Security, Observability
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Cloud, Security, Observability
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../../cloud-security-observability/" class="md-nav__link">
+      <a href="../security/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Overview
+    Security, Observability և Cloud
   
 
     
@@ -1282,42 +793,6 @@
     </li>
   
 
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../cloud-security-observability/least-privilege/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Least Privilege
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
@@ -1326,7 +801,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../glossary/" class="md-nav__link">
+      <a href="../glossary/" class="md-nav__link">
         
   
   
@@ -1353,248 +828,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Բովանդակություն">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Բովանդակություն
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Տեսություն
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Տեսություն">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#venv-" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ինչպե՞ս է կառուցված venv-ը
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ի՞նչ է կրկնվում, և ի՞նչը ոչ
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ինչու՞ է կրկնությունն ընդունելի
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docker-" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Իսկ ինչպե՞ս է սա տարբերվում Docker-ում
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Key concepts
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Հիմնական հրամաններ
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#lab" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Փորձարկում (Lab)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#devops" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Իրական DevOps իրավիճակ
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Իրական DevOps իրավիճակ">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ախտանիշ
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ախտորոշում
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Լուծում
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Կանխարգելում
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Հարցազրույցի հարցեր և պատասխաններ
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Հարցազրույցի հարցեր և պատասխաններ">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#venv-pip-venv-mid-level" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ի՞նչ կա venv-ի ներսում, և ինչու՞ է pip-ը կրկնվում ամեն venv-ում (mid-level)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#interpreter-pip-senior-level" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ինչու՞ interpreter-ը չի կրկնվում, իսկ pip-ը կրկնվում է, և ինչո՞ւ է դա ընդունելի (senior-level)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ինքնաստուգում
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Հաջորդ քայլեր
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -1605,10 +838,17 @@
 
 
 
-<h1 id="python-virtual-environments-venv">Python Virtual Environments (venv)<a class="headerlink" href="#python-virtual-environments-venv" title="Permanent link">&para;</a></h1>
-<h2 id="_1">Տեսություն<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h1 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h1>
+<p>Python-ը DevOps-ի ամենահաճախ օգտագործվող լեզուներից է. դրանով գրվում են ավտոմատացման սկրիպտեր, CI/CD գործիքներ, Ansible-ի մոդուլներ և ներքին API-ներ։ Այս էջում սկսում ենք միջավայրի մեկուսացումից, որը Python-ում ամենահաճախ խնդիրներն առաջացնող թեման է։</p>
+<h2 id="_1">Էջի բաժիններ<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#venv">Virtual Environments (venv)</a> — ինչպես է կառուցված venv-ը, ինչն է կրկնվում ամեն միջավայրում, dependency hell-ի իրական իրավիճակ և կանխարգելում։</li>
+<li>pip, requirements և package management — շուտով (<code>uv</code>/<code>pip-tools</code> տարբերակների ամրագրմամբ)։</li>
+</ul>
+<h2 id="venv">Virtual Environments (venv)<a class="headerlink" href="#venv" title="Permanent link">&para;</a></h2>
+<h3 id="_2">Տեսություն<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <p><strong>Virtual environment (venv)</strong>-ը Python-ի փոքր, մեկուսացված միջավայր է. յուրաքանչյուր venv ունի իր <code>site-packages</code> պանակը, որտեղ տեղադրված են փաթեթները, և իր executable-ների ուղին։ Այն կառուցվում է արդեն տեղադրված Python-ի վրա, որը կոչվում է <strong>base Python</strong>։ venv-ը մեկուսացնում է տվյալ նախագծի փաթեթները ինչպես system Python-ից, այնպես էլ մյուս venv-ներից։ Ինչպես նշված է <a href="https://docs.python.org/3/library/venv.html">Python-ի պաշտոնական փաստաթղթերում</a>, յուրաքանչյուր venv ստեղծվում է base Python-ի վրա և լռությամբ մեկուսացված է base environment-ի փաթեթներից։ Այդ պատճառով մեկ app-ի թարմացումը չի ազդում մյուս հավելվածների վրա։</p>
-<h3 id="venv-">Ինչպե՞ս է կառուցված venv-ը<a class="headerlink" href="#venv-" title="Permanent link">&para;</a></h3>
+<h4 id="venv-">Ինչպե՞ս է կառուցված venv-ը<a class="headerlink" href="#venv-" title="Permanent link">&para;</a></h4>
 <p>Ubuntu/Linux-ի վրա <code>.venv/</code>-ի կառուցվածքը.</p>
 <div class="highlight"><pre><span></span><code>.venv/
 ├── bin/
@@ -1631,7 +871,7 @@
 <span class="na">executable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/usr/bin/python3.12</span>
 <span class="na">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/usr/bin/python3 -m venv /home/app/.venv</span>
 </code></pre></div>
-<h3 id="_2">Ի՞նչ է կրկնվում, և ի՞նչը ոչ<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<h4 id="_3">Ի՞նչ է կրկնվում, և ի՞նչը ոչ<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p><strong>Կրկնվում է.</strong> ամեն անգամ <code>python3 -m venv .venv</code> գործարկելիս <code>pip</code>-ը (մոտ 10-15 MB) և <code>setuptools</code>-ը (մոտ 5 MB) ensurepip-ի միջոցով ընկնում են այդ venv-ի <code>site-packages</code>-ում։ Այսինքն, ամեն venv կրում է նույն <code>pip</code>-ը և <code>setuptools</code>-ը։ Երեք venv-ում այդ ~15-20 MB-ը կրկնվում է երեք անգամ (մոտ 50 MB)։</p>
@@ -1640,15 +880,15 @@
 <p><strong>Չի կրկնվում.</strong> Python interpreter-ը (բուն <code>python3.x</code> binary-ը) մեկն է ամբողջ սերվերի վրա. venv-ի <code>bin/python</code>-ը Linux-ում symlink է դեպի base Python-ը, իսկ <code>pyvenv.cfg</code>-ն ցույց է տալիս դրա ուղին (օրինակ <code>/usr/bin/python3.12</code>)։ Իրական interpreter-ը տեղադրված է մեկ անգամ, և բոլոր venv-ները կիսում են այն։</p>
 </li>
 </ul>
-<h3 id="_3">Ինչու՞ է կրկնությունն ընդունելի<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h4 id="_4">Ինչու՞ է կրկնությունն ընդունելի<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
 <ol>
 <li><strong>Մեկուսացումն ավելի կարևոր է, քան 20 MB-ը.</strong> Եթե <code>pip</code>-ը կամ ընդհանուր <code>site-packages</code>-ը կիսվեր բոլորի միջև, մեկ app-ի թարմացումը կարող էր կոտրել մյուսներին (dependency hell)։ venv-ն երաշխավորում է, որ յուրաքանչյուր app ունի իր փաթեթների ճշգրիտ տարբերակները։</li>
 <li><strong>Ծավալն աննշան է</strong> ժամանակակից սերվերի համար (GB-ներ). 15-20 MB կրկնություն յուրաքանչյուր venv-ում ռեսուրսի խնդիր չէ։</li>
 <li><strong>Ավելի պարզ է.</strong> ամեն venv ինքնաբավ է և disposable, հեշտ ջնջվում ու նորից ստեղծվում. Ուստի venv-ը ներառվում է <code>.gitignore</code>-ում, իսկ version control-ում չի պահվում։</li>
 </ol>
-<h3 id="docker-">Իսկ ինչպե՞ս է սա տարբերվում Docker-ում<a class="headerlink" href="#docker-" title="Permanent link">&para;</a></h3>
+<h4 id="docker-">Իսկ ինչպե՞ս է սա տարբերվում Docker-ում<a class="headerlink" href="#docker-" title="Permanent link">&para;</a></h4>
 <p>Docker-ում կրկնությունն ավելի մեծ է. յուրաքանչյուր image սովորաբար ներառում է իր ամբողջական Python runtime-ը (<code>python:3.12</code> base image-ը ~100 MB+ է)։ Այսինքն, ամեն կոնտեյներ կրում է իր Python-ը ի տարբերություն venv-ի, որը կիսում է հոսթի base Python-ը. Բայց Docker-ի layer caching-ը մեղմում է ծավալը. read-only image layer-ները այդ թվում Python layer-ը հոսթի վրա մեկ անգամ են պահվում և կիսվում նույն base-ով աշխատող կոնտեյների միջև։ Այսպիսով, և՛ venv-ը, և՛ Docker-ն էլ միևնույն փոխզիջումն են, փոքր կրկնվող ծավալ մեկուսացման դիմաց։</p>
-<h3 id="key-concepts">Key concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h3>
+<h4 id="key-concepts">Key concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>base Python</strong> հոսթի վրա մեկ անգամ տեղադրված Python-ը, որի վրա կառուցվում է venv-ը.</li>
 <li><strong>site-packages</strong> venv-ի ներսի պանակը, որտեղ pip-ը տեղադրում է փաթեթները.</li>
@@ -1656,7 +896,7 @@
 <li><strong>symlink</strong> Linux-ում venv-ի python-ը մատնանշում է base Python-ին առանց այն պատճենելու.</li>
 <li><strong>disposable</strong> venv-ը ժամանակավոր է հեշտ ջնջվում և նորից ստեղծվում.</li>
 </ul>
-<h2 id="_4">Հիմնական հրամաններ<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="_5">Հիմնական հրամաններ<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -1718,7 +958,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="lab">Փորձարկում (Lab)<a class="headerlink" href="#lab" title="Permanent link">&para;</a></h2>
+<h3 id="lab">Փորձարկում (Lab)<a class="headerlink" href="#lab" title="Permanent link">&para;</a></h3>
 <p>Միջավայր սովորական Ubuntu VM կամ container. Երկու venv կստեղծենք, որ տեսնենք ինչ է կրկնվում, իսկ ինչը ոչ.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 1) Երկու անկախ venv նույն base Python-ի վրա</span>
 python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>/tmp/app1-venv
@@ -1750,10 +990,10 @@ du<span class="w"> </span>-sh<span class="w"> </span>/tmp/app1-venv<span class="
 <li>Ծառայությունները գործարկիր venv-ի ամբողջական ուղիով, օրինակ <code>/srv/app/.venv/bin/python</code>:</li>
 </ul>
 </div>
-<h2 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h2>
-<h3 id="_5">Ախտանիշ<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<h3 id="devops">Իրական DevOps իրավիճակ<a class="headerlink" href="#devops" title="Permanent link">&para;</a></h3>
+<h4 id="_6">Ախտանիշ<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
 <p>Production սերվերում երեք Python հավելված աշխատում է առանց venv-ի, բոլորը փաթեթներ են տեղադրում system <code>site-packages</code>-ում. Թիմերից մեկը մեկ հավելվածի համար թարմացնում է ընդհանուր փաթեթը (օրինակ <code>requests</code>), և հաջորդ օրը մյուս հավելվածը սկսում է ընկնել <code>ImportError</code>-ով, որովհետև փաթեթի API-ն փոխվել է, իսկ այդ հավելվածն ակնկալում էր հին տարբերակը (dependency hell).</p>
-<h3 id="_6">Ախտորոշում<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<h4 id="_7">Ախտորոշում<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
 <ol>
 <li>Պարզիր թե ինչ տարբերակ է ակտիվ.
    <div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>show<span class="w"> </span>requests
@@ -1762,7 +1002,7 @@ python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </s
 <li>Համոզվիր, որ նույն system <code>site-packages</code>-ից օգտվում են մի քանի app-ներ.</li>
 <li>Եզրակացրու. մեկի թարմացումն ազդում է բոլորի վրա.</li>
 </ol>
-<h3 id="_7">Լուծում<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<h4 id="_8">Լուծում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
 <p>Կարճաժամկետ rollback վերադարձրու նախկին տարբերակը.</p>
 <div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">requests</span><span class="o">==</span>&lt;նախորդ_տարբերակ&gt;
 </code></pre></div>
@@ -1772,19 +1012,19 @@ python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </s
 <span class="c1"># նույնը app2-ի և app3-ի համար</span>
 </code></pre></div>
 <p>Այսուհետ ամեն app-ի թարմացումն ազդում է միայն իր venv-ի վրա. systemd unit-ի <code>ExecStart</code>-ում գրիր venv-ի <code>bin/python</code>-ը, օրինակ <code>/srv/app1/.venv/bin/python /srv/app1/main.py</code>.</p>
-<h3 id="_8">Կանխարգելում<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<h4 id="_9">Կանխարգելում<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Յուրաքանչյուր app սեփական venv ամրագրված <code>requirements.txt</code>-ով (կամ <code>uv.lock</code>).</li>
 <li>CI-ում փորձարկիր venv-ով, իսկ deploy-ի ժամանակ վերստեղծիր venv-ը նույն ցուցակից (reproducible build).</li>
 <li>Ծառայությունները գործարկիր venv-ի ամբողջական ուղիով, ոչ թե PATH-ից.</li>
-<li>Ավելի խոր մեկուսացման համար փաթեթավորիր app-ը Docker image-ով (տես <a href="../../docker-kubernetes/">Docker և Կոնտեյներներ</a>).</li>
+<li>Ավելի խոր մեկուսացման համար փաթեթավորիր app-ը Docker image-ով (տես <a href="../containers/">Docker և Կոնտեյներներ</a>).</li>
 </ul>
-<h2 id="_9">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
-<h3 id="venv-pip-venv-mid-level">Ի՞նչ կա venv-ի ներսում, և ինչու՞ է pip-ը կրկնվում ամեն venv-ում (mid-level)<a class="headerlink" href="#venv-pip-venv-mid-level" title="Permanent link">&para;</a></h3>
+<h3 id="_10">Հարցազրույցի հարցեր և պատասխաններ<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<h4 id="venv-pip-venv-mid-level">Ի՞նչ կա venv-ի ներսում, և ինչու՞ է pip-ը կրկնվում ամեն venv-ում (mid-level)<a class="headerlink" href="#venv-pip-venv-mid-level" title="Permanent link">&para;</a></h4>
 <p>venv-ի ներսում կան <code>bin/</code> (Windows-ում <code>Scripts/</code>), <code>lib/pythonX.Y/site-packages/</code> (փաթեթները) և <code>pyvenv.cfg</code> (base Python-ի ուղին). <code>pip</code>-ն ու <code>setuptools</code>-ը կրկնվում են, որովհետև ensurepip-ը դրանք ավելացնում է յուրաքանչյուր <code>site-packages</code>-ում, որպեսզի ամեն venv ինքնավար լինի. մեկուսացումն այստեղ ավելի կարևոր է, քան 15-20 MB կրկնվող ծավալը.</p>
-<h3 id="interpreter-pip-senior-level">Ինչու՞ interpreter-ը չի կրկնվում, իսկ pip-ը կրկնվում է, և ինչո՞ւ է դա ընդունելի (senior-level)<a class="headerlink" href="#interpreter-pip-senior-level" title="Permanent link">&para;</a></h3>
+<h4 id="interpreter-pip-senior-level">Ինչու՞ interpreter-ը չի կրկնվում, իսկ pip-ը կրկնվում է, և ինչո՞ւ է դա ընդունելի (senior-level)<a class="headerlink" href="#interpreter-pip-senior-level" title="Permanent link">&para;</a></h4>
 <p>Interpreter-ը մեկն է ամբողջ սերվերի վրա. venv-ը չի պատճենում Python-ը. Linux-ում <code>bin/python</code>-ը symlink է դեպի base Python-ը, իսկ <code>pyvenv.cfg</code>-ի <code>home</code>-ը ցույց է տալիս դրա ուղին. Փաթեթները յուրաքանչյուր venv-ում տարբեր են, որովհետև դրանք նախագծից նախագիծ պետք է տարբերվեն. venv-ը կրկնում է փաթեթի շերտը, բայց կիսում է interpreter-ի շերտը հոսթի մակարդակով. Docker-ում պատկերն հակառակն է. ամեն image-ը կրում է իր Python runtime-ը (base image ~100 MB+), այսինքն կրկնվում է ամբողջ interpreter-ը ևս. Բայց layer caching-ը read-only layer-ները մեկ անգամ է պահում հոսթի վրա, կիսելով նույն base-ով աշխատող կոնտեյների միջև.</p>
-<h2 id="_10">Ինքնաստուգում<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h3 id="_11">Ինքնաստուգում<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
 <ol>
 <li>Որ ֆայլերն են կրկնվում ամեն venv-ում, և որո՞նք ոչ.</li>
 <li>Ի՞նչ է ցույց տալիս <code>pyvenv.cfg</code>-ի <code>home</code> բանալին, և ինչու է venv-ը կիսում base Python-ը.</li>
@@ -1792,8 +1032,8 @@ python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </s
 <li>Ինչու՞ venv-ը չի ներառվում Git-ում, և ինչպե՞ս է այն վերստեղծվում նոր մեքենայում.</li>
 <li>Ինչպե՞ս է venv-ի կրկնությունը համեմատվում Docker-ի, և ինչպե՞ս է layer caching-ը մեղմում այն.</li>
 </ol>
-<h2 id="_11">Հաջորդ քայլեր<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
-<p>Հիմա, երբ հասկանում ես, որ venv-ում կրկնությունը գիտակցված փոխզիջում է, խորացրու թեման <a href="../../docker-kubernetes/">Docker և Կոնտեյներներ</a>, որտեղ նույն մեկուսացման սկզբունքը լուծվում է image layer-ների միջոցով, կամ <a href="../../linux/processes/">Linux Processes</a> որպեսզի տեսնես, թե ինչպես են process-ները դիտարկվում հոսթի վրա. Package management-ի հաջորդ քայլը <code>pip-tools</code>/<code>uv</code> տարբերակների ամրագրման և վերարտադրելի build-ի գործիքներն են.</p>
+<h3 id="_12">Հաջորդ քայլեր<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>Հիմա, երբ հասկանում ես, որ venv-ում կրկնությունը գիտակցված փոխզիջում է, խորացրու թեման <a href="../containers/">Docker և Կոնտեյներներ</a>, որտեղ նույն մեկուսացման սկզբունքը լուծվում է image layer-ների միջոցով, կամ <a href="../linux/#processes">Linux Processes</a> որպեսզի տեսնես, թե ինչպես են process-ները դիտարկվում հոսթի վրա. Package management-ի հաջորդ քայլը <code>pip-tools</code>/<code>uv</code> տարբերակների ամրագրման և վերարտադրելի build-ի գործիքներն են.</p>
 
 
 
@@ -1849,10 +1089,10 @@ python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </s
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "content.code.copy", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u054a\u0561\u057f\u0573\u0565\u0576\u057e\u0561\u056e \u0567", "clipboard.copy": "\u054a\u0561\u057f\u0573\u0565\u0576\u0565\u056c", "search.result.more.one": "\u0587\u057d 1-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.more.other": "\u0587\u057d #-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.none": "\u0531\u0580\u0564\u0575\u0578\u0582\u0576\u0584\u0576\u0565\u0580 \u0579\u056f\u0561\u0576", "search.result.one": "1 \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.other": "# \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.placeholder": "\u0544\u0578\u0582\u057f\u0584\u0561\u0563\u0580\u0565\u0584 \u0578\u0580\u0578\u0576\u0565\u056c\u0578\u0582 \u0570\u0561\u0574\u0561\u0580", "search.result.term.missing": "\u0532\u0561\u0581\u0561\u056f\u0561\u0575\u0578\u0582\u0574 \u0567", "select.version": "\u0538\u0576\u057f\u0580\u0565\u056c \u057f\u0561\u0580\u0562\u0565\u0580\u0561\u056f\u0568"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.top", "toc.integrate", "content.code.copy", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u054a\u0561\u057f\u0573\u0565\u0576\u057e\u0561\u056e \u0567", "clipboard.copy": "\u054a\u0561\u057f\u0573\u0565\u0576\u0565\u056c", "search.result.more.one": "\u0587\u057d 1-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.more.other": "\u0587\u057d #-\u0568 \u0561\u0575\u057d \u0567\u057b\u0578\u0582\u0574", "search.result.none": "\u0531\u0580\u0564\u0575\u0578\u0582\u0576\u0584\u0576\u0565\u0580 \u0579\u056f\u0561\u0576", "search.result.one": "1 \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.other": "# \u0561\u0580\u0564\u0575\u0578\u0582\u0576\u0584", "search.result.placeholder": "\u0544\u0578\u0582\u057f\u0584\u0561\u0563\u0580\u0565\u0584 \u0578\u0580\u0578\u0576\u0565\u056c\u0578\u0582 \u0570\u0561\u0574\u0561\u0580", "search.result.term.missing": "\u0532\u0561\u0581\u0561\u056f\u0561\u0575\u0578\u0582\u0574 \u0567", "select.version": "\u0538\u0576\u057f\u0580\u0565\u056c \u057f\u0561\u0580\u0562\u0565\u0580\u0561\u056f\u0568"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

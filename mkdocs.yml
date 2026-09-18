@@ -7,12 +7,13 @@ theme:
   language: hy
   features:
     - navigation.tabs
-    - navigation.sections
     - navigation.top
+    - toc.integrate
     - content.code.copy
     - search.suggest
 markdown_extensions:
   - admonition
+  - attr_list
   - pymdownx.details
   - pymdownx.superfences
   - pymdownx.tabbed:
@@ -21,25 +22,12 @@ markdown_extensions:
       permalink: true
 nav:
   - Սկիզբ: index.md
-  - Linux:
-      - Overview: linux/index.md
-      - Processes: linux/processes.md
-      - Bash Scripting: linux/bash-scripting.md
-      - Cgroups: linux/cgroups.md
-      - Networking: linux/networking.md
-      - Firewall: linux/firewall.md
-      - Filesystem: linux/filesystem.md
-      - Special Bits (SUID/SGID/Sticky): linux/special-bits.md
-  - Networks: networking/index.md
-  - Git և CI/CD: git-ci-cd/index.md
-  - Automation և IaC:
-      - Overview: automation-iac/index.md
-      - Ansible: automation-iac/ansible.md
-      - YAML: automation-iac/yaml.md
-  - Docker և Kubernetes: docker-kubernetes/index.md
-  - Python: python/venv.md
-  - Cloud, Security, Observability:
-      - Overview: cloud-security-observability/index.md
-      - Least Privilege: cloud-security-observability/least-privilege.md
+  - Linux: linux.md
+  - Automation և IaC: automation-iac.md
+  - Containers: containers.md
+  - Python: python.md
+  - Security, Observability և Cloud: security.md
   - Բառարան: glossary.md
 
+exclude_docs: |
+  _template.md

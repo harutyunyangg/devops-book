@@ -1,0 +1,16 @@
+docs: միավորել գիրքը 20 ֆայլից 7-ի. մեկ գլոբալ թեմա, մեկ ֆայլ
+
+- Նոր կառուցվածք. linux.md, automation-iac.md, containers.md, python.md,
+  security.md, index.md, glossary.md. Ամեն թեմա դարձել է ## բաժին՝
+  կայուն anchor-ով, ենթաբաժինները՝ ### ու ####։
+- Ջնջվել են docs/ ենթապանակների 13 ֆայլերը և 5 «Շուտով» index էջերը
+  (linux, automation-iac, cloud-security-observability, git-ci-cd, networking)։
+- mkdocs.yml. nav-ը՝ էջերի մակարդակով, ավելացվել են attr_list, toc.integrate,
+  exclude_docs, հանվել է navigation.sections-ը։
+- AGENTS.md. նոր կանոն «քիչ ֆայլ, շատ բաժին», թեմաների տեղադրման աղյուսակ և
+  բաժնային մակարդակի template-ի պահանջ։
+- docs/_template.md. անցել է բաժնի մակարդակի (## թեմա, ### ենթաբաժիններ)։
+- Ուղղվել են yaml/ansible բովանդակության mojibake-ները, full-width նշանները,
+  կոտրված backtick-ները և «1.4/1.5» հնացած համարակալումը։
+- glossary.md և index.md թարմացվել են (նոր տերմիններ, գլոբալ էջերի ցանկ)։
+- mkdocs build --strict անցնում է առանց նախազգուշացումների։

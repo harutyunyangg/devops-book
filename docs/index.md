@@ -2,6 +2,16 @@
 
 Այս գիրքը կառուցում ենք սովորելու հետ զուգահեռ. յուրաքանչյուր թեման ունի տեսություն, իրական հրամաններ, վերարտադրելի փորձարկում և production մտածողություն։
 
+## Գլոբալ էջեր
+
+- [Linux](linux.md) — Processes, Bash Scripting, Cgroups, Networking, Firewall, Filesystem, Special Bits։
+- [Automation և IaC](automation-iac.md) — Ansible և YAML։
+- [Containers](containers.md) — Docker և կոնտեյներներ։
+- [Python](python.md) — Virtual Environments (venv)։
+- [Security, Observability և Cloud](security.md) — Least Privilege։
+- [Բառարան](glossary.md) — տերմինների բառարան։
+
+
 ## Ինչպես օգտագործել
 
 1. Ընտրիր մեկ փոքր թեմա։

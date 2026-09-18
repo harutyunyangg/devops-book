@@ -22,3 +22,12 @@
 | SGID | Set Group ID. ֆայլի վրա՝ գործարկում է խմբի իրավունքներով. գրացանակի վրա՝ ներսում ստեղծված ֆայլերը ժառանգում են գրացանակի խումբը |
 | Sticky bit | Գրացանակի permission բիթ, որի դեպքում ֆայլը ջնջել/վերանվանել կարող է միայն ֆայլի տերը, գրացանակի տերը կամ root-ը (օր.՝ `/tmp`, `t` others-ի դիրքում) |
 | umask | Ծրագրերի կողմից նոր ֆայլերի/գրացանակների ստեղծման ժամանակ «հանվող» permission բիթերի դիմակ (օր.՝ `022` → `644` ֆայլեր) |
+| cgroup | Linux kernel-ի մեխանիզմ, որը պրոցեսները խմբավորում և սահմանափակում է ըստ ռեսուրսների (CPU, memory, I/O, PIDs) |
+| namespace | Linux kernel-ի մեկուսացման մեխանիզմ, որը որոշում է, թե ինչ է տեսնում կոնտեյները (PID, network, mount) |
+| UFW | Uncomplicated Firewall. Ubuntu-ի լռելյայն firewall-ի կառավարման frontend |
+| nftables | Linux kernel-ի ժամանակակից firewall framework-ը, որը փոխարինել է iptables-ին |
+| Netplan | Ubuntu-ի ցանցային կարգավորումների YAML-միջերես, որը կիրառում է systemd-networkd կամ NetworkManager |
+| anchor / alias | YAML-ի կրկնությունը կրճատող մեխանիզմներ (`&name` սահմանում, `*name` հղում) |
+| venv | Python-ի մեկուսացված virtual environment. ունի իր `site-packages`-ը և executable-ները |
+| dangling image | Docker image առանց tag-ի (`<none>:<none>`), որը մնում է նույն tag-ով նոր build-ից հետո |
+

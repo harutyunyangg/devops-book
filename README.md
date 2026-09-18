@@ -15,6 +15,9 @@
 
 - `docs/` — աղբյուր բովանդակություն (նավիգացիան՝ `mkdocs.yml`-ի `nav` բաժնում)։
 - `site/` — build-ի արդյունքը. ստատիկ HTML, որը կարող ես բացել ցանկացած բրաուզերում կամ տեղադրել web server-ի վրա։
+- `docs/`-ի կառուցվածքը. քիչ ֆայլ, շատ բաժին. `index.md`, `linux.md`, `automation-iac.md`, `containers.md`, `python.md`, `security.md`, `glossary.md`։
+
+
 
 ### Դիտել մշակման ընթացքում (dev server)
 
