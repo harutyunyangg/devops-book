@@ -676,6 +676,58 @@
 <td>dangling image</td>
 <td>Docker image առանց tag-ի (<code>&lt;none&gt;:&lt;none&gt;</code>), որը մնում է նույն tag-ով նոր build-ից հետո</td>
 </tr>
+<tr>
+<td>bound method</td>
+<td>Մեթոդ, որին instance-ը արդեն կապված է. կանչի ժամանակ <code>self</code>-ը լրացվում է ավտոմատ</td>
+</tr>
+<tr>
+<td>descriptor</td>
+<td>Python-ի մեխանիզմը, որով class-ի ատրիբուտը (օրինակ ֆունկցիան) կառավարում է իր մուտքը <code>__get__</code>-ով</td>
+</tr>
+<tr>
+<td><code>@classmethod</code></td>
+<td>Decorator, որի մեթոդը ստանում է <code>cls</code> (դասը, ոչ instance-ը). տիպիկ օգտագործումը այլընտրանքային constructor-ն է</td>
+</tr>
+<tr>
+<td><code>@staticmethod</code></td>
+<td>Decorator, որի մեթոդը չի ստանում ոչ <code>self</code>, ոչ <code>cls</code>. class-ի namespace-ում ապրող սովորական ֆունկցիա է</td>
+</tr>
+<tr>
+<td><code>@property</code></td>
+<td>Decorator, որը մեթոդը դարձնում է attribute-ի նման ընթերցվող հատկություն</td>
+</tr>
+<tr>
+<td>name mangling</td>
+<td><code>__name</code> ձևի անդամի վերածումը <code>_ClassName__name</code>-ի. պաշտպանում է պատահական բախումից, ոչ մուտքից</td>
+</tr>
+<tr>
+<td>type hint</td>
+<td>Տիպի նշումը signature-ում (<code>def f(x: int) -&gt; str</code>). runtime-ում չի ստուգվում, ստուգում են <code>mypy</code>/<code>pyright</code>-ը</td>
+</tr>
+<tr>
+<td>DB-API</td>
+<td>Python-ի տվյալների բազայի driver-ների ստանդարտ միջերեսը (PEP 249). <code>connect</code>, <code>cursor</code>, <code>execute</code></td>
+</tr>
+<tr>
+<td>paramstyle / placeholder</td>
+<td>SQL-ում parameter-ի տեղը պահող նշանը (<code>?</code>, <code>%s</code>, <code>:name</code>, <code>@name</code>). driver-ից driver տարբերվում է</td>
+</tr>
+<tr>
+<td>prepared statement</td>
+<td>Նախապես parse/plan արված SQL. parameter-ները կցվում են առանձին ուղիով որպես արժեք, ոչ որպես SQL տեքստ</td>
+</tr>
+<tr>
+<td>SQL injection</td>
+<td>Հարձակում, երբ օգտատիրոջ մուտքը միանում է SQL տեքստին և մեկնաբանվում որպես հրաման</td>
+</tr>
+<tr>
+<td>shell injection</td>
+<td>Հարձակում, երբ մուտքը միանում է shell հրամանին (տիպիկ <code>shell=True</code>-ի հետ) և կատարվում որպես հրաման</td>
+</tr>
+<tr>
+<td>XSS</td>
+<td>Cross-Site Scripting. չչեզոքացված օգտատիրոջ տվյալը HTML-ում կատարվում է զոհի browser-ում որպես script</td>
+</tr>
 </tbody>
 </table>
 

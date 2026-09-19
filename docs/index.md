@@ -7,7 +7,7 @@
 - [Linux](linux.md) — Processes, Bash Scripting, Cgroups, Networking, Firewall, Filesystem, Special Bits։
 - [Automation և IaC](automation-iac.md) — Ansible և YAML։
 - [Containers](containers.md) — Docker և կոնտեյներներ։
-- [Python](python.md) — Virtual Environments (venv)։
+- [Python](python.md) — Virtual Environments (venv), մեթոդներ և type hints, SQL placeholders և injection-ից պաշտպանություն։
 - [Security, Observability և Cloud](security.md) — Least Privilege։
 - [Բառարան](glossary.md) — տերմինների բառարան։
 
